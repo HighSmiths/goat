@@ -6,11 +6,48 @@
     android:layout_height="match_parent"
     tools:context="com.example.android.goatchat.MainActivity">
 
+    <ImageView
+        android:id="@+id/goats"
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:scaleType="centerCrop"
+        android:src="@drawable/goats_on_goats"
+        />
+
+
     <TextView
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:text="Hello World!"
-        android:id="@+id/textView" />
+        android:text="GoatChat"
+        android:textSize="56dp"
+        android:textColor="@android:color/holo_red_dark"
+        android:id="@+id/textView"
+        android:layout_alignParentTop="true"
+        android:layout_centerHorizontal="true"
+        android:layout_marginTop="36dp" />
+
+    <Button
+        android:id="@+id/sign_up"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:text="Sign up"
+
+        android:layout_marginRight="50dp"
+        android:layout_marginEnd="50dp"
+        android:layout_marginBottom="30dp"
+        android:layout_alignParentBottom="true"
+        android:layout_alignParentRight="true"
+        android:layout_alignParentEnd="true" />
+
+    <Button
+        android:id="@+id/log_in"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:text="Log In"
+        android:layout_alignBaseline="@+id/sign_up"
+        android:layout_alignBottom="@+id/sign_up"
+        android:layout_alignLeft="@+id/textView"
+        android:layout_alignStart="@+id/textView" />
 
     <Button
         android:layout_width="wrap_content"
@@ -23,6 +60,16 @@
         android:layout_marginTop="67dp"
         android:id="@+id/button2"
         android:onClick="stubAccount"/>
+    <TextView
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:text="Bringing friends together one goat at a time"
+        android:textColor="@android:color/holo_red_dark"
+        android:textSize="16dp"
+        android:layout_below="@+id/textView"
+        android:layout_centerHorizontal="true"
+        android:id="@+id/textView2" />
+
 
 </RelativeLayout>
 
