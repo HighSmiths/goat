@@ -1,0 +1,42 @@
+{
+  "project_info": {
+    "project_number": "970867830096",
+    "firebase_url": "https://goat-chat-c2625.firebaseio.com",
+    "project_id": "goat-chat-c2625",
+    "storage_bucket": "goat-chat-c2625.appspot.com"
+  },
+  "client": [
+    {
+      "client_info": {
+        "mobilesdk_app_id": "1:970867830096:android:f4b31aeaea9aea13",
+        "android_client_info": {
+          "package_name": "com.example.android.goatchat"
+        }
+      },
+      "oauth_client": [
+        {
+          "client_id": "970867830096-6fq3mu1d2epkubov6p67jinv19d9c0p5.apps.googleusercontent.com",
+          "client_type": 3
+        }
+      ],
+      "api_key": [
+        {
+          "current_key": "AIzaSyBzOhf9MMXrOA7qsvEFzOEKeMH5XPLsZdQ"
+        }
+      ],
+      "services": {
+        "analytics_service": {
+          "status": 1
+        },
+        "appinvite_service": {
+          "status": 1,
+          "other_platform_oauth_client": []
+        },
+        "ads_service": {
+          "status": 2
+        }
+      }
+    }
+  ],
+  "configuration_version": "1"
+}
