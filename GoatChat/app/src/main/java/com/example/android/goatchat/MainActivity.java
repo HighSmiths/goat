@@ -1,5 +1,6 @@
 package com.example.android.goatchat;
 
+import android.content.Intent;
 import android.support.annotation.NonNull;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
@@ -17,6 +18,13 @@ public class MainActivity extends AppCompatActivity {
 
     private FirebaseAuth mAuth;
     private FirebaseAuth.AuthStateListener mAuthListener;
+
+    public void openUserInbox(){
+        Intent intent = new Intent(this, inboxActivity.class);
+        intent.putExtra("username", "garbage");
+        startActivity(intent);
+    }
+
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         mAuth = FirebaseAuth.getInstance();
@@ -28,6 +36,8 @@ public class MainActivity extends AppCompatActivity {
                 if (user != null) {
                     // User is signed in
                     Log.d("TaT", "onAuthStateChanged:signed_in:" + user.getUid());
+                    openUserInbox();
+
                 } else {
                     // User is signed out
                    Log.d("TAT", "onAuthStateChanged:signed_out");
