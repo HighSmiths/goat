@@ -27,10 +27,10 @@ public class MainActivity extends AppCompatActivity {
                 FirebaseUser user = firebaseAuth.getCurrentUser();
                 if (user != null) {
                     // User is signed in
-                 //   Log.d(TAG, "onAuthStateChanged:signed_in:" + user.getUid());
+                    Log.d("TaT", "onAuthStateChanged:signed_in:" + user.getUid());
                 } else {
                     // User is signed out
-                  //  Log.d(TAG, "onAuthStateChanged:signed_out");
+                   Log.d("TAT", "onAuthStateChanged:signed_out");
                 }
                 // ...
             }
@@ -57,7 +57,7 @@ public class MainActivity extends AppCompatActivity {
     public void stubAccount(View view)
     {
         Log.d("this", "far");
-        createAccount("misc.mikez@gmail.com", "l1zard");
+        createAccount("maxrhighsmith@gmail.com", "l1zard");
     }
     public void createAccount(String email, String password) {
 
@@ -79,5 +79,27 @@ public class MainActivity extends AppCompatActivity {
                 });
     }
 
+    public void stubSign(View view){
+        Log.d("you are","in the main frame");
+        signIn("maxrhighsmith@gmail.com", "l1zard");
+    }
+    public void signIn(String email, String password){
+        mAuth.signInWithEmailAndPassword(email, password)
+                .addOnCompleteListener(this, new OnCompleteListener<AuthResult>() {
+                    @Override
+                    public void onComplete(@NonNull Task<AuthResult> task) {
+                        Log.d("STIF", "signInWithEmail:onComplete:" + task.isSuccessful());
+
+                        // If sign in fails, display a message to the user. If sign in succeeds
+                        // the auth state listener will be notified and logic to handle the
+                        // signed in user can be handled in the listener.
+                        if (!task.isSuccessful()) {
+                            Log.w("STUFF", "signInWithEmail:failed", task.getException());
+                        }
+
+                        // ...
+                    }
+                });
+    }
 
 }

@@ -47,7 +47,8 @@
         android:layout_alignBaseline="@+id/sign_up"
         android:layout_alignBottom="@+id/sign_up"
         android:layout_alignLeft="@+id/textView"
-        android:layout_alignStart="@+id/textView" />
+        android:layout_alignStart="@+id/textView"
+        android:onClick="stubSign"/>
 
     <Button
         android:layout_width="wrap_content"

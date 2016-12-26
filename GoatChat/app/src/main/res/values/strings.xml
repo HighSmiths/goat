@@ -1,3 +1,4 @@
 <resources>
     <string name="app_name">Goat Chat</string>
+    <string name="title_activity_inbox">inboxActivity</string>
 </resources>
