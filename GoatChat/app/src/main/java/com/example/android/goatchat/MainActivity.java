@@ -119,8 +119,8 @@ public  class MainActivity extends AppCompatActivity{
 
   //                  Database db = Database.instance;
 //                    db.execute();
-                    // openUserInbox();
-                    pushFriendListView();
+                     openUserInbox();
+                   // pushFriendListView();
 
 
                 } else {
