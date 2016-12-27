@@ -49,8 +49,8 @@ public class MainActivity extends AppCompatActivity {
                     Log.d(Constants.LOG_TAG, "onAuthStateChanged:signed_in:" + user.getUid());
                     Database db = Database.instance;
                     db.execute();
-                     openUserInbox();
-                  //  pushFriendListView();
+                    // openUserInbox();
+                    pushFriendListView();
 
                 } else {
                     // User is signed out
