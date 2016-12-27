@@ -51,10 +51,10 @@ public class User {
 
     public String toString() {
         return "User "
-                + uid + ", "
-                + email + ", "
-                + sentMessages + ", "
-                + receivedMessages + ", "
+                + uid + "\n"
+                + email + "\n"
+                + sentMessages + "\n"
+                + receivedMessages + "\n"
                 + friends;
 
     }

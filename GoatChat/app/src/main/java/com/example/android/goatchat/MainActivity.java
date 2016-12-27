@@ -22,7 +22,7 @@ public class MainActivity extends AppCompatActivity {
 
     public void openUserInbox(){
         Intent intent = new Intent(this, inboxActivity.class);
-        intent.putExtra("username", "garbage");
+        intent.putExtra("uid", FirebaseAuth.getInstance().getCurrentUser().getUid());
         startActivity(intent);
         Log.d(Constants.LOG_TAG, "open user inbox");
     }
@@ -49,8 +49,8 @@ public class MainActivity extends AppCompatActivity {
                     Log.d(Constants.LOG_TAG, "onAuthStateChanged:signed_in:" + user.getUid());
                     Database db = Database.instance;
                     db.execute();
-                    // openUserInbox();
-                    pushFriendListView();
+                     openUserInbox();
+//                    pushFriendListView();
 
                 } else {
                     // User is signed out

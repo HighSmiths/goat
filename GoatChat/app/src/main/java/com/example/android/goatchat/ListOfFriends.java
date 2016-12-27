@@ -32,8 +32,6 @@ public class ListOfFriends extends AppCompatActivity {
 
         super.onCreate(saveInstanceState);
 
-
-
         setContentView(R.layout.list_of_friends);
         lv = (ListView) findViewById(R.id.friends_list);
 
@@ -57,10 +55,17 @@ public class ListOfFriends extends AppCompatActivity {
 
         lv.setAdapter(arrayAdapter);
 
+        class Callback implements ReadFriendsCallback {
+            public void execute(User user) {
+                for (String friend : user.friends.values()) {
+                    friends_array_list.add(friend);
+                }
+            }
+        }
 
         // Get UID passed in from MainActivity.
         String uid = getIntent().getStringExtra("uid");
         // Read from database to get friends
-        Database.instance.readFriendsAndAddToList(friends_array_list, uid);
+        Database.instance.readFriendsAndAddToList(uid, new Callback());
     }
 }

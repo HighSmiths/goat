@@ -42,4 +42,12 @@
         app:layout_anchorGravity="center_vertical|center_horizontal"
         android:layout_gravity="center_vertical|center_horizontal" />
 
+    <TextView
+        android:text="TextView"
+        android:layout_width="358dp"
+        android:layout_height="178dp"
+        app:layout_anchorGravity="center_vertical|center_horizontal"
+        android:layout_gravity="center_vertical|center_horizontal"
+        android:id="@+id/userDetailsText" />
+
 </android.support.design.widget.CoordinatorLayout>

@@ -8,6 +8,7 @@ import android.support.v7.app.AppCompatActivity;
 import android.support.v7.widget.Toolbar;
 import android.util.Log;
 import android.view.View;
+import android.widget.TextView;
 
 import com.google.firebase.auth.FirebaseAuth;
 
@@ -18,10 +19,25 @@ public class inboxActivity extends AppCompatActivity {
         Intent intent = new Intent(this, MainActivity.class);
         intent.putExtra("username", "garbage");
         startActivity(intent);
-        Log.d(Constants.LOG_TAG, "open user inbox");
+        Log.d(Constants.LOG_TAG, "Logging out");
     }
     @Override
     protected void onCreate(Bundle savedInstanceState) {
+        class Callback implements ReadUserCallback{
+            @Override
+            public void execute(User user) {
+                Log.d(Constants.LOG_TAG, "USER: " + user.toString());
+                TextView userDetails = (TextView) findViewById(R.id.userDetailsText);
+                userDetails.setText(user.toString());
+            }
+        }
+
+        // Get UID passed in from MainActivity.
+        String uid = getIntent().getStringExtra("uid");
+//        Log.d(Constants.LOG_TAG, uid);
+        Database.instance.getUserWithUID(uid, new Callback());
+
+
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_inbox);
         Toolbar toolbar = (Toolbar) findViewById(R.id.toolbar);

@@ -30,10 +30,10 @@ public class Database {
         myRef.setValue(data);
     }
 
-    // Accepts an String array `arr` and a String user ID `uid`.
     // Reads all of user's friends from Firebase, and stores them in `arr`.
-    public void readFriendsAndAddToList(List<String> arr, String uid) {
-        final CBEventReadFriends callback = new CBEventReadFriends(arr);
+    // Accepts an String array `arr` and a String user ID `uid`.
+    public void readFriendsAndAddToList(String uid, ReadFriendsCallback cb) {
+        final ReadFriendsCallback callback = cb;
 
         // Query for current user, appending all friends to the input array `arr`.
         database.getInstance().getReference("users/" + uid).addListenerForSingleValueEvent(
@@ -41,7 +41,7 @@ public class Database {
                     @Override
                     public void onDataChange(DataSnapshot dataSnapshot) {
                         User user = dataSnapshot.getValue(User.class);
-                        callback.readFriends(user);
+                        callback.execute(user);
                     }
 
                     @Override
@@ -52,32 +52,36 @@ public class Database {
 
 
 
+    // Reads the user with given userId.
+    // Accepts a String user Id `uid` and a reference to a User object, and stores the retrieved User in `user`.
 
-    public void getUserWithUID(String userId) {
-        database.getReference("users/" + userId).addListenerForSingleValueEvent(
+    public void getUserWithUID(String userId, ReadUserCallback cb) {
+        final ReadUserCallback callback = cb;
+
+        database.getReference().child("users").child(userId).addListenerForSingleValueEvent(
                 new ValueEventListener() {
             @Override
             public void onDataChange(DataSnapshot dataSnapshot) {
                 User user = dataSnapshot.getValue(User.class);
-
-                // Log.d(Constants.LOG_TAG, user.toString());
+                Log.d(Constants.LOG_TAG, user.getEmail());
+                callback.execute(user);
             }
 
             @Override
             public void onCancelled(DatabaseError databaseError) {
-
+                Log.d(Constants.LOG_TAG, "DB Cancelled (ERROR): " + databaseError.getMessage());
             }
         });
-
     }
 
+    // Creates a new user record in Firebase with given userId and email.
     public void createNewUserRecordInFirebase(String userId, String email) {
         User user = new User(userId, email);
         user.friends.put("id", userId);
-        database.getReference("users/" + userId).setValue(user);
-
+        database.getReference().child("users").child(userId).setValue(user);
     }
 
+    // Test function to execute some database functions
     public void execute() {
         Log.d(Constants.LOG_TAG, "Executing DB methods");
 
@@ -89,7 +93,5 @@ public class Database {
         Log.d(Constants.LOG_TAG, email);
 
         createNewUserRecordInFirebase(uid, email);
-
-        getUserWithUID(uid);
     }
 }
