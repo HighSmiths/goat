@@ -79,12 +79,6 @@ public class MainActivity extends AppCompatActivity {
         }
     }
 
-    public void stubAccount(View view)
-    {
-        Log.d("this", "far");
-        createAccount("mh5234@gmail.com", "l1zard");
-    }
-
     public void createNewAccount(View view)
     {
         EditText email = (EditText)findViewById((R.id.email));

@@ -38,7 +38,7 @@ public class ListOfFriends extends AppCompatActivity {
         // Instanciating an array list (you don't need to do this,
         // you already have yours).
 
-        List<String> friends_array_list = new ArrayList<String>();
+        final List<String> friends_array_list = new ArrayList<String>();
         friends_array_list.add("Max");
         friends_array_list.add("Jake");
         friends_array_list.add("Matt");
