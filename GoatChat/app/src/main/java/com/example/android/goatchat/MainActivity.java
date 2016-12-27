@@ -50,7 +50,7 @@ public class MainActivity extends AppCompatActivity {
                     Database db = Database.instance;
                     db.execute();
                     // openUserInbox();
-                    pushFriendListView();
+                  //  pushFriendListView();
 
 
                 } else {
@@ -82,7 +82,7 @@ public class MainActivity extends AppCompatActivity {
     public void stubAccount(View view)
     {
         Log.d("this", "far");
-        createAccount("maxrhighsmith@gmail.com", "l1zard");
+        createAccount("mh5234@gmail.com", "l1zard");
     }
 
     public void createNewAccount(View view)
@@ -120,7 +120,7 @@ public class MainActivity extends AppCompatActivity {
 
     public void stubSign(View view){
         Log.d("you are","in the main frame");
-        signIn("maxrhighsmith@gmail.com", "l1zard");
+        signIn("mh5234@truman.edu", "l1zard");
     }
     public void signIn(String email, String password){
         mAuth.signInWithEmailAndPassword(email, password)
