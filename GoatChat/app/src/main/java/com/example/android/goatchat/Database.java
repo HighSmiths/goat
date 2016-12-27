@@ -63,7 +63,6 @@ public class Database {
             @Override
             public void onDataChange(DataSnapshot dataSnapshot) {
                 User user = dataSnapshot.getValue(User.class);
-                Log.d(Constants.LOG_TAG, user.getEmail());
                 callback.execute(user);
             }
 
