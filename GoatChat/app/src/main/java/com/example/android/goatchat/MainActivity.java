@@ -117,8 +117,8 @@ public  class MainActivity extends AppCompatActivity{
                     // User is signed in
                     Log.d(Constants.LOG_TAG, "onAuthStateChanged:signed_in:" + user.getUid());
 
-                    Database db = Database.instance;
-                    db.execute();
+  //                  Database db = Database.instance;
+//                    db.execute();
                     // openUserInbox();
                     pushFriendListView();
 
