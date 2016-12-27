@@ -23,6 +23,16 @@ public class MainActivity extends AppCompatActivity {
         Intent intent = new Intent(this, inboxActivity.class);
         intent.putExtra("username", "garbage");
         startActivity(intent);
+        Log.d(Constants.LOG_TAG, "open user inbox");
+    }
+
+    public void pushFriendListView(){
+        Intent intent = new Intent(this, ListOfFriends.class);
+        intent.putExtra("uid", FirebaseAuth.getInstance().getCurrentUser().getUid());
+        Log.d(Constants.LOG_TAG, "Open friend list view");
+
+        startActivity(intent);
+
     }
 
     @Override
@@ -38,7 +48,8 @@ public class MainActivity extends AppCompatActivity {
                     Log.d(Constants.LOG_TAG, "onAuthStateChanged:signed_in:" + user.getUid());
                     Database db = Database.instance;
                     db.execute();
-                    openUserInbox();
+                    // openUserInbox();
+                    pushFriendListView();
 
 
 
