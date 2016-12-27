@@ -49,9 +49,8 @@ public class MainActivity extends AppCompatActivity {
                     Log.d(Constants.LOG_TAG, "onAuthStateChanged:signed_in:" + user.getUid());
                     Database db = Database.instance;
                     db.execute();
-                    // openUserInbox();
+                     openUserInbox();
                   //  pushFriendListView();
-
 
                 } else {
                     // User is signed out
@@ -79,12 +78,6 @@ public class MainActivity extends AppCompatActivity {
         }
     }
 
-    public void stubAccount(View view)
-    {
-        Log.d("this", "far");
-        createAccount("mh5234@gmail.com", "l1zard");
-    }
-
     public void createNewAccount(View view)
     {
         EditText email = (EditText)findViewById((R.id.email));
@@ -96,6 +89,17 @@ public class MainActivity extends AppCompatActivity {
        // String emailText = "mh5234@truman.edu";
       //  String passwordText = "l1zard";
         createAccount(emailText,passwordText);
+    }
+
+    public void signInAccount(View view)
+    {
+        EditText email = (EditText)findViewById((R.id.email));
+        String emailText = email.getText().toString();
+        EditText password = (EditText)findViewById((R.id.password));
+        String passwordText = password.getText().toString();
+        Log.d("password", passwordText);
+        Log.d("email", emailText);
+        signIn(emailText, passwordText);
     }
 
     public void createAccount(String email, String password) {
