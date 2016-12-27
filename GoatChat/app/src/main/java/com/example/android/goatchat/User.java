@@ -7,21 +7,55 @@ import java.util.HashMap;
  */
 
 public class User {
-
+    public String uid;
     public String email;
-    public HashMap<String, String> messages_sent;
-    public HashMap<String, String> messages_received;
+    public HashMap<String, String> sentMessages;
+    public HashMap<String, String> receivedMessages;
     public HashMap<String, String> friends;
 
-    public User(String email) {
-        this.email = email;
-        this.messages_sent = new HashMap<>();
-        this.messages_received = new HashMap<>();
-        this.friends = new HashMap<>();
-
-        messages_sent.put("message", "test message sent");
-        messages_received.put("message", "test message received");
+    public User() {
+        // Default constructor required for calls to DataSnapshot.getValue(User.class)
+        // I have NO clue what that means.
     }
 
+    public User(String uid, String email) {
+        this.uid = uid;
+        this.email = email;
+        this.sentMessages = new HashMap<>();
+        this.receivedMessages = new HashMap<>();
+        this.friends = new HashMap<>();
 
+        sentMessages.put("message", "test message sent");
+        receivedMessages.put("message", "test message received");
+    }
+
+    public String getUid() {
+        return uid;
+    }
+    
+    public String getEmail() {
+        return email;
+    }
+
+    public HashMap<String,String> getSentMessages() {
+        return sentMessages;
+    }
+
+    public HashMap<String,String> getReceivedMessages() {
+        return receivedMessages;
+    }
+
+    public HashMap<String,String> getFriends() {
+        return friends;
+    }
+
+    public String toString() {
+        return "User "
+                + uid + ", "
+                + email + ", "
+                + sentMessages + ", "
+                + receivedMessages + ", "
+                + friends;
+
+    }
 }
