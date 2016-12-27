@@ -6,6 +6,7 @@ import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
 import android.util.*;
 import android.view.View;
+import android.widget.EditText;
 import android.widget.Toast;
 
 import com.google.android.gms.tasks.OnCompleteListener;
@@ -36,7 +37,7 @@ public class MainActivity extends AppCompatActivity {
                 if (user != null) {
                     // User is signed in
                     Log.d("TaT", "onAuthStateChanged:signed_in:" + user.getUid());
-                    openUserInbox();
+                   // openUserInbox();
 
                 } else {
                     // User is signed out
@@ -69,6 +70,20 @@ public class MainActivity extends AppCompatActivity {
         Log.d("this", "far");
         createAccount("maxrhighsmith@gmail.com", "l1zard");
     }
+
+    public void createNewAccount(View view)
+    {
+        EditText email = (EditText)findViewById((R.id.email));
+        String emailText = email.getText().toString();
+        EditText password = (EditText)findViewById((R.id.password));
+        String passwordText = password.getText().toString();
+        Log.d("password", passwordText);
+        Log.d("email", emailText);
+       // String emailText = "mh5234@truman.edu";
+      //  String passwordText = "l1zard";
+        createAccount(emailText,passwordText);
+    }
+
     public void createAccount(String email, String password) {
 
         mAuth.createUserWithEmailAndPassword(email, password)
