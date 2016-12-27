@@ -18,7 +18,13 @@
         <activity
             android:name=".inboxActivity"
             android:label="@string/title_activity_inbox"
-            android:theme="@style/AppTheme.NoActionBar"></activity>
+            android:theme="@style/AppTheme.NoActionBar">
+        </activity>
+        <activity
+            android:name=".ListOfFriends"
+            android:label="@string/title_list_of_friends"
+            android:theme="@style/AppTheme.NoActionBar">
+        </activity>
     </application>
 
 </manifest>
