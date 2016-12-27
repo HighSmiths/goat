@@ -32,15 +32,13 @@ public class ListOfFriends extends AppCompatActivity {
 
         super.onCreate(saveInstanceState);
 
-        // Get UID passed in from MainActivity.
-        String uid = getIntent().getStringExtra("uid");
+
 
         setContentView(R.layout.list_of_friends);
         lv = (ListView) findViewById(R.id.friends_list);
 
         // Instanciating an array list (you don't need to do this,
         // you already have yours).
-
         final List<String> friends_array_list = new ArrayList<String>();
         friends_array_list.add("Max");
         friends_array_list.add("Jake");
@@ -48,8 +46,6 @@ public class ListOfFriends extends AppCompatActivity {
         friends_array_list.add("Mike");
         friends_array_list.add("John");
         friends_array_list.add("Samuel");
-
-
 
         // This is the array adapter, it takes the context of the activity as a
         // first parameter, the type of list view as a second parameter and your
@@ -61,28 +57,10 @@ public class ListOfFriends extends AppCompatActivity {
 
         lv.setAdapter(arrayAdapter);
 
-        // Query for current user, creating new array of friends from response.
-        FirebaseDatabase.getInstance().getReference("users/" + uid).addListenerForSingleValueEvent(
-                new ValueEventListener() {
-                    @Override
-                    public void onDataChange(DataSnapshot dataSnapshot) {
-                        User user = dataSnapshot.getValue(User.class);
-                        for (String i : user.friends.keySet()) {
-                            friends_array_list.add(user.friends.get(i));
-                        }
-                        Log.d(Constants.LOG_TAG, user.toString());
-                    }
 
-                    @Override
-                    public void onCancelled(DatabaseError databaseError) {
-
-                    }
-                });
-
-
-
-
-
-
+        // Get UID passed in from MainActivity.
+        String uid = getIntent().getStringExtra("uid");
+        // Read from database to get friends
+        Database.instance.readFriendsAndAddToList(friends_array_list, uid);
     }
 }
