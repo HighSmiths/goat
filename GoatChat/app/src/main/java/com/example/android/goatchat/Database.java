@@ -10,13 +10,17 @@ import com.google.firebase.database.DatabaseReference;
 import com.google.firebase.database.FirebaseDatabase;
 import com.google.firebase.database.ValueEventListener;
 
-import java.util.List;
+import java.util.HashMap;
+import java.util.Map;
+import java.util.logging.ConsoleHandler;
 
 /**
  * Created by mz on 12/26/16.
  */
 
 public class Database {
+
+
     public static Database instance = new Database();
 
     private FirebaseDatabase database;
@@ -32,16 +36,16 @@ public class Database {
 
     // Reads all of user's friends from Firebase, and stores them in `arr`.
     // Accepts an String array `arr` and a String user ID `uid`.
-    public void readFriendsAndAddToList(String uid, ReadFriendsCallback cb) {
-        final ReadFriendsCallback callback = cb;
+    public void getFriendsOfUserWithUID(String uid, GetFriendsCallback cb) {
+        final GetFriendsCallback callback = cb;
 
         // Query for current user, appending all friends to the input array `arr`.
-        database.getInstance().getReference("users/" + uid).addListenerForSingleValueEvent(
+        database.getReference().child("users").child(uid).child("friends").addListenerForSingleValueEvent(
                 new ValueEventListener() {
                     @Override
                     public void onDataChange(DataSnapshot dataSnapshot) {
-                        User user = dataSnapshot.getValue(User.class);
-                        callback.execute(user);
+                        HashMap<String, String> friends= dataSnapshot.getValue(Constants.Friends.class);
+                        callback.execute(friends);
                     }
 
                     @Override
@@ -50,6 +54,41 @@ public class Database {
                 });
     }
 
+    public void getReceivedMessagesOfUserWithUID(String uid, GetMessagesCallback cb) {
+        final GetMessagesCallback callback = cb;
+
+        // Query for current user, appending all friends to the input array `arr`.
+        database.getReference().child("users").child(uid).child("receivedMessages").addListenerForSingleValueEvent(
+                new ValueEventListener() {
+                    @Override
+                    public void onDataChange(DataSnapshot dataSnapshot) {
+                        HashMap<String, String> messages = dataSnapshot.getValue(Constants.Messages.class);
+                        callback.execute(messages);
+                    }
+
+                    @Override
+                    public void onCancelled(DatabaseError databaseError) {
+                    }
+                });
+    }
+
+    public void getSentMessagesOfUserWithUID(String uid, GetMessagesCallback cb) {
+        final GetMessagesCallback callback = cb;
+
+        // Query for current user, appending all friends to the input array `arr`.
+        database.getReference().child("users").child(uid).child("sentMessages").addListenerForSingleValueEvent(
+                new ValueEventListener() {
+                    @Override
+                    public void onDataChange(DataSnapshot dataSnapshot) {
+                        HashMap<String, String> messages = dataSnapshot.getValue(Constants.Messages.class);
+                        callback.execute(messages);
+                    }
+
+                    @Override
+                    public void onCancelled(DatabaseError databaseError) {
+                    }
+                });
+    }
 
 
     // Reads the user with given userId.

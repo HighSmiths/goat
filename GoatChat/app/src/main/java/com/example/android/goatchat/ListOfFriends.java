@@ -3,15 +3,8 @@ package com.example.android.goatchat;
 import android.os.Bundle;
 import android.support.v7.app.AppCompatActivity;
 import android.util.Log;
-import android.view.View;
 import android.widget.ArrayAdapter;
 import android.widget.ListView;
-
-import com.google.firebase.auth.FirebaseAuth;
-import com.google.firebase.database.DataSnapshot;
-import com.google.firebase.database.DatabaseError;
-import com.google.firebase.database.FirebaseDatabase;
-import com.google.firebase.database.ValueEventListener;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -52,7 +45,7 @@ public class ListOfFriends extends AppCompatActivity {
 
         lv.setAdapter(arrayAdapter);
 
-        class Callback implements ReadFriendsCallback {
+        class Callback implements GetFriendsCallback {
             public void execute(User user) {
                 for (String friend : user.friends.values()) {
                     friends_array_list.add(friend);
@@ -63,6 +56,6 @@ public class ListOfFriends extends AppCompatActivity {
         // Get UID passed in from MainActivity.
         String uid = getIntent().getStringExtra("uid");
         // Read from database to get friends
-        Database.instance.readFriendsAndAddToList(uid, new Callback());
+        Database.instance.getFriendsOfUserWithUID(uid, new Callback());
     }
 }
