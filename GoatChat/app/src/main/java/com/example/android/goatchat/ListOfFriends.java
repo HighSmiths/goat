@@ -1,10 +1,7 @@
 package com.example.android.goatchat;
 
-import android.app.Activity;
 import android.os.Bundle;
-import android.provider.ContactsContract;
 import android.support.v7.app.AppCompatActivity;
-import android.support.v7.widget.Toolbar;
 import android.util.Log;
 import android.widget.ArrayAdapter;
 import android.widget.ListView;
@@ -38,7 +35,7 @@ public class ListOfFriends extends AppCompatActivity {
         // Instanciating an array list (you don't need to do this,
         // you already have yours).
 
-        List<String> friends_array_list = new ArrayList<String>();
+        final List<String> friends_array_list = new ArrayList<String>();
         friends_array_list.add("Max");
         friends_array_list.add("Jake");
         friends_array_list.add("Matt");
