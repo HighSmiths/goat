@@ -1,6 +1,6 @@
 <?xml version="1.0" encoding="utf-8"?>
 <manifest xmlns:android="http://schemas.android.com/apk/res/android"
-    package="com.example.android.goatchat">
+    package="com.example.android.miwoktry2">
 
     <application
         android:allowBackup="true"
@@ -14,16 +14,6 @@
 
                 <category android:name="android.intent.category.LAUNCHER" />
             </intent-filter>
-        </activity>
-        <activity
-            android:name=".inboxActivity"
-            android:label="@string/title_activity_inbox"
-            android:theme="@style/AppTheme.NoActionBar">
-        </activity>
-        <activity
-            android:name=".ListOfFriends"
-            android:label="@string/title_list_of_friends"
-            android:theme="@style/AppTheme.NoActionBar">
         </activity>
     </application>
 

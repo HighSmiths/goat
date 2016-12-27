@@ -24,6 +24,16 @@ public class MainActivity extends AppCompatActivity {
         Intent intent = new Intent(this, inboxActivity.class);
         intent.putExtra("username", "garbage");
         startActivity(intent);
+        Log.d(Constants.LOG_TAG, "open user inbox");
+    }
+
+    public void pushFriendListView(){
+        Intent intent = new Intent(this, ListOfFriends.class);
+        intent.putExtra("uid", FirebaseAuth.getInstance().getCurrentUser().getUid());
+        Log.d(Constants.LOG_TAG, "Open friend list view");
+
+        startActivity(intent);
+
     }
 
     @Override
@@ -36,12 +46,16 @@ public class MainActivity extends AppCompatActivity {
                 FirebaseUser user = firebaseAuth.getCurrentUser();
                 if (user != null) {
                     // User is signed in
-                    Log.d("TaT", "onAuthStateChanged:signed_in:" + user.getUid());
-                   // openUserInbox();
+                    Log.d(Constants.LOG_TAG, "onAuthStateChanged:signed_in:" + user.getUid());
+                    Database db = Database.instance;
+                    db.execute();
+                    // openUserInbox();
+                    pushFriendListView();
+
 
                 } else {
                     // User is signed out
-                   Log.d("TAT", "onAuthStateChanged:signed_out");
+                   Log.d(Constants.LOG_TAG, "onAuthStateChanged:signed_out");
                 }
                 // ...
             }
@@ -113,13 +127,13 @@ public class MainActivity extends AppCompatActivity {
                 .addOnCompleteListener(this, new OnCompleteListener<AuthResult>() {
                     @Override
                     public void onComplete(@NonNull Task<AuthResult> task) {
-                        Log.d("STIF", "signInWithEmail:onComplete:" + task.isSuccessful());
+                        Log.d(Constants.LOG_TAG, "signInWithEmail:onComplete:" + task.isSuccessful());
 
                         // If sign in fails, display a message to the user. If sign in succeeds
                         // the auth state listener will be notified and logic to handle the
                         // signed in user can be handled in the listener.
                         if (!task.isSuccessful()) {
-                            Log.w("STUFF", "signInWithEmail:failed", task.getException());
+                            Log.w(Constants.LOG_TAG, "signInWithEmail:failed", task.getException());
                         }
 
                         // ...
