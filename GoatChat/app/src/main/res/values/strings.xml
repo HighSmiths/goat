@@ -2,4 +2,6 @@
     <string name="app_name">Goat Chat</string>
     <string name="title_activity_inbox">inboxActivity</string>
     <string name="title_list_of_friends">List Of Friends</string>
+    <string name="facebook_app_id">206254653114978</string>
+    <string name="fb_login_protocol_scheme">fb206254653114978</string>
 </resources>
