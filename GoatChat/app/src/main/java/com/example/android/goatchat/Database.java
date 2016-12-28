@@ -44,7 +44,6 @@ public class Database {
 //            / \/ \ ) _) \___ \\___ \/    \( (_ \ ) _)    ) _) ) \/ (/    /( (__   )(   )((  O )/    /\___ \
 //            \_)(_/(____)(____/(____/\_/\_/ \___/(____)  (__)  \____/\_)__) \___) (__) (__)\__/ \_)__)(____/
 
-
 //    TODO: IN PROGRESS
     public void createMessage(String fromUID, String toUID, Boolean body) {
         Message msg = new Message(fromUID, toUID, body);
@@ -55,11 +54,15 @@ public class Database {
         updates.put("/users/" + fromUID + "/sentMessages/" + key, msg);
         updates.put("/users/" + toUID + "/receivedMessages/" + key, msg);
 
-
         database.getReference().runTransaction(new Transaction.Handler() {
             @Override
             public Transaction.Result doTransaction(MutableData mutableData) {
-
+                Log.d(Constants.LOG_TAG, mutableData.toString());
+//                if (mutableData) {
+//
+//                } else {
+//                    return 1;
+//                }
                 return null;
             }
 
