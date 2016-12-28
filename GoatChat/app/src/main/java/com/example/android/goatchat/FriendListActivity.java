@@ -1,12 +1,14 @@
 package com.example.android.goatchat;
 
 import android.os.Bundle;
+import android.support.design.widget.FloatingActionButton;
+import android.support.design.widget.Snackbar;
 import android.support.v7.app.AppCompatActivity;
+import android.support.v7.widget.Toolbar;
 import android.util.Log;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.ArrayAdapter;
-import android.widget.Button;
 import android.widget.ImageView;
 import android.widget.ListView;
 import android.widget.TextView;
@@ -14,16 +16,53 @@ import android.widget.TextView;
 import com.google.firebase.auth.FirebaseAuth;
 
 import java.util.ArrayList;
-import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
 
-public class UserListActivity extends AppCompatActivity {
+public class FriendListActivity extends AppCompatActivity {
     private List<Friend> myFriends = new ArrayList<Friend>();
+    /*
+    @Override
+    protected void onCreate(Bundle savedInstanceState) {
+        super.onCreate(savedInstanceState);
+        setContentView(R.layout.activity_friend_list);
+        Toolbar toolbar = (Toolbar) findViewById(R.id.toolbar);
+        setSupportActionBar(toolbar);
+
+        FloatingActionButton fab = (FloatingActionButton) findViewById(R.id.fab);
+        fab.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                Snackbar.make(view, "Replace with your own action", Snackbar.LENGTH_LONG)
+                        .setAction("Action", null).show();
+            }
+        });
+
+
+
+////
+            class HelperUserList implements GetFriendsCallback{
+                @Override
+                public void execute(Map<String, User> users){
+                    Log.d(Constants.LOG_TAG,"executed called");
+                    for (String uid: users.keySet()){
+                        Log.d(Constants.LOG_TAG, uid+"");
+                        myFriends.add(new Friend(users.get(uid).getUid(), -99, R.drawable.blank_user, "-99", "button"));
+                    }
+                    populateListView();
+                }
+            }
+
+            Database.instance.getAllUsers(FirebaseAuth.getInstance().getCurrentUser().getUid(), new  HelperUserList());
+     /////
+
+        */
+   // }
+
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
-        Log.d(Constants.LOG_TAG, "created list ACtivity");
+        Log.d(Constants.LOG_TAG, "created Friend List");
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_user_list);
 
@@ -62,7 +101,7 @@ public class UserListActivity extends AppCompatActivity {
 
     private class MyListAdapter extends ArrayAdapter<Friend>{
         public MyListAdapter(){
-            super(UserListActivity.this, R.layout.item_view, myFriends);
+            super(FriendListActivity.this, R.layout.item_view, myFriends);
         }
 
         //this overrides ArrayAdapter's getView
@@ -76,14 +115,12 @@ public class UserListActivity extends AppCompatActivity {
             //Find the car to work with
             Friend currentFriend = myFriends.get(position);
 
-            final String friendUid = currentFriend.getUser();
-
             //Fill the view
             ImageView imageView = (ImageView)itemView.findViewById(R.id.item_icon);
             imageView.setImageResource(currentFriend.getIconID());
 
             //Make:
-            final TextView makeText = (TextView) itemView.findViewById(R.id.item_txtMake);
+            TextView makeText = (TextView) itemView.findViewById(R.id.item_txtMake);
             makeText.setText(currentFriend.getUser());
 
             //Year:
@@ -94,12 +131,8 @@ public class UserListActivity extends AppCompatActivity {
             TextView conditionText = (TextView) itemView.findViewById(R.id.item_txtCondition);
             conditionText.setText(currentFriend.getCondition());
 
-            Button button = (Button) itemView.findViewById(R.id.bfbutton);
-            button.setOnClickListener(new View.OnClickListener(){
-                public void onClick(View v){
-                    Database.instance.addFriendForUserWithUID(FirebaseAuth.getInstance().getCurrentUser().getUid(), friendUid);
-                }
-            });
+            //Button button = (Button) itemView.findViewById(R.id.bfbutton);
+            // button.setText("Button");
             return itemView;
         }
 
