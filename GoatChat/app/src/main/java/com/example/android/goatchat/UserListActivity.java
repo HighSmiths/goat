@@ -76,12 +76,14 @@ public class UserListActivity extends AppCompatActivity {
             //Find the car to work with
             Friend currentFriend = myFriends.get(position);
 
+            final String friendUid = currentFriend.getUser();
+
             //Fill the view
             ImageView imageView = (ImageView)itemView.findViewById(R.id.item_icon);
             imageView.setImageResource(currentFriend.getIconID());
 
             //Make:
-            TextView makeText = (TextView) itemView.findViewById(R.id.item_txtMake);
+            final TextView makeText = (TextView) itemView.findViewById(R.id.item_txtMake);
             makeText.setText(currentFriend.getUser());
 
             //Year:
@@ -92,8 +94,12 @@ public class UserListActivity extends AppCompatActivity {
             TextView conditionText = (TextView) itemView.findViewById(R.id.item_txtCondition);
             conditionText.setText(currentFriend.getCondition());
 
-        //    Button button = (Button) itemView.findViewById(R.id.bfbutton);
-         //   button.setText("Button");
+            Button button = (Button) itemView.findViewById(R.id.bfbutton);
+            button.setOnClickListener(new View.OnClickListener(){
+                public void onClick(View v){
+                    Database.instance.addFriendForUserWithUID(FirebaseAuth.getInstance().getCurrentUser().getUid(), friendUid);
+                }
+            });
             return itemView;
         }
 
