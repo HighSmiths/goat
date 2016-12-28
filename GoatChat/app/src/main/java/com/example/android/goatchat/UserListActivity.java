@@ -6,6 +6,7 @@ import android.util.Log;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.ArrayAdapter;
+import android.widget.Button;
 import android.widget.ImageView;
 import android.widget.ListView;
 import android.widget.TextView;
@@ -26,9 +27,6 @@ public class UserListActivity extends AppCompatActivity {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_user_list);
 
-        //populateFriendList();
-        populateListView();
-
 
         class HelperUserList implements GetAllUsersCallback{
             @Override
@@ -36,7 +34,7 @@ public class UserListActivity extends AppCompatActivity {
                 Log.d(Constants.LOG_TAG,"executed called");
                 for (String uid: users.keySet()){
                     Log.d(Constants.LOG_TAG, uid+"");
-                    myFriends.add(new Friend(users.get(uid).getUid(), -99, R.drawable.blank_user, "-99"));
+                    myFriends.add(new Friend(users.get(uid).getUid(), -99, R.drawable.blank_user, "-99", "button"));
                 }
                 populateListView();
             }
@@ -45,19 +43,7 @@ public class UserListActivity extends AppCompatActivity {
         Database.instance.getAllUsers(FirebaseAuth.getInstance().getCurrentUser().getUid(), new  HelperUserList());
     }
 
-
-    /*
-    private class
-    //Database user querry
-    private void populateUserList(ArrayList<User> friends){
-        for(friend: friends){
-            myFriends.add(new Friend(, 33, R.drawable.blank_user, "Needs more goats");
-        }
-
-    }
-    */
-
-
+/*
     private void populateFriendList(){
         myFriends.add(new Friend("Max Highsmith", 33, R.drawable.blank_user, "Needs more goats"));
         myFriends.add(new Friend("Michael Highsmith", 12, R.drawable.blank_user, "Dude...More goats"));
@@ -65,7 +51,7 @@ public class UserListActivity extends AppCompatActivity {
         myFriends.add(new Friend("John Park", 200, R.drawable.blank_user, "Pretty Goat"));
         myFriends.add(new Friend("P dizzle", 12, R.drawable.blank_user, "Needs more goats"));
     }
-
+*/
 
     private void populateListView(){
         ArrayAdapter<Friend> adapter = new MyListAdapter();
@@ -106,6 +92,8 @@ public class UserListActivity extends AppCompatActivity {
             TextView conditionText = (TextView) itemView.findViewById(R.id.item_txtCondition);
             conditionText.setText(currentFriend.getCondition());
 
+        //    Button button = (Button) itemView.findViewById(R.id.bfbutton);
+         //   button.setText("Button");
             return itemView;
         }
 

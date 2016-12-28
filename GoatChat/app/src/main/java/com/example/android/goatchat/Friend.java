@@ -9,6 +9,7 @@ public class Friend {
     private int goats_sent;
     private int iconID;
     private String condition;
+    private String button;
 
     public Friend(String user, int goats_sent, int iconID, String condition) {
         super();
@@ -16,6 +17,15 @@ public class Friend {
         this.goats_sent = goats_sent;
         this.iconID = iconID;
         this.condition = condition;
+    }
+
+    public Friend(String user, int goats_sent, int iconID, String condition, String button) {
+        super();
+        this.user = user;
+        this.goats_sent = goats_sent;
+        this.iconID = iconID;
+        this.condition = condition;
+        this.button = button;
     }
 
     public String getUser() {

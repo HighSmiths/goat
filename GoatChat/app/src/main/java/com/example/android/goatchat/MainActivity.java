@@ -49,12 +49,6 @@ public  class MainActivity extends AppCompatActivity{
         Log.d(Constants.LOG_TAG, "open user inbox");
     }
 
-    public void openUsers(){
-        Intent intent = new Intent(this, UserListActivity.class);
-        intent.putExtra("uid", FirebaseAuth.getInstance().getCurrentUser().getUid());
-        startActivity(intent);
-        Log.d(Constants.LOG_TAG, "open Users");
-    }
 
     public void pushFriendListView(){
         Intent intent = new Intent(this, ListOfFriends.class);
@@ -63,6 +57,13 @@ public  class MainActivity extends AppCompatActivity{
 
         startActivity(intent);
 
+    }
+
+    public void openButtonManager(){
+        Intent intent = new Intent(this, ScreenManagerActivity.class);
+        intent.putExtra("uid", FirebaseAuth.getInstance().getCurrentUser().getUid());
+        Log.d(Constants.LOG_TAG, "Miss loyet you have such big buttons");
+        startActivity(intent);
     }
 
 
@@ -127,8 +128,9 @@ public  class MainActivity extends AppCompatActivity{
   //                  Database db = Database.instance;
 //                    db.execute();
                      //openUserInbox();
-                       openUsers();
+                      // openUsers();
                    // pushFriendListView();
+                    openButtonManager();
 
                 } else {
                     // User is signed out
