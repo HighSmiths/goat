@@ -12,4 +12,5 @@ public class Constants {
     public static String LOG_TAG = "GOAT";
     class Friends extends ArrayList<String> {}
     class Messages extends ArrayList<String> {}
+    class Users extends HashMap<String, User> {}
 }

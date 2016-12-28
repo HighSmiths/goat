@@ -4,7 +4,6 @@ import android.util.*;
 
 import com.google.firebase.auth.FirebaseAuth;
 import com.google.firebase.auth.FirebaseUser;
-import com.google.firebase.auth.api.model.StringList;
 import com.google.firebase.database.DataSnapshot;
 import com.google.firebase.database.DatabaseError;
 import com.google.firebase.database.DatabaseReference;
@@ -13,8 +12,6 @@ import com.google.firebase.database.ValueEventListener;
 
 import java.util.HashMap;
 import java.util.List;
-import java.util.Map;
-import java.util.logging.ConsoleHandler;
 
 /**
  * Created by mz on 12/26/16.
@@ -93,11 +90,40 @@ public class Database {
     }
 
 
+    // Read User functions
+
+    // Reads all users currently using the app
+    public void getAllUsers(GetAllUsersCallback cb) {
+        final GetAllUsersCallback callback = cb;
+
+        database.getReference().child("users").addListenerForSingleValueEvent(
+                new ValueEventListener() {
+                    @Override
+                    public void onDataChange(DataSnapshot dataSnapshot) {
+                        HashMap<String, User> users = dataSnapshot.getValue(Constants.Users.class);
+                        callback.execute(users);
+                    }
+                    @Override
+                    public void onCancelled(DatabaseError databaseError) {
+                        Log.d(Constants.LOG_TAG, "DB Cancelled (ERROR): " + databaseError.getMessage());
+                    }
+                });
+    }
+
+//      Callback usage:
+    
+//    class Callback implements GetAllUsersCallback {
+//        public void execute(HashMap<String, User> users) {
+//            Manipulate `users` here
+//        }
+//    }
+
+
+
     // Reads the user with given userId.
     // Accepts a String user Id `uid` and a reference to a User object, and stores the retrieved User in `user`.
-
-    public void getUserWithUID(String userId, ReadUserCallback cb) {
-        final ReadUserCallback callback = cb;
+    public void getUserWithUID(String userId, GetUserCallback cb) {
+        final GetUserCallback callback = cb;
 
         database.getReference().child("users").child(userId).addListenerForSingleValueEvent(
                 new ValueEventListener() {
