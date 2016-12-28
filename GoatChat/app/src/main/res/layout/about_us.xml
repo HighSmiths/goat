@@ -52,7 +52,7 @@
         android:id="@+id/textView4" />
 
     <TextView
-        android:text="Pooped out of Missouri S&T, John just handles the about us page and is in the process of understanding what the hell is going on with everything about this awesome project. For love of God we hope to get this page connected to the main-screen!"
+        android:text="Pooped out of Missouri S and T, John just handles the about us page and is in the process of understanding what the hell is going on with everything about this awesome project. For love of God we hope to get this page connected to the main-screen!"
         android:layout_width="match_parent"
         android:layout_height="match_parent"
         android:id="@+id/textView13" />
