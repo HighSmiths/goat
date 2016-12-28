@@ -45,12 +45,14 @@ public class Database {
 //            / \/ \ ) _) \___ \\___ \/    \( (_ \ ) _)    ) _) ) \/ (/    /( (__   )(   )((  O )/    /\___ \
 //            \_)(_/(____)(____/(____/\_/\_/ \___/(____)  (__)  \____/\_)__) \___) (__) (__)\__/ \_)__)(____/
 
-//    TODO: IN PROGRESS
     public void createMessage(String mid, String fromUID, String toUID, Boolean body) {
         Log.d("this is being called","message being created");
-        Message msg = new Message(mid,fromUID, toUID, body);
+      //  Message msg = new Message(mid,fromUID, toUID, body);
 
         String msgKey = database.getReference().child("messages").push().getKey();
+        Message msg = new Message(msgKey,fromUID, toUID, body);
+
+
         String key1 = database.getReference().child("users").child(fromUID).child("sentMessages").push().getKey();
         String key2 = database.getReference().child("users").child(toUID).child("receivedMessages").push().getKey();
 
@@ -78,28 +80,6 @@ public class Database {
 
             }
         });
-//      Sample code to increment a value.
-//        firebase.runTransaction(new Transaction.Handler() {
-//            @Override
-//            public Transaction.Result doTransaction(final MutableData currentData) {
-//                if (currentData.getValue() == null) {
-//                    currentData.setValue(1);
-//                } else {
-//                    currentData.setValue((Long) currentData.getValue() + 1);
-//                }
-//
-//                return Transaction.success(currentData);
-//            }
-//
-//            @Override
-//            public void onComplete(FirebaseError firebaseError, boolean committed, DataSnapshot currentData) {
-//                if (firebaseError != null) {
-//                    Log.d("Firebase counter increment failed.");
-//                } else {
-//                    Log.d("Firebase counter increment succeeded.");
-//                }
-//            }
-//        });
     }
 
     //    Make these two users friends.

@@ -55,10 +55,10 @@ public class MessageListActivity extends AppCompatActivity {
         class HelperMessageList implements GetMessagesCallback{
             @Override
             public void execute(Map<String, String> messages){
-                for (String uid: messages.values()){
-                    Log.d(Constants.LOG_TAG, uid+"");
+                for (String mid: messages.values()){
+                    Log.d(Constants.LOG_TAG, mid+"");
                     //TODO fix temp message id constructor
-                    myMessages.add(new Message("temp", uid, "-99", true));  //// TODO: 12/28/16  fix true to change per goat datum
+                    myMessages.add(new Message(mid, "uid", "-99", true));  //// TODO: 12/28/16  fix true to change per goat datum
                 }
                 populateListView();
             }
