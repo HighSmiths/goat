@@ -36,32 +36,28 @@ public  class MainActivity extends AppCompatActivity{
 
     private FirebaseAuth mAuth;
     private FirebaseAuth.AuthStateListener mAuthListener;
-   // private View view;
     private CallbackManager callbackManager;
+   // private LoginButton fbLoginButton;
 
-    private LoginButton fbLoginButton;
-
+    //Go to Logged in Screen
     public void openButtonManager(){
         Intent intent = new Intent(this, ScreenManagerActivity.class);
         intent.putExtra("uid", FirebaseAuth.getInstance().getCurrentUser().getUid());
         startActivity(intent);
     }
 
-
     @Override
     protected void onActivityResult(int requestCode, int resultCode, Intent data) {
         super.onActivityResult(requestCode, resultCode, data);
         callbackManager.onActivityResult(requestCode, resultCode, data);
     }
-
-
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
 
 //        Database.instance.addFriendForUserWithUID("Gn6YHvwr5yMgLsTKRLrdoul6hw52", "P9ZbZsni4OR0YPU9qiVDTeqFxO92");
         //TODO fix temp message id
-        Database.instance.createMessage("TEMP","Gn6YHvwr5yMgLsTKRLrdoul6hw52", "P9ZbZsni4OR0YPU9qiVDTeqFxO92", true);
+       // Database.instance.createMessage("TEMP","Gn6YHvwr5yMgLsTKRLrdoul6hw52", "P9ZbZsni4OR0YPU9qiVDTeqFxO92", true);
 
         mAuth = FirebaseAuth.getInstance();
         mAuthListener = new FirebaseAuth.AuthStateListener() {
@@ -104,14 +100,9 @@ public  class MainActivity extends AppCompatActivity{
             }
         });
         FacebookSdk.sdkInitialize(getApplicationContext());
-
-
-
-
-
     }
 
-
+//{{ID
     @Override
     public void onStart() {
         super.onStart();
@@ -125,6 +116,7 @@ public  class MainActivity extends AppCompatActivity{
             mAuth.removeAuthStateListener(mAuthListener);
         }
     }
+    //}}
 
     public void createNewAccount(View view)
     {
@@ -174,33 +166,42 @@ public  class MainActivity extends AppCompatActivity{
         }
     }
 
+    public boolean validCreation(String em)
+    {
+        return true; //TODO check if username is on database yet
+    }
+
     public void createAccount(String email, String password) {
+        try {
+            mAuth.createUserWithEmailAndPassword(email, password)
+                    .addOnCompleteListener(this, new OnCompleteListener<AuthResult>() {
+                        @Override
+                        public void onComplete(@NonNull Task<AuthResult> task) {
+                            Log.d("STUF", "createUserWithEmail:onComplete:" + task.isSuccessful());
+                            String uid = mAuth.getCurrentUser().getUid();
+                            String email = mAuth.getCurrentUser().getEmail();
+                            if(validCreation(email))
+                            {
+                                Database.instance.createNewUserRecordInFirebase(uid, email);
+                            }
 
-        mAuth.createUserWithEmailAndPassword(email, password)
-                .addOnCompleteListener(this, new OnCompleteListener<AuthResult>() {
-                    @Override
-                    public void onComplete(@NonNull Task<AuthResult> task) {
-                        Log.d("STUF", "createUserWithEmail:onComplete:" + task.isSuccessful());
-                        String uid = mAuth.getCurrentUser().getUid();
-                        String email = mAuth.getCurrentUser().getEmail();
-                        Database.instance.createNewUserRecordInFirebase(uid, email);
+                            // If sign in fails, display a message to the user. If sign in succeeds
+                            // the auth state listener will be notified and logic to handle the
+                            // signed in user can be handled in the listener.
+                            if (!task.isSuccessful()) {
+                                Log.d("PRoblem", "uh oh");
+                            }
 
-                        // If sign in fails, display a message to the user. If sign in succeeds
-                        // the auth state listener will be notified and logic to handle the
-                        // signed in user can be handled in the listener.
-                        if (!task.isSuccessful()) {
-                           Log.d("PRoblem", "uh oh");
+                            // ...
                         }
-
-                        // ...
-                    }
-                });
+                    });
+        }
+        catch (Exception e)
+        {
+            Log.d(Constants.LOG_TAG, "That won't work");
+        }
     }
 
-    public void stubSign(View view){
-        Log.d("you are","in the main frame");
-        signIn("mh5234@truman.edu", "l1zard");
-    }
     public void signIn(String email, String password){
         mAuth.signInWithEmailAndPassword(email, password)
                 .addOnCompleteListener(this, new OnCompleteListener<AuthResult>() {
@@ -244,10 +245,6 @@ public  class MainActivity extends AppCompatActivity{
                     }
                 });
     }
-
-
-
-
 
 
 }
