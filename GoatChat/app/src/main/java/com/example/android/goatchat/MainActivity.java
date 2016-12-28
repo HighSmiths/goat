@@ -206,6 +206,9 @@ public  class MainActivity extends AppCompatActivity{
                     @Override
                     public void onComplete(@NonNull Task<AuthResult> task) {
                         Log.d("STUF", "createUserWithEmail:onComplete:" + task.isSuccessful());
+                        String uid = mAuth.getCurrentUser().getUid();
+                        String email = mAuth.getCurrentUser().getEmail();
+                        Database.instance.createNewUserRecordInFirebase(uid, email);
 
                         // If sign in fails, display a message to the user. If sign in succeeds
                         // the auth state listener will be notified and logic to handle the
@@ -252,6 +255,9 @@ public  class MainActivity extends AppCompatActivity{
                     public void onComplete(@NonNull Task<AuthResult> task) {
                         Log.d("TAG", "signInWithCredential:onComplete:" + task.isSuccessful());
 
+                        String uid = mAuth.getCurrentUser().getUid();
+                        String email = mAuth.getCurrentUser().getEmail();
+                        Database.instance.createNewUserRecordInFirebase(uid, email);
                         // If sign in fails, display a message to the user. If sign in succeeds
                         // the auth state listener will be notified and logic to handle the
                         // signed in user can be handled in the listener.
