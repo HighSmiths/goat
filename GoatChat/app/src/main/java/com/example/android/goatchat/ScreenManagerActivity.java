@@ -67,4 +67,11 @@ public class ScreenManagerActivity extends AppCompatActivity {
         Log.d(Constants.LOG_TAG, "Logging out");
     }
 
+    public void aboutus(View view){
+        Intent intent = new Intent(this, AboutUsActivity.class);
+        intent.putExtra("uid","c");
+        startActivity(intent);
+        Log.d(Constants.LOG_TAG, "open AboutUsActivity");
+    }
+
 }
