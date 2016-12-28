@@ -2,6 +2,7 @@ package com.example.android.goatchat;
 
 import android.content.Context;
 import android.content.Intent;
+import android.provider.ContactsContract;
 import android.support.annotation.NonNull;
 import android.support.v4.app.Fragment;
 import android.support.v4.app.FragmentActivity;
@@ -39,8 +40,6 @@ public  class MainActivity extends AppCompatActivity{
     private CallbackManager callbackManager;
 
     private LoginButton fbLoginButton;
-
-
 
     public void openUserInbox(){
         Intent intent = new Intent(this, inboxActivity.class);
@@ -109,12 +108,12 @@ public  class MainActivity extends AppCompatActivity{
     }
 
 
-
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
 
-
+//        Database.instance.addFriendForUserWithUID("Gn6YHvwr5yMgLsTKRLrdoul6hw52", "P9ZbZsni4OR0YPU9qiVDTeqFxO92");
+        Database.instance.createMessage("Gn6YHvwr5yMgLsTKRLrdoul6hw52", "P9ZbZsni4OR0YPU9qiVDTeqFxO92", true);
 
         mAuth = FirebaseAuth.getInstance();
         mAuthListener = new FirebaseAuth.AuthStateListener() {

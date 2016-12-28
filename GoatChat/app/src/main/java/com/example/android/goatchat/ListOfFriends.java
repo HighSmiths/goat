@@ -8,6 +8,7 @@ import android.widget.ListView;
 
 import java.util.ArrayList;
 import java.util.List;
+import java.util.Map;
 
 public class ListOfFriends extends AppCompatActivity {
 
@@ -46,8 +47,8 @@ public class ListOfFriends extends AppCompatActivity {
         lv.setAdapter(arrayAdapter);
 
         class Callback implements GetFriendsCallback {
-            public void execute(List<String> friends) {
-                for (String friend : friends) {
+            public void execute(Map<String, String> friends) {
+                for (String friend : friends.values()) {
                     friends_array_list.add(friend);
                 }
             }
