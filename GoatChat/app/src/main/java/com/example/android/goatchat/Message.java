@@ -20,7 +20,6 @@ public class Message {
         // I have NO clue what that means.
     }
 
-
     //1 for happy 0 for sad
     public Message(String fr, String t, boolean tp){
         this.fromUID = fr;
@@ -31,7 +30,6 @@ public class Message {
         opened = false;
 
     }
-
 
     public String getFromUID() {
         return fromUID;

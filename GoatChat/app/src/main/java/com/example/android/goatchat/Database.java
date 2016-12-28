@@ -48,16 +48,21 @@ public class Database {
     public void createMessage(String fromUID, String toUID, Boolean body) {
         Message msg = new Message(fromUID, toUID, body);
 
-        String key = database.getReference().child("messages").push().getKey();
-        Map<String, Object> updates = new HashMap<>();
-        updates.put("/messages/" + key, msg);
-        updates.put("/users/" + fromUID + "/sentMessages/" + key, msg);
-        updates.put("/users/" + toUID + "/receivedMessages/" + key, msg);
+        String msgKey = database.getReference().child("messages").push().getKey();
+        String key1 = database.getReference().child("users").child(fromUID).child("sentMessages").push().getKey();
+        String key2 = database.getReference().child("users").child(toUID).child("receivedMessages").push().getKey();
 
-        database.getReference().runTransaction(new Transaction.Handler() {
+        database.getReference().child("messages").child(msgKey).setValue(msg);
+        database.getReference().child("users").child(fromUID).child("sentMessages").child(key1).setValue(msgKey);
+        database.getReference().child("users").child(toUID).child("receivedMessages").child(key2).setValue(msgKey);
+
+        Log.d(Constants.LOG_TAG, "In create message function");
+        Log.d(Constants.LOG_TAG, "fromUID: " + fromUID);
+
+        database.getReference().child("users").child(fromUID).child("numMsgSent").runTransaction(new Transaction.Handler() {
             @Override
             public Transaction.Result doTransaction(MutableData mutableData) {
-                Log.d(Constants.LOG_TAG, mutableData.toString());
+                Log.d(Constants.LOG_TAG, "Mutable Data: " + mutableData.getValue().toString());
 //                if (mutableData) {
 //
 //                } else {
