@@ -2,6 +2,7 @@ package com.example.android.goatchat;
 
 import android.os.Bundle;
 import android.support.v7.app.AppCompatActivity;
+import android.util.Log;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.ArrayAdapter;
@@ -9,27 +10,53 @@ import android.widget.ImageView;
 import android.widget.ListView;
 import android.widget.TextView;
 
+import com.google.firebase.auth.FirebaseAuth;
+
 import java.util.ArrayList;
+import java.util.HashMap;
 import java.util.List;
+import java.util.Map;
 
 public class UserListActivity extends AppCompatActivity {
     private List<Friend> myFriends = new ArrayList<Friend>();
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
+        Log.d(Constants.LOG_TAG, "created list ACtivity");
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_user_list);
 
-      //  populateUserList();
-        populateFriendList();
+        //populateFriendList();
         populateListView();
+
+
+        class HelperUserList implements GetAllUsersCallback{
+
+            @Override
+            public void execute(Map<String, User> users){
+                Log.d(Constants.LOG_TAG,"executed called");
+                for (String uid: users.keySet()){
+                    Log.d(Constants.LOG_TAG, uid+"");
+                    myFriends.add(new Friend(users.get(uid).getUid(), -99, R.drawable.blank_user, "-99"));
+                }
+            }
+        }
+
+        Database.instance.getAllUsers(FirebaseAuth.getInstance().getCurrentUser().getUid(), new  HelperUserList());
     }
 
 
+    /*
+    private class
     //Database user querry
-    private void populateUserList(){
+    private void populateUserList(ArrayList<User> friends){
+        for(friend: friends){
+            myFriends.add(new Friend(, 33, R.drawable.blank_user, "Needs more goats");
+        }
 
     }
+    */
+
 
     private void populateFriendList(){
         myFriends.add(new Friend("Max Highsmith", 33, R.drawable.blank_user, "Needs more goats"));

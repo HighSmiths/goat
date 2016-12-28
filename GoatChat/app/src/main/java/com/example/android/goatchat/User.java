@@ -11,8 +11,39 @@ import java.util.List;
 public class User {
     public String uid;
     public String email;
+
+    public void setUid(String uid) {
+        this.uid = uid;
+    }
+
+    public int getNumMsgSent() {
+        return numMsgSent;
+    }
+
+    public void setNumMsgSent(int numMsgSent) {
+        this.numMsgSent = numMsgSent;
+    }
+
     public int numMsgSent;
+
+    public int getNumMsgRec() {
+        return numMsgRec;
+    }
+
+    public void setNumMsgRec(int numMsgRec) {
+        this.numMsgRec = numMsgRec;
+    }
+
     public int numMsgRec;
+
+    public int getNumFriends() {
+        return numFriends;
+    }
+
+    public void setNumFriends(int numFriends) {
+        this.numFriends = numFriends;
+    }
+
     public int numFriends;
     public List<String> sentMessages;
     public List<String> receivedMessages;

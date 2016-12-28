@@ -53,7 +53,7 @@ public  class MainActivity extends AppCompatActivity{
         Intent intent = new Intent(this, UserListActivity.class);
         intent.putExtra("uid", FirebaseAuth.getInstance().getCurrentUser().getUid());
         startActivity(intent);
-        Log.d(Constants.LOG_TAG, "open user inbox");
+        Log.d(Constants.LOG_TAG, "open Users");
     }
 
     public void pushFriendListView(){

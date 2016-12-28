@@ -1,11 +1,12 @@
 package com.example.android.goatchat;
 
 import java.util.HashMap;
+import java.util.Map;
 
 /**
  * Created by mz on 12/27/16.
  */
 
 public interface GetAllUsersCallback {
-    public void execute(HashMap<String, User> users);
+    public void execute(Map<String, User> users);
 }

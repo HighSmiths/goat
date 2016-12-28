@@ -12,6 +12,7 @@ import com.google.firebase.database.ValueEventListener;
 
 import java.util.HashMap;
 import java.util.List;
+import java.util.Map;
 
 /**
  * Created by mz on 12/26/16.
@@ -94,14 +95,19 @@ public class Database {
     // Read User functions
 
     // Reads all users currently using the app
-    public void getAllUsers(GetAllUsersCallback cb) {
+    public void getAllUsers(String uid, GetAllUsersCallback cb) {
+
+        Log.d(Constants.LOG_TAG, "calling getAllUSers");
         final GetAllUsersCallback callback = cb;
 
+        Log.d(Constants.LOG_TAG, database.getReference().child("users").child(uid).toString()+"");
         database.getReference().child("users").addListenerForSingleValueEvent(
                 new ValueEventListener() {
                     @Override
                     public void onDataChange(DataSnapshot dataSnapshot) {
-                        HashMap<String, User> users = dataSnapshot.getValue(Constants.Users.class);
+                        Log.d(Constants.LOG_TAG, "dtat changeds");
+                        Map<String, User> users = (Map<String, User>)dataSnapshot.getValue();
+                        Log.d("SDFSDFSD", users.toString());
                         callback.execute(users);
                     }
                     @Override
