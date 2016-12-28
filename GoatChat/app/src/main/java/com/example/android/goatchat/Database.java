@@ -8,6 +8,7 @@ import com.google.firebase.database.DataSnapshot;
 import com.google.firebase.database.DatabaseError;
 import com.google.firebase.database.DatabaseReference;
 import com.google.firebase.database.FirebaseDatabase;
+import com.google.firebase.database.GenericTypeIndicator;
 import com.google.firebase.database.ValueEventListener;
 
 import java.util.HashMap;
@@ -106,7 +107,8 @@ public class Database {
                     @Override
                     public void onDataChange(DataSnapshot dataSnapshot) {
                         Log.d(Constants.LOG_TAG, "dtat changeds");
-                        Map<String, User> users = (Map<String, User>)dataSnapshot.getValue();
+                        GenericTypeIndicator<Map<String, User>> genericTypeIndicator = new GenericTypeIndicator<Map<String, User>>() {};
+                        Map<String, User> users = dataSnapshot.getValue(genericTypeIndicator);
                         Log.d("SDFSDFSD", users.toString());
                         callback.execute(users);
                     }

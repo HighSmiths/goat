@@ -31,7 +31,6 @@ public class UserListActivity extends AppCompatActivity {
 
 
         class HelperUserList implements GetAllUsersCallback{
-
             @Override
             public void execute(Map<String, User> users){
                 Log.d(Constants.LOG_TAG,"executed called");
@@ -39,6 +38,7 @@ public class UserListActivity extends AppCompatActivity {
                     Log.d(Constants.LOG_TAG, uid+"");
                     myFriends.add(new Friend(users.get(uid).getUid(), -99, R.drawable.blank_user, "-99"));
                 }
+                populateListView();
             }
         }
 
