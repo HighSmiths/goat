@@ -60,4 +60,14 @@
         android:layout_marginBottom="24dp"
         android:id="@+id/button5"
         android:onClick="logout"/>
+
+    <Button
+        android:text="About us"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_above="@+id/button5"
+        android:layout_toLeftOf="@+id/button3"
+        android:layout_toStartOf="@+id/button3"
+        android:id="@+id/button6"
+        android:onClick="aboutus" />
 </RelativeLayout>
