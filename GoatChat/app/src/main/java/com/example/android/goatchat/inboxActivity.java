@@ -23,7 +23,7 @@ public class inboxActivity extends AppCompatActivity {
     }
     @Override
     protected void onCreate(Bundle savedInstanceState) {
-        class Callback implements ReadUserCallback{
+        class Callback implements GetUserCallback {
             @Override
             public void execute(User user) {
                 Log.d(Constants.LOG_TAG, "USER: " + user.toString());
