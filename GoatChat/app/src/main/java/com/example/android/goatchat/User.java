@@ -3,6 +3,7 @@ package com.example.android.goatchat;
 import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.List;
+import java.util.Map;
 
 /**
  * Created by mz on 12/26/16.
@@ -11,43 +12,12 @@ import java.util.List;
 public class User {
     public String uid;
     public String email;
-
-    public void setUid(String uid) {
-        this.uid = uid;
-    }
-
-    public int getNumMsgSent() {
-        return numMsgSent;
-    }
-
-    public void setNumMsgSent(int numMsgSent) {
-        this.numMsgSent = numMsgSent;
-    }
-
     public int numMsgSent;
-
-    public int getNumMsgRec() {
-        return numMsgRec;
-    }
-
-    public void setNumMsgRec(int numMsgRec) {
-        this.numMsgRec = numMsgRec;
-    }
-
     public int numMsgRec;
-
-    public int getNumFriends() {
-        return numFriends;
-    }
-
-    public void setNumFriends(int numFriends) {
-        this.numFriends = numFriends;
-    }
-
     public int numFriends;
-    public List<String> sentMessages;
-    public List<String> receivedMessages;
-    public List<String> friends;
+    public Map<String, String> sentMessages;
+    public Map<String, String> receivedMessages;
+    public Map<String, String> friends;
 
     public User() {
         // Default constructor required for calls to DataSnapshot.getValue(User.class)
@@ -57,12 +27,12 @@ public class User {
     public User(String uid, String email) {
         this.uid = uid;
         this.email = email;
-        this.sentMessages = new ArrayList<>();
-        this.receivedMessages = new ArrayList<>();
-        this.friends = new ArrayList<>();
+        this.sentMessages = new HashMap<>();
+        this.receivedMessages = new HashMap<>();
+        this.friends = new HashMap<>();
 
-        sentMessages.add("messageID");
-        receivedMessages.add("messageID");
+        sentMessages.put("messageID", "messageText");
+        receivedMessages.put("messageID", "messageText");
     }
 
     public String getUid() {
@@ -73,16 +43,26 @@ public class User {
         return email;
     }
 
-    public List<String> getSentMessages() {
+    public Map<String, String> getSentMessages() {
         return sentMessages;
     }
 
-    public List<String> getReceivedMessages() {
+    public Map<String, String> getReceivedMessages() {
         return receivedMessages;
     }
 
-    public List<String> getFriends() {
+    public Map<String, String> getFriends() {
         return friends;
+    }
+
+    public int getNumMsgSent() {
+        return numMsgSent;
+    }
+    public int getNumMsgRec() {
+        return numMsgRec;
+    }
+    public int getNumFriends() {
+        return numFriends;
     }
 
     public String toString() {

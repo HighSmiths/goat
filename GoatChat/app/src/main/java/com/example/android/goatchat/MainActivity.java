@@ -40,8 +40,6 @@ public  class MainActivity extends AppCompatActivity{
 
     private LoginButton fbLoginButton;
 
-
-
     public void openUserInbox(){
         Intent intent = new Intent(this, inboxActivity.class);
         intent.putExtra("uid", FirebaseAuth.getInstance().getCurrentUser().getUid());
@@ -108,12 +106,11 @@ public  class MainActivity extends AppCompatActivity{
     }
 
 
-
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
 
-
+        Database.instance.addFriendForUserWithUID("Gn6YHvwr5yMgLsTKRLrdoul6hw52", "P9ZbZsni4OR0YPU9qiVDTeqFxO92");
 
         mAuth = FirebaseAuth.getInstance();
         mAuthListener = new FirebaseAuth.AuthStateListener() {
