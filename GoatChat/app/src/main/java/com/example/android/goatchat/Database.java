@@ -4,6 +4,7 @@ import android.util.*;
 
 import com.google.firebase.auth.FirebaseAuth;
 import com.google.firebase.auth.FirebaseUser;
+import com.google.firebase.auth.api.model.StringList;
 import com.google.firebase.database.DataSnapshot;
 import com.google.firebase.database.DatabaseError;
 import com.google.firebase.database.DatabaseReference;
@@ -11,6 +12,7 @@ import com.google.firebase.database.FirebaseDatabase;
 import com.google.firebase.database.ValueEventListener;
 
 import java.util.HashMap;
+import java.util.List;
 import java.util.Map;
 import java.util.logging.ConsoleHandler;
 
@@ -44,7 +46,7 @@ public class Database {
                 new ValueEventListener() {
                     @Override
                     public void onDataChange(DataSnapshot dataSnapshot) {
-                        HashMap<String, String> friends= dataSnapshot.getValue(Constants.Friends.class);
+                        List<String> friends= dataSnapshot.getValue(Constants.Friends.class);
                         callback.execute(friends);
                     }
 
@@ -62,7 +64,7 @@ public class Database {
                 new ValueEventListener() {
                     @Override
                     public void onDataChange(DataSnapshot dataSnapshot) {
-                        HashMap<String, String> messages = dataSnapshot.getValue(Constants.Messages.class);
+                        List<String> messages = dataSnapshot.getValue(Constants.Messages.class);
                         callback.execute(messages);
                     }
 
@@ -80,7 +82,7 @@ public class Database {
                 new ValueEventListener() {
                     @Override
                     public void onDataChange(DataSnapshot dataSnapshot) {
-                        HashMap<String, String> messages = dataSnapshot.getValue(Constants.Messages.class);
+                        List<String> messages = dataSnapshot.getValue(Constants.Messages.class);
                         callback.execute(messages);
                     }
 
@@ -115,7 +117,7 @@ public class Database {
     // Creates a new user record in Firebase with given userId and email.
     public void createNewUserRecordInFirebase(String userId, String email) {
         User user = new User(userId, email);
-        user.friends.put("id", userId);
+        user.friends.add(userId);
         database.getReference().child("users").child(userId).setValue(user);
     }
 

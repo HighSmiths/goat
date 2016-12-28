@@ -1,6 +1,8 @@
 package com.example.android.goatchat;
 
+import java.util.ArrayList;
 import java.util.HashMap;
+import java.util.List;
 
 /**
  * Created by mz on 12/26/16.
@@ -8,6 +10,6 @@ import java.util.HashMap;
 
 public class Constants {
     public static String LOG_TAG = "GOAT";
-    class Friends extends HashMap<String, String> {}
-    class Messages extends HashMap<String, String> {}
+    class Friends extends ArrayList<String> {}
+    class Messages extends ArrayList<String> {}
 }

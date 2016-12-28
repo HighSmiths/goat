@@ -1,6 +1,8 @@
 package com.example.android.goatchat;
 
+import java.util.ArrayList;
 import java.util.HashMap;
+import java.util.List;
 
 /**
  * Created by mz on 12/26/16.
@@ -9,9 +11,12 @@ import java.util.HashMap;
 public class User {
     public String uid;
     public String email;
-    public HashMap<String, String> sentMessages;
-    public HashMap<String, String> receivedMessages;
-    public HashMap<String, String> friends;
+    public int numMsgSent;
+    public int numMsgRec;
+    public int numFriends;
+    public List<String> sentMessages;
+    public List<String> receivedMessages;
+    public List<String> friends;
 
     public User() {
         // Default constructor required for calls to DataSnapshot.getValue(User.class)
@@ -21,12 +26,12 @@ public class User {
     public User(String uid, String email) {
         this.uid = uid;
         this.email = email;
-        this.sentMessages = new HashMap<>();
-        this.receivedMessages = new HashMap<>();
-        this.friends = new HashMap<>();
+        this.sentMessages = new ArrayList<>();
+        this.receivedMessages = new ArrayList<>();
+        this.friends = new ArrayList<>();
 
-        sentMessages.put("message", "test message sent");
-        receivedMessages.put("message", "test message received");
+        sentMessages.add("messageID");
+        receivedMessages.add("messageID");
     }
 
     public String getUid() {
@@ -37,15 +42,15 @@ public class User {
         return email;
     }
 
-    public HashMap<String,String> getSentMessages() {
+    public List<String> getSentMessages() {
         return sentMessages;
     }
 
-    public HashMap<String,String> getReceivedMessages() {
+    public List<String> getReceivedMessages() {
         return receivedMessages;
     }
 
-    public HashMap<String,String> getFriends() {
+    public List<String> getFriends() {
         return friends;
     }
 

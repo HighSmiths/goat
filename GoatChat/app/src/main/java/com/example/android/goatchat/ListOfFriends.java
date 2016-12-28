@@ -46,8 +46,8 @@ public class ListOfFriends extends AppCompatActivity {
         lv.setAdapter(arrayAdapter);
 
         class Callback implements GetFriendsCallback {
-            public void execute(User user) {
-                for (String friend : user.friends.values()) {
+            public void execute(List<String> friends) {
+                for (String friend : friends) {
                     friends_array_list.add(friend);
                 }
             }
