@@ -41,64 +41,12 @@ public  class MainActivity extends AppCompatActivity{
 
     private LoginButton fbLoginButton;
 
-    public void openUserInbox(){
-        Intent intent = new Intent(this, inboxActivity.class);
-        intent.putExtra("uid", FirebaseAuth.getInstance().getCurrentUser().getUid());
-        startActivity(intent);
-        Log.d(Constants.LOG_TAG, "open user inbox");
-    }
-
-
-    public void pushFriendListView(){
-        Intent intent = new Intent(this, ListOfFriends.class);
-        intent.putExtra("uid", FirebaseAuth.getInstance().getCurrentUser().getUid());
-        Log.d(Constants.LOG_TAG, "Open friend list view");
-
-        startActivity(intent);
-
-    }
-
     public void openButtonManager(){
         Intent intent = new Intent(this, ScreenManagerActivity.class);
         intent.putExtra("uid", FirebaseAuth.getInstance().getCurrentUser().getUid());
         startActivity(intent);
     }
 
-
-   /* @Override
-    public View onCreateView(
-            LayoutInflater inflater,
-            ViewGroup container,
-            Bundle savedInstanceState) {
-         //super.onCreateView(inflater, container, savedInstanceState);
-        //super.onCreateView(inflater, container, savedInstanceState);
-        View view = inflater.inflate(R.layout.activity_main, container, false);
-
-        fbLoginButton = (LoginButton) view.findViewById(R.id.login_button);
-        fbLoginButton.setReadPermissions("email");
-        // Other app specific specialization
-
-        // Callback registration
-        fbLoginButton.registerCallback(callbackManager, new FacebookCallback<LoginResult>() {
-            @Override
-            public void onSuccess(LoginResult loginResult) {
-                // App code
-            }
-
-            @Override
-            public void onCancel() {
-                // App code
-            }
-
-            @Override
-            public void onError(FacebookException exception) {
-                // App code
-            }
-        });
-
-        return view;
-    }
-*/
 
     @Override
     protected void onActivityResult(int requestCode, int resultCode, Intent data) {
@@ -112,7 +60,8 @@ public  class MainActivity extends AppCompatActivity{
         super.onCreate(savedInstanceState);
 
 //        Database.instance.addFriendForUserWithUID("Gn6YHvwr5yMgLsTKRLrdoul6hw52", "P9ZbZsni4OR0YPU9qiVDTeqFxO92");
-        Database.instance.createMessage("Gn6YHvwr5yMgLsTKRLrdoul6hw52", "P9ZbZsni4OR0YPU9qiVDTeqFxO92", true);
+        //TODO fix temp message id
+        Database.instance.createMessage("TEMP","Gn6YHvwr5yMgLsTKRLrdoul6hw52", "P9ZbZsni4OR0YPU9qiVDTeqFxO92", true);
 
         mAuth = FirebaseAuth.getInstance();
         mAuthListener = new FirebaseAuth.AuthStateListener() {
@@ -122,12 +71,6 @@ public  class MainActivity extends AppCompatActivity{
                 if (user != null) {
                     // User is signed in
                     Log.d(Constants.LOG_TAG, "onAuthStateChanged:signed_in:" + user.getUid());
-
-  //                  Database db = Database.instance;
-//                    db.execute();
-                     //openUserInbox();
-                      // openUsers();
-                   // pushFriendListView();
                     openButtonManager();
 
                 } else {
@@ -189,11 +132,27 @@ public  class MainActivity extends AppCompatActivity{
         String emailText = email.getText().toString();
         EditText password = (EditText)findViewById((R.id.password));
         String passwordText = password.getText().toString();
-        Log.d("password", passwordText);
-        Log.d("email", emailText);
-       // String emailText = "mh5234@truman.edu";
-      //  String passwordText = "l1zard";
-        createAccount(emailText,passwordText);
+        if(emailIsValid(emailText)) {
+            if(passwordIsValid(passwordText)) {
+                createAccount(emailText,passwordText);
+            }
+            else {
+                Log.d("login", "password to short");
+            }
+        }
+        else{
+            Log.d("login","Faulty Email");
+        }
+        //createAccount(emailText,passwordText);
+    }
+
+    public boolean emailIsValid(String em)
+    {
+        return em.contains("@")&&(em.contains(".com")||em.contains(".edu"));
+    }
+    public boolean passwordIsValid(String ps)
+    {
+        return ps.length() >4;
     }
 
     public void signInAccount(View view)
@@ -202,9 +161,17 @@ public  class MainActivity extends AppCompatActivity{
         String emailText = email.getText().toString();
         EditText password = (EditText)findViewById((R.id.password));
         String passwordText = password.getText().toString();
-        Log.d("password", passwordText);
-        Log.d("email", emailText);
-        signIn(emailText, passwordText);
+        if(emailIsValid(emailText)) {
+            if(passwordIsValid(passwordText)) {
+                signIn(emailText, passwordText);
+            }
+            else {
+                Log.d("login", "password to short");
+            }
+        }
+        else{
+            Log.d("login","Faulty Email");
+        }
     }
 
     public void createAccount(String email, String password) {

@@ -52,4 +52,12 @@ public class ScreenManagerActivity extends AppCompatActivity {
         Log.d(Constants.LOG_TAG, "open Users");
     }
 
+    public void logout(View view){
+        FirebaseAuth.getInstance().signOut();
+        Intent intent = new Intent(this, MainActivity.class);
+        intent.putExtra("username", "garbage");
+        startActivity(intent);
+        Log.d(Constants.LOG_TAG, "Logging out");
+    }
+
 }

@@ -9,6 +9,7 @@ import android.util.Log;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.ArrayAdapter;
+import android.widget.Button;
 import android.widget.ImageView;
 import android.widget.ListView;
 import android.widget.TextView;
@@ -53,11 +54,11 @@ public class MessageListActivity extends AppCompatActivity {
         */
         class HelperMessageList implements GetMessagesCallback{
             @Override
-            public void execute(Map<String, String> users){
-                Log.d(Constants.LOG_TAG,"executed friendly call of the wild");
-                for (String uid: users.values()){
+            public void execute(Map<String, String> messages){
+                for (String uid: messages.values()){
                     Log.d(Constants.LOG_TAG, uid+"");
-                    myMessages.add(new Message(uid, "-99", true));  //// TODO: 12/28/16  fix true to change per goat datum
+                    //TODO fix temp message id constructor
+                    myMessages.add(new Message("temp", uid, "-99", true));  //// TODO: 12/28/16  fix true to change per goat datum
                 }
                 populateListView();
             }
@@ -93,7 +94,9 @@ public class MessageListActivity extends AppCompatActivity {
             }
 
             //Find the car to work with
-            Message currentMessage = myMessages.get(position);
+            Log.d("this p","lease");
+            final Message currentMessage = myMessages.get(position);
+            final String messageId = currentMessage.getMessageId();
 
             //Fill the view
           //  ImageView imageView = (ImageView)itemView.findViewById(R.id.item_icon);
@@ -104,15 +107,22 @@ public class MessageListActivity extends AppCompatActivity {
             //makeText.setText(currentFriend.getUser());
 
             //Year:
-            //TextView yearText = (TextView) itemView.findViewById(R.id.item_txtYear);
-            //yearText.setText("" + currentFriend.getGoats_sent());
+            TextView yearText = (TextView) itemView.findViewById(R.id.item_txtYear);
+            yearText.setText("" + currentMessage.typeOGoat);
 
             //Condition:
             //TextView conditionText = (TextView) itemView.findViewById(R.id.item_txtCondition);
             //conditionText.setText(currentFriend.getCondition());
 
-            //Button button = (Button) itemView.findViewById(R.id.bfbutton);
-            // button.setText("Button");
+            Button button = (Button) itemView.findViewById(R.id.bfbutton);
+            Log.d(Constants.LOG_TAG, "making button");
+            button.setOnClickListener(new View.OnClickListener(){
+                public void onClick(View v){
+                    Log.d(Constants.LOG_TAG,"message clicked");
+                    Database.instance.setReceivedMessagetoSeen(messageId, currentMessage.fromUID);   //SEDNS HAPPY GOAT
+                }
+            });
+
             return itemView;
         }
 

@@ -79,6 +79,7 @@ public class FriendListActivity extends AppCompatActivity {
                 itemView = getLayoutInflater().inflate(R.layout.item_view, parent, false);
             }
 
+            Log.d(Constants.LOG_TAG,"friends array adapter");
             //Find the car to work with
             Friend currentFriend = myFriends.get(position);
             final String friendUid = currentFriend.getUser();
@@ -102,7 +103,9 @@ public class FriendListActivity extends AppCompatActivity {
             Button button = (Button) itemView.findViewById(R.id.bfbutton);
             button.setOnClickListener(new View.OnClickListener(){
                 public void onClick(View v){
-                    Database.instance.createMessage(FirebaseAuth.getInstance().getCurrentUser().getUid(), friendUid, true);   //SEDNS HAPPY GOAT
+                    Log.d("clicked","friendbutton");
+                    //TODO fix temp message id
+                    Database.instance.createMessage("TEMP",FirebaseAuth.getInstance().getCurrentUser().getUid(), friendUid, true);   //SEDNS HAPPY GOAT
                 }
             });
             return itemView;

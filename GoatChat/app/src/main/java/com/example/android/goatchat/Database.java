@@ -17,6 +17,7 @@ import com.google.firebase.database.ValueEventListener;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
+import java.util.Objects;
 
 /**
  * Created by mz on 12/26/16.
@@ -45,8 +46,9 @@ public class Database {
 //            \_)(_/(____)(____/(____/\_/\_/ \___/(____)  (__)  \____/\_)__) \___) (__) (__)\__/ \_)__)(____/
 
 //    TODO: IN PROGRESS
-    public void createMessage(String fromUID, String toUID, Boolean body) {
-        Message msg = new Message(fromUID, toUID, body);
+    public void createMessage(String mid, String fromUID, String toUID, Boolean body) {
+        Log.d("this is being called","message being created");
+        Message msg = new Message(mid,fromUID, toUID, body);
 
         String msgKey = database.getReference().child("messages").push().getKey();
         String key1 = database.getReference().child("users").child(fromUID).child("sentMessages").push().getKey();
@@ -100,6 +102,63 @@ public class Database {
 //        });
     }
 
+    //    Make these two users friends.
+    public void setReceivedMessagetoSeen(String messageID, String friendUID) {
+        class Callback implements SetMessageSeenCallback {
+            @Override
+            public void execute() {}
+        }
+        Log.d(Constants.LOG_TAG, "2 parts");
+        setReceivedMessagetoSeen(messageID, new Callback());
+    }
+
+    public void setReceivedMessagetoSeen(String messageId, SetMessageSeenCallback cb){
+
+        final SetMessageSeenCallback callback = cb;
+        DatabaseReference.CompletionListener listener = new DatabaseReference.CompletionListener(){
+            @Override
+            public void onComplete(DatabaseError databaseError, DatabaseReference databaseReference) {
+                callback.execute();
+            }
+        };
+
+        Log.d(Constants.LOG_TAG, "3 parts");
+        database.getReference().child("messages").child(messageId).child("opened").setValue(true);
+      //  Map<String,Object> childUpdates = new HashMap<>();
+    //    childUpdates.put("/messages/"+messageId+"/opened/"+key1,true);
+       // database.getReference().updateChildren(childUpdates,listener);
+/*
+        final AddFriendCallback callback = cb;
+        DatabaseReference.CompletionListener listener = new DatabaseReference.CompletionListener() {
+            @Override
+            public void onComplete(DatabaseError databaseError, DatabaseReference databaseReference) {
+                callback.execute();
+            }
+        };
+
+        // Method `.push()` creates a new node under a given path.
+        // Create the 2-way friendship, so A becomes B's friend, and vice-versa.
+        String key1 = database.getReference().child("users").child(userUID).child("friends").push().getKey();
+        String key2 = database.getReference().child("users").child(friendUID).child("friends").push().getKey();
+
+        // Use updateChildren for 1 batch atomic update. Either all updates succeed, or all updates fail
+        Map<String, Object> childUpdates = new HashMap<>();
+        childUpdates.put("/users/" + userUID + "/friends/" + key1, friendUID);
+        childUpdates.put("/users/" + friendUID + "/friends/" + key2, userUID);
+        database.getReference().updateChildren(childUpdates, listener);
+
+//        Sample Code:
+//        String key = mDatabase.child("posts").push().getKey();
+//        Post post = new Post(userId, username, title, body);
+//        Map<String, Object> postValues = post.toMap();
+//
+//        Map<String, Object> childUpdates = new HashMap<>();
+//        childUpdates.put("/posts/" + key, postValues);
+//        childUpdates.put("/user-posts/" + userId + "/" + key, postValues);
+//        mDatabase.updateChildren(childUpdates);
+        */
+    }
+
     public void getReceivedMessagesOfUserWithUID(String uid, GetMessagesCallback cb) {
         final GetMessagesCallback callback = cb;
 
@@ -135,6 +194,7 @@ public class Database {
                     }
                 });
     }
+
 
 
 //             ____  ____  __  ____  __ _  ____    ____  _  _  __ _   ___  ____  __  __   __ _  ____
