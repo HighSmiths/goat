@@ -13,6 +13,7 @@ public class Message {
     public int timestamp;
     public boolean opened;
     public boolean typeOGoat;
+    
 
 
     public Message() {

@@ -46,7 +46,10 @@ public class ScreenManagerActivity extends AppCompatActivity {
     }
 
     public void listCurrentMessages(View view){
-
+        Intent intent = new Intent(this, MessageListActivity.class);
+        intent.putExtra("uid", "c");
+        startActivity(intent);
+        Log.d(Constants.LOG_TAG, "open Users");
     }
 
 }

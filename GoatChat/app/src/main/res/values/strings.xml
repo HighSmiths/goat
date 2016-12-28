@@ -7,4 +7,5 @@
     <string name="title_activity_user_list">UserListActivity</string>
     <string name="title_activity_screen_manager">ScreenManagerActivity</string>
     <string name="title_activity_friend_list">FriendListActivity</string>
+    <string name="title_activity_message_list">MessageListActivity</string>
 </resources>

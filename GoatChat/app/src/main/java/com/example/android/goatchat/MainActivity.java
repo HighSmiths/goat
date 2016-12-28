@@ -61,7 +61,6 @@ public  class MainActivity extends AppCompatActivity{
     public void openButtonManager(){
         Intent intent = new Intent(this, ScreenManagerActivity.class);
         intent.putExtra("uid", FirebaseAuth.getInstance().getCurrentUser().getUid());
-        Log.d(Constants.LOG_TAG, "Miss loyet you have such big buttons");
         startActivity(intent);
     }
 

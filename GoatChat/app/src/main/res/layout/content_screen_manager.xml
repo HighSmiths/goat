@@ -48,5 +48,5 @@
         android:layout_alignStart="@+id/button3"
         android:layout_marginTop="67dp"
         android:id="@+id/button4"
-        android:onClick="listCurrentFriends"/>
+        android:onClick="listCurrentMessages"/>
 </RelativeLayout>
