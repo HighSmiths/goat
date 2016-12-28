@@ -4,4 +4,5 @@
     <string name="title_list_of_friends">List Of Friends</string>
     <string name="facebook_app_id">206254653114978</string>
     <string name="fb_login_protocol_scheme">fb206254653114978</string>
+    <string name="title_activity_user_list">UserListActivity</string>
 </resources>

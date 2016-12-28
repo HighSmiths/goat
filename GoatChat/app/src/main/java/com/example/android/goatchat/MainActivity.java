@@ -49,6 +49,13 @@ public  class MainActivity extends AppCompatActivity{
         Log.d(Constants.LOG_TAG, "open user inbox");
     }
 
+    public void openUsers(){
+        Intent intent = new Intent(this, UserListActivity.class);
+        intent.putExtra("uid", FirebaseAuth.getInstance().getCurrentUser().getUid());
+        startActivity(intent);
+        Log.d(Constants.LOG_TAG, "open user inbox");
+    }
+
     public void pushFriendListView(){
         Intent intent = new Intent(this, ListOfFriends.class);
         intent.putExtra("uid", FirebaseAuth.getInstance().getCurrentUser().getUid());
@@ -119,7 +126,8 @@ public  class MainActivity extends AppCompatActivity{
 
   //                  Database db = Database.instance;
 //                    db.execute();
-                     openUserInbox();
+                     //openUserInbox();
+                       openUsers();
                    // pushFriendListView();
 
                 } else {

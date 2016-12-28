@@ -55,6 +55,7 @@ public class Database {
                     }
                 });
     }
+    
 
     public void getReceivedMessagesOfUserWithUID(String uid, GetMessagesCallback cb) {
         final GetMessagesCallback callback = cb;
