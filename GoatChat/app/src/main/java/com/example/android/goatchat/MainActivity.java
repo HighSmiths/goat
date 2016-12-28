@@ -32,37 +32,50 @@ import com.google.firebase.auth.FirebaseUser;
 import com.facebook.FacebookSdk;
 import android.view.LayoutInflater;
 
-public  class MainActivity extends AppCompatActivity{
+public  class MainActivity extends AppCompatActivity {
 
     private FirebaseAuth mAuth;
     private FirebaseAuth.AuthStateListener mAuthListener;
     private CallbackManager callbackManager;
-   // private LoginButton fbLoginButton;
 
-    //Go to Logged in Screen
-    public void openButtonManager(){
-        Intent intent = new Intent(this, ScreenManagerActivity.class);
-        intent.putExtra("uid", FirebaseAuth.getInstance().getCurrentUser().getUid());
-        startActivity(intent);
+
+    //{{Main Activity Life cycle
+    @Override
+    public void onStart() {
+        super.onStart();
+        mAuth.addAuthStateListener(mAuthListener);
     }
+
+    @Override
+    public void onStop() {
+        super.onStop();
+        if (mAuthListener != null) {
+            mAuth.removeAuthStateListener(mAuthListener);
+        }
+    }
+
+    @Override
+    protected void onCreate(Bundle savedInstanceState) {
+        super.onCreate(savedInstanceState);
+        manageFirebaseAuth();
+        accessFirebaseThroughFB();
+    }
+    //}}
+
 
     @Override
     protected void onActivityResult(int requestCode, int resultCode, Intent data) {
         super.onActivityResult(requestCode, resultCode, data);
         callbackManager.onActivityResult(requestCode, resultCode, data);
     }
-    @Override
-    protected void onCreate(Bundle savedInstanceState) {
-        super.onCreate(savedInstanceState);
 
-//        Database.instance.addFriendForUserWithUID("Gn6YHvwr5yMgLsTKRLrdoul6hw52", "P9ZbZsni4OR0YPU9qiVDTeqFxO92");
-        //TODO fix temp message id
-       // Database.instance.createMessage("TEMP","Gn6YHvwr5yMgLsTKRLrdoul6hw52", "P9ZbZsni4OR0YPU9qiVDTeqFxO92", true);
-
+    //{{onCreate helper methods
+    // Instantiate firebaseAuthentication listenet
+    public void manageFirebaseAuth(){
         mAuth = FirebaseAuth.getInstance();
         mAuthListener = new FirebaseAuth.AuthStateListener() {
             @Override
-            public void onAuthStateChanged( FirebaseAuth firebaseAuth) {
+            public void onAuthStateChanged(FirebaseAuth firebaseAuth) {
                 FirebaseUser user = firebaseAuth.getCurrentUser();
                 if (user != null) {
                     // User is signed in
@@ -71,12 +84,14 @@ public  class MainActivity extends AppCompatActivity{
 
                 } else {
                     // User is signed out
-                   Log.d(Constants.LOG_TAG, "onAuthStateChanged:signed_out");
+                    Log.d(Constants.LOG_TAG, "onAuthStateChanged:signed_out");
                 }
-                // ...
             }
         };
+    }
 
+    //manage facebook access callback
+    public void accessFirebaseThroughFB() {
         FacebookSdk.sdkInitialize(getApplicationContext());
         callbackManager = CallbackManager.Factory.create();
         setContentView(com.example.android.goatchat.R.layout.activity_main);
@@ -85,7 +100,7 @@ public  class MainActivity extends AppCompatActivity{
             @Override
             public void onSuccess(LoginResult loginResult) {
 
-                Log.d("suc","CEst");
+                Log.d("suc", "CEst");
                 handleFacebookAccessToken(loginResult.getAccessToken());
             }
 
@@ -101,43 +116,14 @@ public  class MainActivity extends AppCompatActivity{
         });
         FacebookSdk.sdkInitialize(getApplicationContext());
     }
-
-//{{ID
-    @Override
-    public void onStart() {
-        super.onStart();
-        mAuth.addAuthStateListener(mAuthListener);
-    }
-
-    @Override
-    public void onStop() {
-        super.onStop();
-        if (mAuthListener != null) {
-            mAuth.removeAuthStateListener(mAuthListener);
-        }
-    }
     //}}
 
-    public void createNewAccount(View view)
-    {
-        EditText email = (EditText)findViewById((R.id.email));
-        String emailText = email.getText().toString();
-        EditText password = (EditText)findViewById((R.id.password));
-        String passwordText = password.getText().toString();
-        if(emailIsValid(emailText)) {
-            if(passwordIsValid(passwordText)) {
-                createAccount(emailText,passwordText);
-            }
-            else {
-                Log.d("login", "password to short");
-            }
-        }
-        else{
-            Log.d("login","Faulty Email");
-        }
-        //createAccount(emailText,passwordText);
-    }
 
+    //{{FORMAT CHECKER
+    public boolean validCreation(String em)  //TODO
+    {
+        return true; //TODO check if username is on database yet
+    }
     public boolean emailIsValid(String em)
     {
         return em.contains("@")&&(em.contains(".com")||em.contains(".edu"));
@@ -146,8 +132,10 @@ public  class MainActivity extends AppCompatActivity{
     {
         return ps.length() >4;
     }
+    //}}
 
-    public void signInAccount(View view)
+    //{{Email Login
+    public void signInViaEmail(View view)
     {
         EditText email = (EditText)findViewById((R.id.email));
         String emailText = email.getText().toString();
@@ -158,47 +146,11 @@ public  class MainActivity extends AppCompatActivity{
                 signIn(emailText, passwordText);
             }
             else {
-                Log.d("login", "password to short");
+                Log.d("login", "password to short");  //TODO TOAST
             }
         }
         else{
             Log.d("login","Faulty Email");
-        }
-    }
-
-    public boolean validCreation(String em)
-    {
-        return true; //TODO check if username is on database yet
-    }
-
-    public void createAccount(String email, String password) {
-        try {
-            mAuth.createUserWithEmailAndPassword(email, password)
-                    .addOnCompleteListener(this, new OnCompleteListener<AuthResult>() {
-                        @Override
-                        public void onComplete(@NonNull Task<AuthResult> task) {
-                            Log.d("STUF", "createUserWithEmail:onComplete:" + task.isSuccessful());
-                            String uid = mAuth.getCurrentUser().getUid();
-                            String email = mAuth.getCurrentUser().getEmail();
-                            if(validCreation(email))
-                            {
-                                Database.instance.createNewUserRecordInFirebase(uid, email);
-                            }
-
-                            // If sign in fails, display a message to the user. If sign in succeeds
-                            // the auth state listener will be notified and logic to handle the
-                            // signed in user can be handled in the listener.
-                            if (!task.isSuccessful()) {
-                                Log.d("PRoblem", "uh oh");
-                            }
-
-                            // ...
-                        }
-                    });
-        }
-        catch (Exception e)
-        {
-            Log.d(Constants.LOG_TAG, "That won't work");
         }
     }
 
@@ -221,16 +173,65 @@ public  class MainActivity extends AppCompatActivity{
                 });
     }
 
-    private void handleFacebookAccessToken(AccessToken token) {
-        Log.d("tag", "handleFacebookAccessToken:" + token);
+    public void createAccountViaEmail(View view)
+    {
+        EditText email = (EditText)findViewById((R.id.email));
+        String emailText = email.getText().toString();
+        EditText password = (EditText)findViewById((R.id.password));
+        String passwordText = password.getText().toString();
+        if(emailIsValid(emailText)) {
+            if(passwordIsValid(passwordText)) {
+                createAccount(emailText,passwordText);
+            }
+            else {
+                Log.d("login", "password to short");
+            }
+        }
+        else{
+            Log.d("login","Faulty Email");
+        }
 
+    }
+
+    public void createAccount(String email, String password) {
+        try {
+            mAuth.createUserWithEmailAndPassword(email, password)
+                    .addOnCompleteListener(this, new OnCompleteListener<AuthResult>() {
+                        @Override
+                        public void onComplete(@NonNull Task<AuthResult> task) {
+                            String uid = mAuth.getCurrentUser().getUid();
+                            String email = mAuth.getCurrentUser().getEmail();
+                            if(validCreation(email))
+                            {
+                                Database.instance.createNewUserRecordInFirebase(uid, email);
+                            }
+
+                            // If sign in fails, display a message to the user. If sign in succeeds
+                            // the auth state listener will be notified and logic to handle the
+                            // signed in user can be handled in the listener.
+                            if (!task.isSuccessful()) {
+                                Log.d(Constants.LOG_TAG, "Failed to Create Account");
+                            }
+
+                            // ...
+                        }
+                    });
+        }
+        catch (Exception e)
+        {
+            Log.d(Constants.LOG_TAG, "That won't work");
+        }
+    }
+    //}}
+
+    //Sign in via facebook
+    private void handleFacebookAccessToken(AccessToken token) {
         AuthCredential credential = FacebookAuthProvider.getCredential(token.getToken());
         mAuth.signInWithCredential(credential)
                 .addOnCompleteListener(this, new OnCompleteListener<AuthResult>() {
                     @Override
                     public void onComplete(@NonNull Task<AuthResult> task) {
                         Log.d("TAG", "signInWithCredential:onComplete:" + task.isSuccessful());
-
                         String uid = mAuth.getCurrentUser().getUid();
                         String email = mAuth.getCurrentUser().getEmail();
                         Database.instance.createNewUserRecordInFirebase(uid, email);
@@ -246,5 +247,11 @@ public  class MainActivity extends AppCompatActivity{
                 });
     }
 
+    //Go to Logged in Screen
+    public void openButtonManager() {
+        Intent intent = new Intent(this, ScreenManagerActivity.class);
+        intent.putExtra("uid", FirebaseAuth.getInstance().getCurrentUser().getUid());
+        startActivity(intent);
+    }
 
 }
