@@ -57,9 +57,10 @@ public class MessageListActivity extends AppCompatActivity {
             public void execute(Map<String, String> messages){
 
                 try {
+                    myMessages = new ArrayList<>();
+
                     for (String mid : messages.values()) {
                         Log.d(Constants.LOG_TAG, mid + "");
-                        //TODO fix temp message id constructor
                         myMessages.add(new Message(mid, "uid", "-99", true));  //// TODO: 12/28/16  fix true to change per goat datum
                     }
                     populateListView();
@@ -72,8 +73,7 @@ public class MessageListActivity extends AppCompatActivity {
         }
 
         Database.instance.getReceivedMessagesOfUserWithUID(FirebaseAuth.getInstance().getCurrentUser().getUid(), new  HelperMessageList());
-
-
+        
     }
 
 

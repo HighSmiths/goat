@@ -118,7 +118,7 @@ public class Database {
         final GetMessagesCallback callback = cb;
 
         // Query for current user, appending all friends to the input array `arr`.
-        database.getReference().child("users").child(uid).child("receivedMessages").addListenerForSingleValueEvent(
+        database.getReference().child("users").child(uid).child("receivedMessages").addValueEventListener(
                 new ValueEventListener() {
                     @Override
                     public void onDataChange(DataSnapshot dataSnapshot) {

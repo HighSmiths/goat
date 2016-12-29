@@ -104,7 +104,6 @@ public  class MainActivity extends AppCompatActivity {
 
                 Log.d("suc", "CEst");
                 handleFacebookAccessToken(loginResult.getAccessToken());
-                fbAccToken = l
             }
 
             @Override
