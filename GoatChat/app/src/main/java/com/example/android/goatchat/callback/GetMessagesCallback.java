@@ -1,5 +1,7 @@
 package com.example.android.goatchat.callback;
 
+import com.example.android.goatchat.models.Message;
+
 import java.util.Map;
 
 /**
@@ -7,5 +9,5 @@ import java.util.Map;
  */
 
 public interface GetMessagesCallback {
-    public void execute(Map<String, String> messages);
+    public void execute(Map<String, Message> messages);
 }

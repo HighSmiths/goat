@@ -3,7 +3,7 @@ package com.example.android.goatchat;
 import android.util.*;
 
 import com.example.android.goatchat.callback.AddFriendCallback;
-import com.example.android.goatchat.callback.GetAllUsersCallback;
+import com.example.android.goatchat.callback.GetUsersCallback;
 import com.example.android.goatchat.callback.GetFriendsCallback;
 import com.example.android.goatchat.callback.GetMessagesCallback;
 import com.example.android.goatchat.callback.GetUserCallback;
@@ -19,6 +19,7 @@ import com.google.firebase.database.MutableData;
 import com.google.firebase.database.Transaction;
 import com.google.firebase.database.ValueEventListener;
 
+import java.util.List;
 import java.util.Map;
 
 /**
@@ -60,8 +61,8 @@ public class Database {
         String key2 = database.getReference().child("users").child(toUID).child("receivedMessages").push().getKey();
 
         database.getReference().child("messages").child(msgKey).setValue(msg);
-        database.getReference().child("users").child(fromUID).child("sentMessages").child(key1).setValue(msgKey);
-        database.getReference().child("users").child(toUID).child("receivedMessages").child(key2).setValue(msgKey);
+        database.getReference().child("users").child(fromUID).child("sentMessages").child(key1).setValue(msg);
+        database.getReference().child("users").child(toUID).child("receivedMessages").child(key2).setValue(msg);
 
         Log.d(Constants.LOG_TAG, "In create message function");
         Log.d(Constants.LOG_TAG, "Path: " + "users/" + toUID );
@@ -102,7 +103,6 @@ public class Database {
         setReceivedMessagetoSeen(messageID, new Callback());
     }
 
-    // TODO: @Max, sweet function!!!
     public void setReceivedMessagetoSeen(String messageId, SetMessageSeenCallback cb){
         final SetMessageSeenCallback callback = cb;
         DatabaseReference.CompletionListener listener = new DatabaseReference.CompletionListener(){
@@ -124,7 +124,9 @@ public class Database {
                 new ValueEventListener() {
                     @Override
                     public void onDataChange(DataSnapshot dataSnapshot) {
-                        Map<String, String> messages = (Map<String, String>)dataSnapshot.getValue();
+                        GenericTypeIndicator<Map<String, Message>> genericTypeIndicator = new GenericTypeIndicator<Map<String, Message>>() {};
+
+                        Map<String, Message> messages = dataSnapshot.getValue(genericTypeIndicator);
                         callback.execute(messages);
                     }
 
@@ -142,7 +144,9 @@ public class Database {
                 new ValueEventListener() {
                     @Override
                     public void onDataChange(DataSnapshot dataSnapshot) {
-                        Map<String, String> messages = (Map<String, String>)dataSnapshot.getValue();
+                        GenericTypeIndicator<Map<String, Message>> genericTypeIndicator = new GenericTypeIndicator<Map<String, Message>>() {};
+
+                        Map<String, Message> messages = dataSnapshot.getValue(genericTypeIndicator);
                         callback.execute(messages);
                     }
 
@@ -235,17 +239,35 @@ public class Database {
 //             \____/(____/(____)(__\_)  (__)  \____/\_)__) \___) (__) (__)\__/ \_)__)(____/
 
     // Creates a new user record in Firebase with given userId and email.
-    public void createNewUserRecordInFirebase(String userId, String email) {
+    public void createNewUser(String userId, String email) {
         User user = new User(userId, email);
 //        user.friends.put(userId);
         database.getReference().child("users").child(userId).setValue(user);
     }
 
+    // Retrieves the User with the given username from Firebase.
+    public void getUserWithUsername(final String username, final GetUsersCallback callback) {
+        database.getReference().child("users").orderByChild("username").equalTo(username).addListenerForSingleValueEvent(
+                new ValueEventListener() {
+                    @Override
+                    public void onDataChange(DataSnapshot dataSnapshot) {
+                        GenericTypeIndicator<Map<String, User>> genericTypeIndicator = new GenericTypeIndicator<Map<String, User>>() {};
+
+                        Map<String, User> users = dataSnapshot.getValue(genericTypeIndicator);
+                        callback.execute(users);
+                    }
+                    @Override
+                    public void onCancelled(DatabaseError databaseError) {
+                        Log.d(Constants.LOG_TAG, "DB Cancelled (ERROR): " + databaseError.getMessage());
+                    }
+                });
+    }
+
     // Reads all users currently using the app
-    public void getAllUsers(String uid, GetAllUsersCallback cb) {
+    public void getAllUsers(String uid, GetUsersCallback cb) {
 
         Log.d(Constants.LOG_TAG, "calling getAllUSers");
-        final GetAllUsersCallback callback = cb;
+        final GetUsersCallback callback = cb;
 
         Log.d(Constants.LOG_TAG, database.getReference().child("users").child(uid).toString()+"");
         database.getReference().child("users").addListenerForSingleValueEvent(

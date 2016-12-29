@@ -8,6 +8,6 @@ import java.util.Map;
  * Created by mz on 12/27/16.
  */
 
-public interface GetAllUsersCallback {
+public interface GetUsersCallback {
     public void execute(Map<String, User> users);
 }

@@ -31,47 +31,29 @@ public class MessageListActivity extends AppCompatActivity {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_message_list);
 
-/*
-        public void getReceivedMessagesOfUserWithUID(String uid, GetMessagesCallback cb) {
-            final GetMessagesCallback callback = cb;
-
-            // Query for current user, appending all friends to the input array `arr`.
-            database.getReference().child("users").child(uid).child("receivedMessages").addListenerForSingleValueEvent(
-                    new ValueEventListener() {
-                        @Override
-                        public void onDataChange(DataSnapshot dataSnapshot) {
-                            Map<String, String> messages = (Map<String, String>)dataSnapshot.getValue();
-                            callback.execute(messages);
-                        }
-
-                        @Override
-                        public void onCancelled(DatabaseError databaseError) {
-                        }
-                    });
-        }
-        */
         class HelperMessageList implements GetMessagesCallback {
             @Override
-            public void execute(Map<String, String> messages){
+            public void execute(Map<String, Message> messages){
+                Log.d(Constants.LOG_TAG, "Messages: " + messages);
 
                 try {
                     myMessages = new ArrayList<>();
 
-                    for (String mid : messages.values()) {
+                    for (Message msg : messages.values()) {
+                        String mid = msg.getMessageId();
                         Log.d(Constants.LOG_TAG, mid + "");
-                        myMessages.add(new Message(mid, "uid", "-99", true));  //// TODO: 12/28/16  fix true to change per goat datum
+                        myMessages.add(msg);  //// TODO: 12/28/16  fix true to change per goat datum
                     }
                     populateListView();
                 }
                 catch (Exception e)
                 {
-                    Log.d(Constants.LOG_TAG,"no one sent you goats");
+                    Log.d(Constants.LOG_TAG,"ERROR: " + e.getMessage());
                 }
             }
         }
 
         Database.instance.getReceivedMessagesOfUserWithUID(FirebaseAuth.getInstance().getCurrentUser().getUid(), new  HelperMessageList());
-        
     }
 
 
