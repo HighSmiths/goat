@@ -1,5 +1,4 @@
 package com.example.android.goatchat;
-
 import android.os.Bundle;
 import android.support.v7.app.AppCompatActivity;
 import android.util.Log;
@@ -10,31 +9,30 @@ import android.widget.Button;
 import android.widget.ImageView;
 import android.widget.ListView;
 import android.widget.TextView;
-
 import com.google.firebase.auth.FirebaseAuth;
-
 import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
 
 public class UserListActivity extends AppCompatActivity {
-    private List<Friend> myFriends = new ArrayList<Friend>();
+    private List<Friend> myUsers = new ArrayList<Friend>();
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
-        Log.d(Constants.LOG_TAG, "created list ACtivity");
+        Log.d(Constants.LOG_TAG, "Created User List Activity");
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_user_list);
-
-
+        createUserCallBackHelperObject();
+    }
+    //Creates an object to populate list which can be used as a callback
+    private void createUserCallBackHelperObject(){
         class HelperUserList implements GetAllUsersCallback{
             @Override
             public void execute(Map<String, User> users){
-                Log.d(Constants.LOG_TAG,"executed called");
                 for (String uid: users.keySet()){
-                    Log.d(Constants.LOG_TAG, uid+"");
-                    myFriends.add(new Friend(users.get(uid).getUid(), -99, R.drawable.blank_user, "-99", "button"));
+                    //TODO implements goat sent
+                    myUsers.add(new Friend(users.get(uid).getUid(), -99, R.drawable.blank_user, "-99", "Add Friend"));
                 }
                 populateListView();
             }
@@ -43,26 +41,16 @@ public class UserListActivity extends AppCompatActivity {
         Database.instance.getAllUsers(FirebaseAuth.getInstance().getCurrentUser().getUid(), new  HelperUserList());
     }
 
-/*
-    private void populateFriendList(){
-        myFriends.add(new Friend("Max Highsmith", 33, R.drawable.blank_user, "Needs more goats"));
-        myFriends.add(new Friend("Michael Highsmith", 12, R.drawable.blank_user, "Dude...More goats"));
-        myFriends.add(new Friend("Michael Zhao", 600, R.drawable.blank_user, "Goattastic"));
-        myFriends.add(new Friend("John Park", 200, R.drawable.blank_user, "Pretty Goat"));
-        myFriends.add(new Friend("P dizzle", 12, R.drawable.blank_user, "Needs more goats"));
-    }
-*/
-
     private void populateListView(){
         ArrayAdapter<Friend> adapter = new MyListAdapter();
-        ListView list = (ListView) findViewById(R.id.carsListView);
+        ListView list = (ListView) findViewById(R.id.usersListView);
         list.setAdapter(adapter);
 
     }
 
     private class MyListAdapter extends ArrayAdapter<Friend>{
         public MyListAdapter(){
-            super(UserListActivity.this, R.layout.item_view, myFriends);
+            super(UserListActivity.this, R.layout.item_view, myUsers);
         }
 
         //this overrides ArrayAdapter's getView
@@ -74,7 +62,7 @@ public class UserListActivity extends AppCompatActivity {
             }
 
             //Find the car to work with
-            Friend currentFriend = myFriends.get(position);
+            Friend currentFriend = myUsers.get(position);
 
             final String friendUid = currentFriend.getUser();
 

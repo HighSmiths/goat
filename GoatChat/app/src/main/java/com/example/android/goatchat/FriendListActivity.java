@@ -9,11 +9,15 @@ import android.util.Log;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.ArrayAdapter;
+import android.widget.Button;
 import android.widget.ImageView;
 import android.widget.ListView;
 import android.widget.TextView;
 
 import com.google.firebase.auth.FirebaseAuth;
+import com.google.firebase.database.DataSnapshot;
+import com.google.firebase.database.DatabaseError;
+import com.google.firebase.database.ValueEventListener;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -21,65 +25,28 @@ import java.util.Map;
 
 public class FriendListActivity extends AppCompatActivity {
     private List<Friend> myFriends = new ArrayList<Friend>();
-    /*
-    @Override
-    protected void onCreate(Bundle savedInstanceState) {
-        super.onCreate(savedInstanceState);
-        setContentView(R.layout.activity_friend_list);
-        Toolbar toolbar = (Toolbar) findViewById(R.id.toolbar);
-        setSupportActionBar(toolbar);
-
-        FloatingActionButton fab = (FloatingActionButton) findViewById(R.id.fab);
-        fab.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View view) {
-                Snackbar.make(view, "Replace with your own action", Snackbar.LENGTH_LONG)
-                        .setAction("Action", null).show();
-            }
-        });
-
-
-
-////
-            class HelperUserList implements GetFriendsCallback{
-                @Override
-                public void execute(Map<String, User> users){
-                    Log.d(Constants.LOG_TAG,"executed called");
-                    for (String uid: users.keySet()){
-                        Log.d(Constants.LOG_TAG, uid+"");
-                        myFriends.add(new Friend(users.get(uid).getUid(), -99, R.drawable.blank_user, "-99", "button"));
-                    }
-                    populateListView();
-                }
-            }
-
-            Database.instance.getAllUsers(FirebaseAuth.getInstance().getCurrentUser().getUid(), new  HelperUserList());
-     /////
-
-        */
-   // }
 
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         Log.d(Constants.LOG_TAG, "created Friend List");
         super.onCreate(savedInstanceState);
-        setContentView(R.layout.activity_user_list);
+        setContentView(R.layout.activity_friend_list);
 
 
-        class HelperUserList implements GetAllUsersCallback{
+        class HelperFriendList implements GetFriendsCallback{
             @Override
-            public void execute(Map<String, User> users){
-                Log.d(Constants.LOG_TAG,"executed called");
-                for (String uid: users.keySet()){
+            public void execute(Map<String, String> users){
+                Log.d(Constants.LOG_TAG,"executed friendly call of the wild");
+                for (String uid: users.values()){
                     Log.d(Constants.LOG_TAG, uid+"");
-                    myFriends.add(new Friend(users.get(uid).getUid(), -99, R.drawable.blank_user, "-99", "button"));
+                    myFriends.add(new Friend(uid, -99, R.drawable.blank_user, "-99", "button"));
                 }
                 populateListView();
             }
         }
 
-        Database.instance.getAllUsers(FirebaseAuth.getInstance().getCurrentUser().getUid(), new  HelperUserList());
+        Database.instance.getFriendsOfUserWithUID(FirebaseAuth.getInstance().getCurrentUser().getUid(), new  HelperFriendList());
     }
 
 /*
@@ -112,8 +79,10 @@ public class FriendListActivity extends AppCompatActivity {
                 itemView = getLayoutInflater().inflate(R.layout.item_view, parent, false);
             }
 
+            Log.d(Constants.LOG_TAG,"friends array adapter");
             //Find the car to work with
             Friend currentFriend = myFriends.get(position);
+            final String friendUid = currentFriend.getUser();
 
             //Fill the view
             ImageView imageView = (ImageView)itemView.findViewById(R.id.item_icon);
@@ -131,8 +100,14 @@ public class FriendListActivity extends AppCompatActivity {
             TextView conditionText = (TextView) itemView.findViewById(R.id.item_txtCondition);
             conditionText.setText(currentFriend.getCondition());
 
-            //Button button = (Button) itemView.findViewById(R.id.bfbutton);
-            // button.setText("Button");
+            Button button = (Button) itemView.findViewById(R.id.bfbutton);
+            button.setOnClickListener(new View.OnClickListener(){
+                public void onClick(View v){
+                    Log.d("clicked","friendbutton");
+                    //TODO fix temp message id
+                    Database.instance.createMessage("TEMP",FirebaseAuth.getInstance().getCurrentUser().getUid(), friendUid, true);   //SEDNS HAPPY GOAT
+                }
+            });
             return itemView;
         }
 

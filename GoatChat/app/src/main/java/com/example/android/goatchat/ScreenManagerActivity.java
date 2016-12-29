@@ -41,12 +41,37 @@ public class ScreenManagerActivity extends AppCompatActivity {
         Intent intent = new Intent(this, FriendListActivity.class);
         intent.putExtra("uid", "c");
         startActivity(intent);
-        Log.d(Constants.LOG_TAG, "open Users");
+        Log.d(Constants.LOG_TAG, "open CurrentFriends");
 
     }
 
     public void listCurrentMessages(View view){
+        Intent intent = new Intent(this, MessageListActivity.class);
+        intent.putExtra("uid", "c");
+        startActivity(intent);
+        Log.d(Constants.LOG_TAG, "open Messages");
+    }
 
+    public boolean isFacebookUser()
+    {
+        return false;  //TODO check if is fb uses
+    }
+
+    public void logout(View view){
+        FirebaseAuth.getInstance().signOut();
+        Intent intent = new Intent(this, MainActivity.class);
+        if(isFacebookUser()){
+            //TODo logout of fb
+        }
+        startActivity(intent);
+        Log.d(Constants.LOG_TAG, "Logging out");
+    }
+
+    public void aboutus(View view){
+        Intent intent = new Intent(this, AboutUsActivity.class);
+        intent.putExtra("uid","c");
+        startActivity(intent);
+        Log.d(Constants.LOG_TAG, "open AboutUsActivity");
     }
 
 }

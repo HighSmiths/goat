@@ -17,6 +17,7 @@ import com.google.firebase.database.ValueEventListener;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
+import java.util.Objects;
 
 /**
  * Created by mz on 12/26/16.
@@ -44,12 +45,15 @@ public class Database {
 //            / \/ \ ) _) \___ \\___ \/    \( (_ \ ) _)    ) _) ) \/ (/    /( (__   )(   )((  O )/    /\___ \
 //            \_)(_/(____)(____/(____/\_/\_/ \___/(____)  (__)  \____/\_)__) \___) (__) (__)\__/ \_)__)(____/
 
-//    TODO: IN PROGRESS
-    public void createMessage(String fromUID, String toUID, Boolean body) {
 
-        Message msg = new Message(fromUID, toUID, body);
+//    TODO: IN PROGRESS
+    public void createMessage(String mid, String fromUID, String toUID, Boolean body) {
+        Log.d(Constants.LOG_TAG,"message being created");
 
         String msgKey = database.getReference().child("messages").push().getKey();
+        Message msg = new Message(msgKey,fromUID, toUID, body);
+
+
         String key1 = database.getReference().child("users").child(fromUID).child("sentMessages").push().getKey();
         String key2 = database.getReference().child("users").child(toUID).child("receivedMessages").push().getKey();
 
@@ -84,6 +88,30 @@ public class Database {
             public void onComplete(DatabaseError databaseError, boolean b, DataSnapshot dataSnapshot) {
             }
         });
+    }
+
+    //    Make these two users friends.
+    public void setReceivedMessagetoSeen(String messageID, String friendUID) {
+        class Callback implements SetMessageSeenCallback {
+            @Override
+            public void execute() {}
+        }
+        Log.d(Constants.LOG_TAG, "2 parts");
+        setReceivedMessagetoSeen(messageID, new Callback());
+    }
+
+    // TODO: @Max, sweet function!!!
+    public void setReceivedMessagetoSeen(String messageId, SetMessageSeenCallback cb){
+        final SetMessageSeenCallback callback = cb;
+        DatabaseReference.CompletionListener listener = new DatabaseReference.CompletionListener(){
+            @Override
+            public void onComplete(DatabaseError databaseError, DatabaseReference databaseReference) {
+                callback.execute();
+            }
+        };
+
+        Log.d(Constants.LOG_TAG, "3 parts");
+        database.getReference().child("messages").child(messageId).child("opened").setValue(true);
     }
 
     public void getReceivedMessagesOfUserWithUID(String uid, GetMessagesCallback cb) {
@@ -121,6 +149,7 @@ public class Database {
                     }
                 });
     }
+
 
 
 //             ____  ____  __  ____  __ _  ____    ____  _  _  __ _   ___  ____  __  __   __ _  ____

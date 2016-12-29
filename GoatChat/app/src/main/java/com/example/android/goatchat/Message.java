@@ -9,10 +9,11 @@ public class Message {
 
     public String fromUID;
     public String toUID;
-    public int messageId;
+    public String messageId;
     public int timestamp;
     public boolean opened;
     public boolean typeOGoat;
+
 
 
     public Message() {
@@ -21,12 +22,12 @@ public class Message {
     }
 
     //1 for happy 0 for sad
-    public Message(String fr, String t, boolean tp){
+    public Message(String mid, String fr, String t, boolean tp){
         this.fromUID = fr;
         this.toUID =t;
         this.typeOGoat = tp;
         timestamp = 1;
-        messageId = -99;
+        messageId = mid;
         opened = false;
 
     }
@@ -55,10 +56,10 @@ public class Message {
     public void setTimestamp(int timestamp) {
         this.timestamp = timestamp;
     }
-    public int getMessageId() {
+    public String getMessageId() {
         return messageId;
     }
-    public void setMessageId(int messageId) {
+    public void setMessageId(String messageId) {
         this.messageId = messageId;
     }
     public boolean isOpened() {
