@@ -4,7 +4,7 @@
     android:id="@+id/activity_main"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    tools:context="com.example.android.goatchat.MainActivity">
+    tools:context="com.example.android.goatchat.activity.MainActivity">
 
     <ImageView
         android:id="@+id/goats"
@@ -38,7 +38,7 @@
         android:layout_alignParentBottom="true"
         android:layout_alignParentRight="true"
         android:layout_alignParentEnd="true"
-        android:onClick="createNewAccount"/>
+        android:onClick="createAccountViaEmail"/>
 
     <Button
         android:id="@+id/log_in"
@@ -49,7 +49,7 @@
         android:layout_alignBottom="@+id/sign_up"
         android:layout_alignLeft="@+id/textView"
         android:layout_alignStart="@+id/textView"
-        android:onClick="signInAccount"/>
+        android:onClick="signInViaEmail"/>
     <TextView
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"

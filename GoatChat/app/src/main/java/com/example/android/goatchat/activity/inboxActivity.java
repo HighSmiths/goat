@@ -1,4 +1,4 @@
-package com.example.android.goatchat;
+package com.example.android.goatchat.activity;
 
 import android.content.Intent;
 import android.os.Bundle;
@@ -8,7 +8,13 @@ import android.support.v7.app.AppCompatActivity;
 import android.support.v7.widget.Toolbar;
 import android.util.Log;
 import android.view.View;
+import android.widget.TextView;
 
+import com.example.android.goatchat.Constants;
+import com.example.android.goatchat.Database;
+import com.example.android.goatchat.R;
+import com.example.android.goatchat.models.User;
+import com.example.android.goatchat.callback.GetUserCallback;
 import com.google.firebase.auth.FirebaseAuth;
 
 public class inboxActivity extends AppCompatActivity {
@@ -18,10 +24,25 @@ public class inboxActivity extends AppCompatActivity {
         Intent intent = new Intent(this, MainActivity.class);
         intent.putExtra("username", "garbage");
         startActivity(intent);
-        Log.d(Constants.LOG_TAG, "open user inbox");
+        Log.d(Constants.LOG_TAG, "Logging out");
     }
     @Override
     protected void onCreate(Bundle savedInstanceState) {
+        class Callback implements GetUserCallback {
+            @Override
+            public void execute(User user) {
+                Log.d(Constants.LOG_TAG, "USER: " + user.toString());
+                TextView userDetails = (TextView) findViewById(R.id.userDetailsText);
+                userDetails.setText(user.toString());
+            }
+        }
+
+        // Get UID passed in from MainActivity.
+        String uid = getIntent().getStringExtra("uid");
+//        Log.d(Constants.LOG_TAG, uid);
+        Database.instance.getUserWithUID(uid, new Callback());
+
+
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_inbox);
         Toolbar toolbar = (Toolbar) findViewById(R.id.toolbar);

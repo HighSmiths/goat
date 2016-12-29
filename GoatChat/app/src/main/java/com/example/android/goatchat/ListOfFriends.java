@@ -3,18 +3,14 @@ package com.example.android.goatchat;
 import android.os.Bundle;
 import android.support.v7.app.AppCompatActivity;
 import android.util.Log;
-import android.view.View;
 import android.widget.ArrayAdapter;
 import android.widget.ListView;
 
-import com.google.firebase.auth.FirebaseAuth;
-import com.google.firebase.database.DataSnapshot;
-import com.google.firebase.database.DatabaseError;
-import com.google.firebase.database.FirebaseDatabase;
-import com.google.firebase.database.ValueEventListener;
+import com.example.android.goatchat.callback.GetFriendsCallback;
 
 import java.util.ArrayList;
 import java.util.List;
+import java.util.Map;
 
 public class ListOfFriends extends AppCompatActivity {
 
@@ -28,8 +24,6 @@ public class ListOfFriends extends AppCompatActivity {
         Log.d(Constants.LOG_TAG, "UID: " + getIntent().getStringExtra("uid"));
 
         super.onCreate(saveInstanceState);
-
-
 
         setContentView(R.layout.list_of_friends);
         lv = (ListView) findViewById(R.id.friends_list);
@@ -54,10 +48,17 @@ public class ListOfFriends extends AppCompatActivity {
 
         lv.setAdapter(arrayAdapter);
 
+        class Callback implements GetFriendsCallback {
+            public void execute(Map<String, String> friends) {
+                for (String friend : friends.values()) {
+                    friends_array_list.add(friend);
+                }
+            }
+        }
 
         // Get UID passed in from MainActivity.
         String uid = getIntent().getStringExtra("uid");
         // Read from database to get friends
-        Database.instance.readFriendsAndAddToList(friends_array_list, uid);
+        Database.instance.getFriendsOfUserWithUID(uid, new Callback());
     }
 }

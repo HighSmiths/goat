@@ -5,19 +5,12 @@
     android:layout_width="match_parent"
     android:layout_height="match_parent"
     android:fitsSystemWindows="true"
-    tools:context="com.example.android.goatchat.inboxActivity">
+    tools:context="com.example.android.goatchat.activity.inboxActivity">
 
     <android.support.design.widget.AppBarLayout
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:theme="@style/AppTheme.AppBarOverlay">
-
-        <android.support.v7.widget.Toolbar
-            android:id="@+id/toolbar"
-            android:layout_width="match_parent"
-            android:layout_height="?attr/actionBarSize"
-            android:background="?attr/colorPrimary"
-            app:popupTheme="@style/AppTheme.PopupOverlay" />
 
     </android.support.design.widget.AppBarLayout>
 
@@ -42,4 +35,19 @@
         app:layout_anchorGravity="center_vertical|center_horizontal"
         android:layout_gravity="center_vertical|center_horizontal" />
 
+    <TextView
+        android:text="TextView"
+        android:layout_width="358dp"
+        android:layout_height="178dp"
+        app:layout_anchorGravity="center_vertical|center_horizontal"
+        android:layout_gravity="center_vertical|center_horizontal"
+        android:id="@+id/userDetailsText" />
+
+    <android.support.v7.widget.Toolbar
+        android:id="@+id/toolbar"
+        android:layout_width="match_parent"
+        android:layout_height="?attr/actionBarSize"
+        android:background="?attr/colorPrimary"
+        app:popupTheme="@style/AppTheme.PopupOverlay" />
+    
 </android.support.design.widget.CoordinatorLayout>
