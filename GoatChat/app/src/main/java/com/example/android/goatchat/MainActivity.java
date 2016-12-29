@@ -2,6 +2,7 @@ package com.example.android.goatchat;
 
 import android.content.Context;
 import android.content.Intent;
+import android.content.pm.PackageManager;
 import android.provider.ContactsContract;
 import android.support.annotation.NonNull;
 import android.support.v4.app.Fragment;
@@ -38,6 +39,7 @@ public  class MainActivity extends AppCompatActivity {
     private FirebaseAuth mAuth;
     private FirebaseAuth.AuthStateListener mAuthListener;
     private CallbackManager callbackManager;
+    private static final int PERMISSIONS_REQUEST_READ_CONTACTS = 100;
 
 
     //{{Main Activity Life cycle
@@ -60,6 +62,8 @@ public  class MainActivity extends AppCompatActivity {
         super.onCreate(savedInstanceState);
         manageFirebaseAuth();
         accessFirebaseThroughFB();
+
+
     }
     //}}
 

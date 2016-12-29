@@ -1,4 +1,5 @@
 package com.example.android.goatchat;
+import android.content.pm.PackageManager;
 import android.os.Bundle;
 import android.support.v7.app.AppCompatActivity;
 import android.util.Log;
@@ -9,6 +10,8 @@ import android.widget.Button;
 import android.widget.ImageView;
 import android.widget.ListView;
 import android.widget.TextView;
+import android.widget.Toast;
+
 import com.google.firebase.auth.FirebaseAuth;
 import java.util.ArrayList;
 import java.util.HashMap;
@@ -24,6 +27,8 @@ public class UserListActivity extends AppCompatActivity {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_user_list);
         createUserCallBackHelperObject();
+
+        PhoneContacts.askContactsPermission(this);
     }
     //Creates an object to populate list which can be used as a callback
     private void createUserCallBackHelperObject(){
@@ -91,6 +96,21 @@ public class UserListActivity extends AppCompatActivity {
             return itemView;
         }
 
+    }
+
+    //  Callback when user grants Read Contacts permissions.
+    @Override
+    public void onRequestPermissionsResult(int requestCode, String[] permissions,
+                                           int[] grantResults) {
+        if (requestCode == 1) {
+            if (grantResults[0] == PackageManager.PERMISSION_GRANTED) {
+                // Permission is granted
+                PhoneContacts.getContacts(this);
+            } else {
+//                Why isn't this working...
+                Toast.makeText(getApplicationContext(), "Until you grant the permission, we canot display the names", Toast.LENGTH_SHORT).show();
+            }
+        }
     }
 
 }
