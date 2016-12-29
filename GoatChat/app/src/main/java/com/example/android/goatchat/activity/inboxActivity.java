@@ -1,4 +1,4 @@
-package com.example.android.goatchat;
+package com.example.android.goatchat.activity;
 
 import android.content.Intent;
 import android.os.Bundle;
@@ -10,6 +10,11 @@ import android.util.Log;
 import android.view.View;
 import android.widget.TextView;
 
+import com.example.android.goatchat.Constants;
+import com.example.android.goatchat.Database;
+import com.example.android.goatchat.R;
+import com.example.android.goatchat.models.User;
+import com.example.android.goatchat.callback.GetUserCallback;
 import com.google.firebase.auth.FirebaseAuth;
 
 public class inboxActivity extends AppCompatActivity {

@@ -1,23 +1,21 @@
-package com.example.android.goatchat;
+package com.example.android.goatchat.activity;
 
 import android.os.Bundle;
-import android.support.design.widget.FloatingActionButton;
-import android.support.design.widget.Snackbar;
 import android.support.v7.app.AppCompatActivity;
-import android.support.v7.widget.Toolbar;
 import android.util.Log;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.ArrayAdapter;
 import android.widget.Button;
-import android.widget.ImageView;
 import android.widget.ListView;
 import android.widget.TextView;
 
+import com.example.android.goatchat.Constants;
+import com.example.android.goatchat.Database;
+import com.example.android.goatchat.models.Message;
+import com.example.android.goatchat.R;
+import com.example.android.goatchat.callback.GetMessagesCallback;
 import com.google.firebase.auth.FirebaseAuth;
-import com.google.firebase.database.DataSnapshot;
-import com.google.firebase.database.DatabaseError;
-import com.google.firebase.database.ValueEventListener;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -52,14 +50,15 @@ public class MessageListActivity extends AppCompatActivity {
                     });
         }
         */
-        class HelperMessageList implements GetMessagesCallback{
+        class HelperMessageList implements GetMessagesCallback {
             @Override
             public void execute(Map<String, String> messages){
 
                 try {
+                    myMessages = new ArrayList<>();
+
                     for (String mid : messages.values()) {
                         Log.d(Constants.LOG_TAG, mid + "");
-                        //TODO fix temp message id constructor
                         myMessages.add(new Message(mid, "uid", "-99", true));  //// TODO: 12/28/16  fix true to change per goat datum
                     }
                     populateListView();
@@ -72,8 +71,7 @@ public class MessageListActivity extends AppCompatActivity {
         }
 
         Database.instance.getReceivedMessagesOfUserWithUID(FirebaseAuth.getInstance().getCurrentUser().getUid(), new  HelperMessageList());
-
-
+        
     }
 
 

@@ -1,7 +1,4 @@
-package com.example.android.goatchat;
-
-import java.util.HashMap;
-import java.util.Map;
+package com.example.android.goatchat.callback;
 
 /**
  * Created by mz on 12/27/16.

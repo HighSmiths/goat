@@ -1,7 +1,7 @@
 <?xml version="1.0" encoding="utf-8"?>
 <manifest xmlns:android="http://schemas.android.com/apk/res/android"
     package="com.example.android.goatchat">
-
+    <uses-permission android:name="android.permission.READ_CONTACTS" />
     <uses-permission android:name="android.permission.INTERNET" />
 
     <activity
@@ -32,7 +32,7 @@
             android:value="@string/facebook_app_id" />
 
         <activity
-            android:name=".MainActivity"
+            android:name=".activity.MainActivity"
             android:label="activity_main">
             <intent-filter>
                 <action android:name="android.intent.action.MAIN" />
@@ -41,7 +41,7 @@
             </intent-filter>
         </activity>
         <activity
-            android:name=".inboxActivity"
+            android:name=".activity.inboxActivity"
             android:label="@string/title_activity_inbox"
             android:theme="@style/AppTheme.NoActionBar" />
         <activity
@@ -49,27 +49,27 @@
             android:label="@string/title_list_of_friends"
             android:theme="@style/AppTheme.NoActionBar" />
         <activity
-            android:name=".UserListActivity"
+            android:name=".activity.UserListActivity"
             android:label="@string/title_activity_user_list"
             android:theme="@style/AppTheme.NoActionBar" />
         <activity
-            android:name=".ScreenManagerActivity"
+            android:name=".activity.ScreenManagerActivity"
             android:label="@string/title_activity_screen_manager"
             android:theme="@style/AppTheme.NoActionBar" />
         <activity
-            android:name=".FriendListActivity"
+            android:name=".activity.FriendListActivity"
             android:label="@string/title_activity_friend_list"
             android:theme="@style/AppTheme.NoActionBar" />
         <activity
-            android:name=".MessageListActivity"
+            android:name=".activity.MessageListActivity"
             android:label="@string/title_activity_message_list"
             android:theme="@style/AppTheme.NoActionBar" />
         <activity
-            android:name=".AboutUsActivity"
+            android:name=".activity.AboutUsActivity"
             android:label="@string/title_activity_about_us"
             android:theme="@style/AppTheme.NoActionBar" />
         <activity
-            android:name=".FacebookFriendsActivity"
+            android:name=".activity.FacebookFriendsActivity"
             android:label="@string/title_activity_facebook_friends"
             android:theme="@style/AppTheme.NoActionBar"></activity>
     </application>

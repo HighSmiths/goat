@@ -1,4 +1,4 @@
-package com.example.android.goatchat;
+package com.example.android.goatchat.models;
 
 /**
  * Created by Michael Highsmith on 12/27/16.

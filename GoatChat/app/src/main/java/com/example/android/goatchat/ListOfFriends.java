@@ -6,6 +6,8 @@ import android.util.Log;
 import android.widget.ArrayAdapter;
 import android.widget.ListView;
 
+import com.example.android.goatchat.callback.GetFriendsCallback;
+
 import java.util.ArrayList;
 import java.util.List;
 import java.util.Map;

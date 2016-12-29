@@ -1,10 +1,15 @@
 package com.example.android.goatchat;
 
-import android.support.annotation.Nullable;
 import android.util.*;
 
-import com.google.firebase.auth.FirebaseAuth;
-import com.google.firebase.auth.FirebaseUser;
+import com.example.android.goatchat.callback.AddFriendCallback;
+import com.example.android.goatchat.callback.GetAllUsersCallback;
+import com.example.android.goatchat.callback.GetFriendsCallback;
+import com.example.android.goatchat.callback.GetMessagesCallback;
+import com.example.android.goatchat.callback.GetUserCallback;
+import com.example.android.goatchat.callback.SetMessageSeenCallback;
+import com.example.android.goatchat.models.Message;
+import com.example.android.goatchat.models.User;
 import com.google.firebase.database.DataSnapshot;
 import com.google.firebase.database.DatabaseError;
 import com.google.firebase.database.DatabaseReference;
@@ -14,10 +19,7 @@ import com.google.firebase.database.MutableData;
 import com.google.firebase.database.Transaction;
 import com.google.firebase.database.ValueEventListener;
 
-import java.util.HashMap;
-import java.util.List;
 import java.util.Map;
-import java.util.Objects;
 
 /**
  * Created by mz on 12/26/16.
@@ -118,7 +120,7 @@ public class Database {
         final GetMessagesCallback callback = cb;
 
         // Query for current user, appending all friends to the input array `arr`.
-        database.getReference().child("users").child(uid).child("receivedMessages").addListenerForSingleValueEvent(
+        database.getReference().child("users").child(uid).child("receivedMessages").addValueEventListener(
                 new ValueEventListener() {
                     @Override
                     public void onDataChange(DataSnapshot dataSnapshot) {

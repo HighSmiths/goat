@@ -1,4 +1,4 @@
-package com.example.android.goatchat;
+package com.example.android.goatchat.models;
 
 import java.util.ArrayList;
 import java.util.HashMap;

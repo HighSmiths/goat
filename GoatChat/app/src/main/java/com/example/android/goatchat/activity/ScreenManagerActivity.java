@@ -1,4 +1,4 @@
-package com.example.android.goatchat;
+package com.example.android.goatchat.activity;
 
 import android.content.Intent;
 import android.os.Bundle;
@@ -9,6 +9,8 @@ import android.support.v7.widget.Toolbar;
 import android.util.Log;
 import android.view.View;
 
+import com.example.android.goatchat.Constants;
+import com.example.android.goatchat.R;
 import com.google.firebase.auth.FirebaseAuth;
 
 public class ScreenManagerActivity extends AppCompatActivity {

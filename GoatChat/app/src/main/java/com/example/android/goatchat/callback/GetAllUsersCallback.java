@@ -1,6 +1,7 @@
-package com.example.android.goatchat;
+package com.example.android.goatchat.callback;
 
-import java.util.HashMap;
+import com.example.android.goatchat.models.User;
+
 import java.util.Map;
 
 /**
