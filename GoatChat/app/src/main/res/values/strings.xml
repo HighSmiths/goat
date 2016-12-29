@@ -9,4 +9,6 @@
     <string name="title_activity_friend_list">FriendListActivity</string>
     <string name="title_activity_message_list">MessageListActivity</string>
     <string name="title_activity_about_us">AboutUsActivity</string>
+    <string name="title_activity_face_book_friends">faceBookFriendsActivity</string>
+    <string name="title_activity_facebook_friends">FacebookFriendsActivity</string>
 </resources>

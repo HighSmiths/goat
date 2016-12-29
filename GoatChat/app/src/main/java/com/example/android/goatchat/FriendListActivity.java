@@ -38,11 +38,18 @@ public class FriendListActivity extends AppCompatActivity {
             @Override
             public void execute(Map<String, String> users){
                 Log.d(Constants.LOG_TAG,"executed friendly call of the wild");
-                for (String uid: users.values()){
-                    Log.d(Constants.LOG_TAG, uid+"");
-                    myFriends.add(new Friend(uid, -99, R.drawable.blank_user, "-99", "button"));
+                try {
+                    for (String uid : users.values()) {
+                        // Log.d(Constants.LOG_TAG, uid+"");
+                        myFriends.add(new Friend(uid, -99, R.drawable.blank_user, "-99", "button"));
+                    }
+
+                    populateListView();
                 }
-                populateListView();
+                catch(Exception e)
+                {
+                    Log.d(Constants.LOG_TAG, "Uh oh, looks like you have no friends");
+                }
             }
         }
 

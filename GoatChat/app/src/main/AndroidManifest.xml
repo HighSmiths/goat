@@ -67,6 +67,10 @@
         <activity
             android:name=".AboutUsActivity"
             android:label="@string/title_activity_about_us"
+            android:theme="@style/AppTheme.NoActionBar" />
+        <activity
+            android:name=".FacebookFriendsActivity"
+            android:label="@string/title_activity_facebook_friends"
             android:theme="@style/AppTheme.NoActionBar"></activity>
     </application>
 

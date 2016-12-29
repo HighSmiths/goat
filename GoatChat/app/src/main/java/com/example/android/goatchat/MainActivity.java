@@ -104,6 +104,7 @@ public  class MainActivity extends AppCompatActivity {
 
                 Log.d("suc", "CEst");
                 handleFacebookAccessToken(loginResult.getAccessToken());
+                fbAccToken = l
             }
 
             @Override
@@ -207,19 +208,23 @@ public  class MainActivity extends AppCompatActivity {
                     .addOnCompleteListener(this, new OnCompleteListener<AuthResult>() {
                         @Override
                         public void onComplete(@NonNull Task<AuthResult> task) {
-                            String uid = mAuth.getCurrentUser().getUid();
-                            String email = mAuth.getCurrentUser().getEmail();
-                            if(validCreation(email))
-                            {
-                                Database.instance.createNewUserRecordInFirebase(uid, email);
+                            if (!task.isSuccessful()) {
+                                Log.d(Constants.LOG_TAG, "Failed to Create Account");
                             }
+                            else {
+                                String uid = mAuth.getCurrentUser().getUid();
+                                String email = mAuth.getCurrentUser().getEmail();
+                                if(validCreation(email))
+                                {
+                                    Database.instance.createNewUserRecordInFirebase(uid, email);
+                                }
+                            }
+
 
                             // If sign in fails, display a message to the user. If sign in succeeds
                             // the auth state listener will be notified and logic to handle the
                             // signed in user can be handled in the listener.
-                            if (!task.isSuccessful()) {
-                                Log.d(Constants.LOG_TAG, "Failed to Create Account");
-                            }
+
 
                             // ...
                         }
