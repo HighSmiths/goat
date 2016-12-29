@@ -14,12 +14,18 @@ import com.facebook.HttpMethod;
 
 public class FacebookFriendsActivity extends AppCompatActivity {
 
+    String appLinkUrl, previewImageUrl;
+
+
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_facebook_friends);
         Toolbar toolbar = (Toolbar) findViewById(R.id.toolbar);
         setSupportActionBar(toolbar);
+
+
+
 
         FloatingActionButton fab = (FloatingActionButton) findViewById(R.id.fab);
         fab.setOnClickListener(new View.OnClickListener() {
@@ -30,6 +36,10 @@ public class FacebookFriendsActivity extends AppCompatActivity {
             }
         });
 
+
+
+        appLinkUrl = "https://www.mydowmain.com/myapplink";
+        previewImageUrl = "https://www.mydomain.com/my_invite_image.";
 
         new GraphRequest(
                 AccessToken.getCurrentAccessToken(),
