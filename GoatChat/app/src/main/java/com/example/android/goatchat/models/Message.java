@@ -5,16 +5,12 @@ import java.util.ArrayList;
 import java.util.List;
 
 public class Message {
-
-
     public String fromUID;
     public String toUID;
     public String messageId;
     public int timestamp;
     public boolean opened;
     public boolean typeOGoat;
-
-
 
     public Message() {
         // Default constructor required for calls to DataSnapshot.getValue(User.class)
