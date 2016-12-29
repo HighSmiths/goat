@@ -11,12 +11,14 @@ import java.util.Map;
 
 public class User {
     public String uid;
+    public String username;
     public String email;
     public int numMsgSent;
     public int numMsgRec;
     public int numFriends;
-    public Map<String, String> sentMessages;
-    public Map<String, String> receivedMessages;
+    public String phoneNumber;
+    public Map<String, Message> sentMessages;
+    public Map<String, Message> receivedMessages;
     public Map<String, String> friends;
 
     public User() {
@@ -26,35 +28,28 @@ public class User {
 
     public User(String uid, String email) {
         this.uid = uid;
+        this.username = email.split("@")[0];
         this.email = email;
         this.sentMessages = new HashMap<>();
         this.receivedMessages = new HashMap<>();
         this.friends = new HashMap<>();
-
-        sentMessages.put("messageID", "messageText");
-        receivedMessages.put("messageID", "messageText");
     }
 
     public String getUid() {
         return uid;
     }
-
     public String getEmail() {
         return email;
     }
-
-    public Map<String, String> getSentMessages() {
+    public Map<String, Message> getSentMessages() {
         return sentMessages;
     }
-
-    public Map<String, String> getReceivedMessages() {
+    public Map<String, Message> getReceivedMessages() {
         return receivedMessages;
     }
-
     public Map<String, String> getFriends() {
         return friends;
     }
-
     public int getNumMsgSent() {
         return numMsgSent;
     }
@@ -64,6 +59,8 @@ public class User {
     public int getNumFriends() {
         return numFriends;
     }
+    public String getPhoneNumber() {return phoneNumber;}
+    public String getUsername() {return username;}
 
     public String toString() {
         return "User "

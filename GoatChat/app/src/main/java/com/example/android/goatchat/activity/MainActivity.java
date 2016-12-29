@@ -11,7 +11,8 @@ import android.widget.EditText;
 import com.example.android.goatchat.Constants;
 import com.example.android.goatchat.Database;
 import com.example.android.goatchat.R;
-import com.example.android.goatchat.activity.ScreenManagerActivity;
+import com.example.android.goatchat.callback.GetUsersCallback;
+import com.example.android.goatchat.models.User;
 import com.facebook.AccessToken;
 import com.facebook.CallbackManager;
 import com.facebook.FacebookCallback;
@@ -27,12 +28,13 @@ import com.google.firebase.auth.FirebaseAuth;
 import com.google.firebase.auth.FirebaseUser;
 import com.facebook.FacebookSdk;
 
+import java.util.Map;
+
 public  class MainActivity extends AppCompatActivity {
 
     private FirebaseAuth mAuth;
     private FirebaseAuth.AuthStateListener mAuthListener;
     private CallbackManager callbackManager;
-    private static final int PERMISSIONS_REQUEST_READ_CONTACTS = 100;
 
 
     //{{Main Activity Life cycle
@@ -55,8 +57,6 @@ public  class MainActivity extends AppCompatActivity {
         super.onCreate(savedInstanceState);
         manageFirebaseAuth();
         accessFirebaseThroughFB();
-
-
     }
     //}}
 
@@ -163,7 +163,7 @@ public  class MainActivity extends AppCompatActivity {
                             String uid = FirebaseAuth.getInstance().getCurrentUser().getUid();
 
                             String email = mAuth.getCurrentUser().getEmail();
-                            Database.instance.createNewUserRecordInFirebase(uid, email);
+                            Database.instance.createNewUser(uid, email);
                         }
 
                         // If sign in fails, display a message to the user. If sign in succeeds
@@ -212,7 +212,7 @@ public  class MainActivity extends AppCompatActivity {
                                 String email = mAuth.getCurrentUser().getEmail();
                                 if(validCreation(email))
                                 {
-                                    Database.instance.createNewUserRecordInFirebase(uid, email);
+                                    Database.instance.createNewUser(uid, email);
                                 }
                             }
 
@@ -243,7 +243,7 @@ public  class MainActivity extends AppCompatActivity {
                         Log.d("TAG", "signInWithCredential:onComplete:" + task.isSuccessful());
                         String uid = mAuth.getCurrentUser().getUid();
                         String email = mAuth.getCurrentUser().getEmail();
-                        Database.instance.createNewUserRecordInFirebase(uid, email);
+                        Database.instance.createNewUser(uid, email);
                         // If sign in fails, display a message to the user. If sign in succeeds
                         // the auth state listener will be notified and logic to handle the
                         // signed in user can be handled in the listener.

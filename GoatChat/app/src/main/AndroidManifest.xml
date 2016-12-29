@@ -41,15 +41,11 @@
             </intent-filter>
         </activity>
         <activity
-            android:name=".activity.inboxActivity"
-            android:label="@string/title_activity_inbox"
-            android:theme="@style/AppTheme.NoActionBar" />
-        <activity
             android:name=".ListOfFriends"
             android:label="@string/title_list_of_friends"
             android:theme="@style/AppTheme.NoActionBar" />
         <activity
-            android:name=".activity.UserListActivity"
+            android:name=".activity.AddFriendsActivity"
             android:label="@string/title_activity_user_list"
             android:theme="@style/AppTheme.NoActionBar" />
         <activity
