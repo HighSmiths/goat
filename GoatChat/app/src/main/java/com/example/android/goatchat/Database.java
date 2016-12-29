@@ -45,9 +45,10 @@ public class Database {
 //            / \/ \ ) _) \___ \\___ \/    \( (_ \ ) _)    ) _) ) \/ (/    /( (__   )(   )((  O )/    /\___ \
 //            \_)(_/(____)(____/(____/\_/\_/ \___/(____)  (__)  \____/\_)__) \___) (__) (__)\__/ \_)__)(____/
 
+
+//    TODO: IN PROGRESS
     public void createMessage(String mid, String fromUID, String toUID, Boolean body) {
-        Log.d("this is being called","message being created");
-      //  Message msg = new Message(mid,fromUID, toUID, body);
+        Log.d(Constants.LOG_TAG,"message being created");
 
         String msgKey = database.getReference().child("messages").push().getKey();
         Message msg = new Message(msgKey,fromUID, toUID, body);
@@ -61,23 +62,30 @@ public class Database {
         database.getReference().child("users").child(toUID).child("receivedMessages").child(key2).setValue(msgKey);
 
         Log.d(Constants.LOG_TAG, "In create message function");
-        Log.d(Constants.LOG_TAG, "fromUID: " + fromUID);
+        Log.d(Constants.LOG_TAG, "Path: " + "users/" + toUID );
 
-        database.getReference().child("users").child(fromUID).child("numMsgSent").runTransaction(new Transaction.Handler() {
+        incrementMsgCount(fromUID, "sent");
+        incrementMsgCount(toUID, "received");
+    }
+
+//  Helper function to increment message count.
+    private void incrementMsgCount(String uid, String type) {
+        final String t = type;
+        database.getReference("users/" + uid).runTransaction(new Transaction.Handler() {
             @Override
             public Transaction.Result doTransaction(MutableData mutableData) {
-                Log.d(Constants.LOG_TAG, "Mutable Data: " + mutableData.getValue().toString());
-//                if (mutableData) {
-//
-//                } else {
-//                    return 1;
-//                }
-                return null;
+                User user = (User) mutableData.getValue(User.class);
+                if (t.toLowerCase().equals("received")) {
+                    user.numMsgRec++;
+                } else if (t.toLowerCase().equals("sent")) {
+                    user.numMsgSent++;
+                }
+                mutableData.setValue(user);
+                return Transaction.success(mutableData);
             }
 
             @Override
             public void onComplete(DatabaseError databaseError, boolean b, DataSnapshot dataSnapshot) {
-
             }
         });
     }
@@ -92,8 +100,8 @@ public class Database {
         setReceivedMessagetoSeen(messageID, new Callback());
     }
 
+    // TODO: @Max, sweet function!!!
     public void setReceivedMessagetoSeen(String messageId, SetMessageSeenCallback cb){
-
         final SetMessageSeenCallback callback = cb;
         DatabaseReference.CompletionListener listener = new DatabaseReference.CompletionListener(){
             @Override
@@ -104,39 +112,6 @@ public class Database {
 
         Log.d(Constants.LOG_TAG, "3 parts");
         database.getReference().child("messages").child(messageId).child("opened").setValue(true);
-      //  Map<String,Object> childUpdates = new HashMap<>();
-    //    childUpdates.put("/messages/"+messageId+"/opened/"+key1,true);
-       // database.getReference().updateChildren(childUpdates,listener);
-/*
-        final AddFriendCallback callback = cb;
-        DatabaseReference.CompletionListener listener = new DatabaseReference.CompletionListener() {
-            @Override
-            public void onComplete(DatabaseError databaseError, DatabaseReference databaseReference) {
-                callback.execute();
-            }
-        };
-
-        // Method `.push()` creates a new node under a given path.
-        // Create the 2-way friendship, so A becomes B's friend, and vice-versa.
-        String key1 = database.getReference().child("users").child(userUID).child("friends").push().getKey();
-        String key2 = database.getReference().child("users").child(friendUID).child("friends").push().getKey();
-
-        // Use updateChildren for 1 batch atomic update. Either all updates succeed, or all updates fail
-        Map<String, Object> childUpdates = new HashMap<>();
-        childUpdates.put("/users/" + userUID + "/friends/" + key1, friendUID);
-        childUpdates.put("/users/" + friendUID + "/friends/" + key2, userUID);
-        database.getReference().updateChildren(childUpdates, listener);
-
-//        Sample Code:
-//        String key = mDatabase.child("posts").push().getKey();
-//        Post post = new Post(userId, username, title, body);
-//        Map<String, Object> postValues = post.toMap();
-//
-//        Map<String, Object> childUpdates = new HashMap<>();
-//        childUpdates.put("/posts/" + key, postValues);
-//        childUpdates.put("/user-posts/" + userId + "/" + key, postValues);
-//        mDatabase.updateChildren(childUpdates);
-        */
     }
 
     public void getReceivedMessagesOfUserWithUID(String uid, GetMessagesCallback cb) {
@@ -183,7 +158,8 @@ public class Database {
 //            (__)  (__\_)(__)(____)\_)__)(____/  (__)  \____/\_)__) \___) (__) (__)\__/ \_)__)(____/
 
     //    Make these two users friends.
-    public void addFriendForUserWithUID(String userUID, String friendUID) {
+    public void addFriendForUserWithUID(final String userUID, final String friendUID) {
+        Log.d(Constants.LOG_TAG, "Adding friends");
         class Callback implements AddFriendCallback {
             @Override
             public void execute() {}
@@ -192,7 +168,7 @@ public class Database {
     }
 
 //  Overloaded function with additional callback parameter.
-    public void addFriendForUserWithUID(String userUID, String friendUID, AddFriendCallback cb) {
+    public void addFriendForUserWithUID(final String userUID, final String friendUID, AddFriendCallback cb) {
         final AddFriendCallback callback = cb;
         DatabaseReference.CompletionListener listener = new DatabaseReference.CompletionListener() {
             @Override
@@ -201,28 +177,35 @@ public class Database {
             }
         };
 
-        // Method `.push()` creates a new node under a given path.
-        // Create the 2-way friendship, so A becomes B's friend, and vice-versa.
-        String key1 = database.getReference().child("users").child(userUID).child("friends").push().getKey();
-        String key2 = database.getReference().child("users").child(friendUID).child("friends").push().getKey();
+        class Callback implements GetFriendsCallback {
+            @Override
+            public void execute(Map<String, String> friends) {
+                if (friends == null || !friends.containsValue(friendUID)) {
+                    if (friends == null)
+                        Log.d(Constants.LOG_TAG, "friends is null");
 
-        // Use updateChildren for 1 batch atomic update. Either all updates succeed, or all updates fail
-        Map<String, Object> childUpdates = new HashMap<>();
-        childUpdates.put("/users/" + userUID + "/friends/" + key1, friendUID);
-        childUpdates.put("/users/" + friendUID + "/friends/" + key2, userUID);
-        database.getReference().updateChildren(childUpdates, listener);
+                    database.getReference().child("users").child(userUID + "/friends").push().setValue(friendUID);
 
-//        Sample Code:
-//        String key = mDatabase.child("posts").push().getKey();
-//        Post post = new Post(userId, username, title, body);
-//        Map<String, Object> postValues = post.toMap();
-//
-//        Map<String, Object> childUpdates = new HashMap<>();
-//        childUpdates.put("/posts/" + key, postValues);
-//        childUpdates.put("/user-posts/" + userId + "/" + key, postValues);
-//        mDatabase.updateChildren(childUpdates);
+                    database.getReference().child("users").child(userUID).runTransaction(new Transaction.Handler() {
+                        @Override
+                        public Transaction.Result doTransaction(MutableData mutableData) {
+                            User user = mutableData.getValue(User.class);
+                            // TODO: This isn't safe if user adds friends from multiple clients simultaneously.
+                            user.numFriends = user.getFriends().size();
+                            mutableData.setValue(user);
+                            return Transaction.success(mutableData);
+                        }
 
+                        @Override
+                        public void onComplete(DatabaseError databaseError, boolean b, DataSnapshot dataSnapshot) {
+                        }
+                    });
+                }
+            }
+        }
+        getFriendsOfUserWithUID(userUID, new Callback());
     }
+
 
     // Reads all of user's friends from Firebase, and stores them in `arr`.
     // Accepts an String array `arr` and a String user ID `uid`.

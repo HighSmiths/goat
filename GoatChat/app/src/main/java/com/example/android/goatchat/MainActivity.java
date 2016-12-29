@@ -13,6 +13,7 @@ import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.EditText;
+import android.widget.TextView;
 import android.widget.Toast;
 
 import com.facebook.AccessToken;
@@ -69,7 +70,8 @@ public  class MainActivity extends AppCompatActivity {
         callbackManager.onActivityResult(requestCode, resultCode, data);
     }
 
-    //{{onCreate helper methods
+
+    //  onCreate helper methods
     // Instantiate firebaseAuthentication listenet
     public void manageFirebaseAuth(){
         mAuth = FirebaseAuth.getInstance();
@@ -160,7 +162,13 @@ public  class MainActivity extends AppCompatActivity {
                 .addOnCompleteListener(this, new OnCompleteListener<AuthResult>() {
                     @Override
                     public void onComplete(@NonNull Task<AuthResult> task) {
-                        Log.d(Constants.LOG_TAG, "signInWithEmail:onComplete:" + task.isSuccessful());
+                        Log.d("STUF", "createUserWithEmail:onComplete:" + task.isSuccessful());
+                        if (task.isSuccessful()) {
+                            String uid = FirebaseAuth.getInstance().getCurrentUser().getUid();
+
+                            String email = mAuth.getCurrentUser().getEmail();
+                            Database.instance.createNewUserRecordInFirebase(uid, email);
+                        }
 
                         // If sign in fails, display a message to the user. If sign in succeeds
                         // the auth state listener will be notified and logic to handle the
