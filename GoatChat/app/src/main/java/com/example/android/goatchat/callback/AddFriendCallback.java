@@ -1,4 +1,4 @@
-package com.example.android.goatchat;
+package com.example.android.goatchat.callback;
 
 /**
  * Created by mz on 12/27/16.

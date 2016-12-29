@@ -1,11 +1,7 @@
-package com.example.android.goatchat;
+package com.example.android.goatchat.activity;
 
-import android.content.pm.PackageManager;
 import android.os.Bundle;
-import android.support.design.widget.FloatingActionButton;
-import android.support.design.widget.Snackbar;
 import android.support.v7.app.AppCompatActivity;
-import android.support.v7.widget.Toolbar;
 import android.util.Log;
 import android.view.View;
 import android.view.ViewGroup;
@@ -14,12 +10,13 @@ import android.widget.Button;
 import android.widget.ImageView;
 import android.widget.ListView;
 import android.widget.TextView;
-import android.widget.Toast;
 
+import com.example.android.goatchat.Constants;
+import com.example.android.goatchat.Database;
+import com.example.android.goatchat.models.Friend;
+import com.example.android.goatchat.R;
+import com.example.android.goatchat.callback.GetFriendsCallback;
 import com.google.firebase.auth.FirebaseAuth;
-import com.google.firebase.database.DataSnapshot;
-import com.google.firebase.database.DatabaseError;
-import com.google.firebase.database.ValueEventListener;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -36,7 +33,7 @@ public class FriendListActivity extends AppCompatActivity {
         setContentView(R.layout.activity_friend_list);
 
 
-        class HelperFriendList implements GetFriendsCallback{
+        class HelperFriendList implements GetFriendsCallback {
             @Override
             public void execute(Map<String, String> users){
                 Log.d(Constants.LOG_TAG,"executed friendly call of the wild");

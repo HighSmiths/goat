@@ -1,4 +1,4 @@
-package com.example.android.goatchat;
+package com.example.android.goatchat.activity;
 import android.content.pm.PackageManager;
 import android.os.Bundle;
 import android.support.v7.app.AppCompatActivity;
@@ -12,9 +12,15 @@ import android.widget.ListView;
 import android.widget.TextView;
 import android.widget.Toast;
 
+import com.example.android.goatchat.Constants;
+import com.example.android.goatchat.Database;
+import com.example.android.goatchat.models.Friend;
+import com.example.android.goatchat.PhoneContacts;
+import com.example.android.goatchat.R;
+import com.example.android.goatchat.models.User;
+import com.example.android.goatchat.callback.GetAllUsersCallback;
 import com.google.firebase.auth.FirebaseAuth;
 import java.util.ArrayList;
-import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
 
@@ -32,7 +38,7 @@ public class UserListActivity extends AppCompatActivity {
     }
     //Creates an object to populate list which can be used as a callback
     private void createUserCallBackHelperObject(){
-        class HelperUserList implements GetAllUsersCallback{
+        class HelperUserList implements GetAllUsersCallback {
             @Override
             public void execute(Map<String, User> users){
                 for (String uid: users.keySet()){

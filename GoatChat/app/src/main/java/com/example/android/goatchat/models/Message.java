@@ -1,4 +1,4 @@
-package com.example.android.goatchat;
+package com.example.android.goatchat.models;
 
 import java.sql.Timestamp;
 import java.util.ArrayList;
