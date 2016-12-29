@@ -24,7 +24,7 @@ import java.util.ArrayList;
 import java.util.List;
 import java.util.Map;
 
-public class UserListActivity extends AppCompatActivity {
+public class AddFriendsActivity extends AppCompatActivity {
     private List<Friend> myUsers = new ArrayList<Friend>();
 
     @Override
@@ -61,7 +61,7 @@ public class UserListActivity extends AppCompatActivity {
 
     private class MyListAdapter extends ArrayAdapter<Friend>{
         public MyListAdapter(){
-            super(UserListActivity.this, R.layout.item_view, myUsers);
+            super(AddFriendsActivity.this, R.layout.item_view, myUsers);
         }
 
         //this overrides ArrayAdapter's getView

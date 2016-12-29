@@ -33,7 +33,7 @@ public class ScreenManagerActivity extends AppCompatActivity {
     }
 
     public void openUsers(View view){
-        Intent intent = new Intent(this, UserListActivity.class);
+        Intent intent = new Intent(this, AddFriendsActivity.class);
         intent.putExtra("uid", "c");
         startActivity(intent);
         Log.d(Constants.LOG_TAG, "open Users");
