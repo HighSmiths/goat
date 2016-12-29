@@ -13,6 +13,7 @@ import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.EditText;
+import android.widget.TextView;
 import android.widget.Toast;
 
 import com.facebook.AccessToken;
@@ -112,8 +113,19 @@ public  class MainActivity extends AppCompatActivity{
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
 
+//        Testing Database methods
 //        Database.instance.addFriendForUserWithUID("Gn6YHvwr5yMgLsTKRLrdoul6hw52", "P9ZbZsni4OR0YPU9qiVDTeqFxO92");
-        Database.instance.createMessage("Gn6YHvwr5yMgLsTKRLrdoul6hw52", "P9ZbZsni4OR0YPU9qiVDTeqFxO92", true);
+//        Database.instance.createMessage("Gn6YHvwr5yMgLsTKRLrdoul6hw52", "P9ZbZsni4OR0YPU9qiVDTeqFxO92", true);
+
+
+//        class Callback implements GetUserCallback {
+//            @Override
+//            public void execute(User user) {
+//                Log.d(Constants.LOG_TAG, "USER: " + user.toString());
+//            }
+//        }
+//        Database.instance.getUserWithUID(FirebaseAuth.getInstance().getCurrentUser().getUid(), new Callback());
+
 
         mAuth = FirebaseAuth.getInstance();
         mAuthListener = new FirebaseAuth.AuthStateListener() {
@@ -215,9 +227,12 @@ public  class MainActivity extends AppCompatActivity{
                     @Override
                     public void onComplete(@NonNull Task<AuthResult> task) {
                         Log.d("STUF", "createUserWithEmail:onComplete:" + task.isSuccessful());
-                        String uid = mAuth.getCurrentUser().getUid();
-                        String email = mAuth.getCurrentUser().getEmail();
-                        Database.instance.createNewUserRecordInFirebase(uid, email);
+                        if (task.isSuccessful()) {
+                            String uid = FirebaseAuth.getInstance().getCurrentUser().getUid();
+
+                            String email = mAuth.getCurrentUser().getEmail();
+                            Database.instance.createNewUserRecordInFirebase(uid, email);
+                        }
 
                         // If sign in fails, display a message to the user. If sign in succeeds
                         // the auth state listener will be notified and logic to handle the
