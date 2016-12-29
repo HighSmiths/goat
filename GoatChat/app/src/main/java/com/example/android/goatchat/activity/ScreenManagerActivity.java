@@ -76,4 +76,18 @@ public class ScreenManagerActivity extends AppCompatActivity {
         Log.d(Constants.LOG_TAG, "open AboutUsActivity");
     }
 
+    public void fbFriends(View view){
+        Intent intent = new Intent(this, FacebookFriendsActivity.class);
+        intent.putExtra("uid","c");
+        startActivity(intent);
+        Log.d(Constants.LOG_TAG, "open ffa");
+    }
+
+    public void searchUsername(View view){
+        Intent intent = new Intent(this, SearchUsernameActivity.class);
+        intent.putExtra("uid","c");
+        startActivity(intent);
+        Log.d(Constants.LOG_TAG, "open ffa");
+    }
+
 }

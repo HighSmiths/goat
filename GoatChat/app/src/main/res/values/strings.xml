@@ -11,4 +11,7 @@
     <string name="title_activity_about_us">AboutUsActivity</string>
     <string name="title_activity_face_book_friends">faceBookFriendsActivity</string>
     <string name="title_activity_facebook_friends">FacebookFriendsActivity</string>
+    <string name="title_activity_search_username">SearchUsernameActivity</string>
+    <string name="app_label">TODO</string>
+    <string name="search_hint">TODO</string>
 </resources>
