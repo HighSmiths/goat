@@ -52,8 +52,6 @@ public class Database {
 
 //    TODO: IN PROGRESS
     public void createMessage(String mid, String fromUID, String toUID, int body) {
-        Log.d(Constants.LOG_TAG,"message being created");
-
 //      This is the msgID
         String msgKey = database.getReference().child("messages").push().getKey();
         Message msg = new Message(msgKey,fromUID, toUID, body);
@@ -69,8 +67,8 @@ public class Database {
         Log.d(Constants.LOG_TAG, "In create message function");
         Log.d(Constants.LOG_TAG, "Path: " + "users/" + toUID );
 
-        incrementMsgCount(fromUID, "sent");
-        incrementMsgCount(toUID, "received");
+//        incrementMsgCount(fromUID, "sent");
+//        incrementMsgCount(toUID, "received");
     }
 
 //  Helper function to increment message count.
@@ -217,20 +215,20 @@ public class Database {
 
                     database.getReference().child("users").child(userUID + "/friends").push().setValue(friendUID);
 
-                    database.getReference().child("users").child(userUID).runTransaction(new Transaction.Handler() {
-                        @Override
-                        public Transaction.Result doTransaction(MutableData mutableData) {
-                            User user = mutableData.getValue(User.class);
-                            // TODO: This isn't safe if user adds friends from multiple clients simultaneously.
-                            user.numFriends = user.getFriends().size();
-                            mutableData.setValue(user);
-                            return Transaction.success(mutableData);
-                        }
-
-                        @Override
-                        public void onComplete(DatabaseError databaseError, boolean b, DataSnapshot dataSnapshot) {
-                        }
-                    });
+//                    database.getReference().child("users").child(userUID).runTransaction(new Transaction.Handler() {
+//                        @Override
+//                        public Transaction.Result doTransaction(MutableData mutableData) {
+//                            User user = mutableData.getValue(User.class);
+//                            // TODO: This isn't safe if user adds friends from multiple clients simultaneously.
+//                            user.numFriends = user.getFriends().size();
+//                            mutableData.setValue(user);
+//                            return Transaction.success(mutableData);
+//                        }
+//
+//                        @Override
+//                        public void onComplete(DatabaseError databaseError, boolean b, DataSnapshot dataSnapshot) {
+//                        }
+//                    });
                 }
             }
         }

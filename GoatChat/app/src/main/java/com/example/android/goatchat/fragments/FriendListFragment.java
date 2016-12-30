@@ -82,11 +82,10 @@ public class FriendListFragment extends Fragment {
         ListView list = (ListView) view.findViewById(R.id.content_friend_list);
         list.setAdapter(adapter);
 
-
         senders= new ArrayList<String>();
         receivers = new ArrayList<String>();
 
-        Button sendButton = (Button) activity.findViewById(R.id.SendGoat);
+        Button sendButton = (Button) view.findViewById(R.id.SendGoat);
         sendButton.setText("Send Goat");
         sendButton.setOnClickListener(new View.OnClickListener() {
             public void onClick(View v) {
