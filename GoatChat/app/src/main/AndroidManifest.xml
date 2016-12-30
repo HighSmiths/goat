@@ -42,10 +42,6 @@
             </intent-filter>
         </activity>
         <activity
-            android:name=".ListOfFriends"
-            android:label="@string/title_list_of_friends"
-            android:theme="@style/AppTheme.NoActionBar" />
-        <activity
             android:name=".activity.AddFriendsActivity"
             android:label="@string/title_activity_user_list"
             android:theme="@style/AppTheme.NoActionBar" />

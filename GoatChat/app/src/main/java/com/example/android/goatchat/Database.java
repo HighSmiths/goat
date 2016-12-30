@@ -144,7 +144,7 @@ public class Database {
                         GenericTypeIndicator<Map<String, Message>> genericTypeIndicator = new GenericTypeIndicator<Map<String, Message>>() {};
 
 
-                        Log.d(Constants.LOG_TAG, dataSnapshot.getValue(genericTypeIndicator).toString());
+                      //  Log.d(Constants.LOG_TAG, dataSnapshot.getValue(genericTypeIndicator).toString());
 
 
                         Map<String, Message> messages = dataSnapshot.getValue(genericTypeIndicator);
@@ -273,7 +273,7 @@ public class Database {
                     @Override
                     public void onDataChange(DataSnapshot dataSnapshot) {
                         GenericTypeIndicator<Map<String, User>> genericTypeIndicator = new GenericTypeIndicator<Map<String, User>>() {};
-
+                        Log.d(Constants.LOG_TAG, genericTypeIndicator.toString());
                         Map<String, User> users = dataSnapshot.getValue(genericTypeIndicator);
                         callback.execute(users);
                     }
