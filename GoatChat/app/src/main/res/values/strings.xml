@@ -14,4 +14,5 @@
     <string name="title_activity_search_username">SearchUsernameActivity</string>
     <string name="app_label">TODO</string>
     <string name="search_hint">TODO</string>
+    <string name="title_activity_happy_goat">HappyGoatActivity</string>
 </resources>

@@ -1,5 +1,6 @@
 package com.example.android.goatchat.activity;
 
+import android.content.Intent;
 import android.os.Bundle;
 import android.support.v7.app.AppCompatActivity;
 import android.util.Log;
@@ -63,6 +64,29 @@ public class MessageListActivity extends AppCompatActivity {
         list.setAdapter(adapter);
     }
 
+    private void showGoat(int typeOfGoat) {
+        switch (typeOfGoat){
+            case 0:
+                showHappyGoat();
+
+        }
+
+    }
+
+
+    private void showHappyGoat() {
+        Intent intent = new Intent(this, HappyGoatActivity.class);
+        intent.putExtra("uid", FirebaseAuth.getInstance().getCurrentUser().getUid());
+        startActivity(intent);
+    }
+    /*
+    private void showSadGoat(){
+        Intent intent = new Intent(this, SadGoatActivity.class);
+        intent.putExtra("uid", FirebaseAuth.getInstance().getCurrentUser().getUid());
+        startActivity(intent);
+    }
+    */
+
     private class MyListAdapter extends ArrayAdapter<Message>{
         public MyListAdapter(){
             //Log.d(Constants.LOG_TAG,"big berhta");
@@ -106,7 +130,8 @@ public class MessageListActivity extends AppCompatActivity {
             button.setOnClickListener(new View.OnClickListener(){
                 public void onClick(View v){
                     Log.d(Constants.LOG_TAG,"message clicked");
-                    Database.instance.setReceivedMessagetoSeen(messageId, currentMessage.fromUID);   //SEDNS HAPPY GOAT
+                    Database.instance.setReceivedMessagetoSeen(messageId, currentMessage.fromUID);   //shows message
+                    showGoat(0);  //type of goat
                 }
             });
 
