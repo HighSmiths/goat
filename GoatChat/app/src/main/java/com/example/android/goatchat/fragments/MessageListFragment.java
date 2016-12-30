@@ -72,6 +72,11 @@ public class MessageListFragment extends Fragment{
                 try {
                     friendMap = new HashMap<>();
                     for (Message msg : messages.values()) {
+                        if(msg.getOpened() == true){
+                            continue;
+                        }
+
+
                         String senderUID = msg.getFromUID();
 //                      If sender is already stored, just update its messages.
                         if (friendMap.keySet().contains(senderUID))
@@ -116,10 +121,20 @@ public class MessageListFragment extends Fragment{
     private void showGoat(int typeOfGoat) {
         switch (typeOfGoat){
             case 0:
-                showHappyGoat();
+                showSadGoat();
                 break;
             case 1:
-                showSadGoat();
+                showHappyGoat();
+                break;
+            case 2:
+                showSexyGoat();
+                break;
+            case 3:
+                break;
+            case 4:
+                break;
+            case 5:
+                break;
 
         }
 
@@ -152,7 +167,7 @@ public class MessageListFragment extends Fragment{
 
         //this overrides ArrayAdapter's getView
         @Override
-        public View getView(int position, View convertView, ViewGroup parent) {
+        public View getView(final int position, View convertView, ViewGroup parent) {
             Log.d(Constants.LOG_TAG, "view seen");
             View itemView = convertView;
             if (itemView == null) {
@@ -176,7 +191,14 @@ public class MessageListFragment extends Fragment{
                 public void onClick(View v){
                     Log.d(Constants.LOG_TAG,"message clicked");
                     //Database.instance.setReceivedMessagetoSeen(messageId, currentMessage.fromUID);   //shows message
-                    showGoat(0);  //type of goat
+                    Database.instance.setReceivedMessagetoSeen(friendArr.get(position).messages.get(0).messageId, "unusued field?",
+                            friendArr.get(position).messages.get(0).getToUID(), friendArr.get(position).messages.get(0).getFromUID());
+                    int typeOGoat = friendArr.get(position).messages.get(0).typeOGoat;
+                    friendArr.get(position).messages.remove(0);
+                    showGoat(typeOGoat);  //type of goat
+                    populateListView();
+                    activity.getLayoutInflater();
+
                 }
             });
 

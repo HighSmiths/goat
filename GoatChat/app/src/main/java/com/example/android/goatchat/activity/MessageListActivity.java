@@ -173,13 +173,13 @@ public class MessageListActivity extends AppCompatActivity {
                     Log.d(Constants.LOG_TAG, friendArr.get(position).messages.get(0).getTypeOGoat()+"");
                     friendArr.get(position).messages.remove(0);
                     recreate();
-                    Database.instance.setReceivedMessagetoSeen(friendArr.get(position).messages.get(0).messageId, "useless" );
+                  //  Database.instance.setReceivedMessagetoSeen(friendArr.get(position).messages.get(0).messageId, "useless" );
                   //  Database.instance.getReceivedMessagesOfUserWithUID(FirebaseAuth.getInstance().getCurrentUser().getUid(), new  HelperMessageList());
 
                     //getView(position, convertView, parent);
                     recreate();
                     showGoat(friendArr.get(position).messages.get(0).getTypeOGoat());  //type of goat
-                   // populateListView();
+                    populateListView();
                 }
             });
 

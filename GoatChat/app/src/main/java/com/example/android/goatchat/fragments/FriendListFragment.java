@@ -1,6 +1,7 @@
 package com.example.android.goatchat.fragments;
 
 import android.app.Activity;
+import android.content.Intent;
 import android.os.Bundle;
 import android.support.v4.app.Fragment;
 import android.util.Log;
@@ -9,6 +10,7 @@ import android.view.View;
 import android.view.ViewGroup;
 import android.widget.ArrayAdapter;
 import android.widget.Button;
+import android.widget.CheckBox;
 import android.widget.ImageView;
 import android.widget.ListView;
 import android.widget.TextView;
@@ -16,6 +18,7 @@ import android.widget.TextView;
 import com.example.android.goatchat.Constants;
 import com.example.android.goatchat.Database;
 import com.example.android.goatchat.R;
+import com.example.android.goatchat.activity.GoatSelectionActivity;
 import com.example.android.goatchat.callback.GetFriendsCallback;
 import com.example.android.goatchat.models.Friend;
 import com.google.firebase.auth.FirebaseAuth;
@@ -32,8 +35,8 @@ public class FriendListFragment extends Fragment {
     Activity activity;
     View view;
     private List<Friend> myFriends = new ArrayList<Friend>();
-
-
+    private ArrayList<String> Senders;
+    private ArrayList<String> Receivers;
 
     //    TODO: Something about having activity implement an interface???
 //    http://stackoverflow.com/questions/14354279/call-parents-activity-from-a-fragment
@@ -52,8 +55,8 @@ public class FriendListFragment extends Fragment {
 
         class HelperFriendList implements GetFriendsCallback {
             @Override
-            public void execute(Map<String, String> users){
-                Log.d(Constants.LOG_TAG,"executed friendly call of the wild");
+            public void execute(Map<String, String> users) {
+                Log.d(Constants.LOG_TAG, "executed friendly call of the wild");
                 try {
                     for (String uid : users.values()) {
                         // Log.d(Constants.LOG_TAG, uid+"");
@@ -61,28 +64,40 @@ public class FriendListFragment extends Fragment {
                     }
 
                     populateListView();
-                }
-                catch(Exception e)
-                {
+                } catch (Exception e) {
                     Log.d(Constants.LOG_TAG, "Uh oh, looks like you have no friends");
                 }
             }
+
         }
 
-        Database.instance.getFriendsOfUserWithUID(FirebaseAuth.getInstance().getCurrentUser().getUid(), new  HelperFriendList());
+        Database.instance.getFriendsOfUserWithUID(FirebaseAuth.getInstance().getCurrentUser().getUid(), new HelperFriendList());
 
         return view;
     }
 
-    private void populateListView(){
+    private void populateListView() {
         ArrayAdapter<Friend> adapter = new FriendListFragment.MyListAdapter();
         ListView list = (ListView) view.findViewById(R.id.content_friend_list);
         list.setAdapter(adapter);
 
+
+        Senders= new ArrayList<String>();
+        Receivers = new ArrayList<String>();
+
+        Button sendButton = (Button) activity.findViewById(R.id.SendGoat);
+        sendButton.setText("Send Goat");
+        sendButton.setOnClickListener(new View.OnClickListener() {
+            public void onClick(View v) {
+                Log.d("clicked", "seriend button");
+                launchSelectGoat(Senders, Receivers);
+            }
+        });
+
     }
 
-    private class MyListAdapter extends ArrayAdapter<Friend>{
-        public MyListAdapter(){
+    private class MyListAdapter extends ArrayAdapter<Friend> {
+        public MyListAdapter() {
             super(activity, R.layout.friend_list_item, myFriends);
         }
 
@@ -94,13 +109,13 @@ public class FriendListFragment extends Fragment {
                 itemView = activity.getLayoutInflater().inflate(R.layout.friend_list_item, parent, false);
             }
 
-            Log.d(Constants.LOG_TAG,"friends array adapter");
+            Log.d(Constants.LOG_TAG, "friends array adapter");
             //Find the car to work with
             Friend currentFriend = myFriends.get(position);
             final String friendUid = currentFriend.getUser();
 
             //Fill the view
-            ImageView imageView = (ImageView)itemView.findViewById(R.id.item_icon);
+            ImageView imageView = (ImageView) itemView.findViewById(R.id.item_icon);
             imageView.setImageResource(currentFriend.getIconID());
 
             //Make:
@@ -108,16 +123,47 @@ public class FriendListFragment extends Fragment {
             nameText.setText(currentFriend.getUser());
 
 
+            final CheckBox checkBox = (CheckBox) itemView.findViewById(R.id.checkBox);
+            checkBox.setOnClickListener(new View.OnClickListener() {
+                @Override
+                public void onClick(View v) {
+                    if(checkBox.isChecked()){
+                        Log.d(Constants.LOG_TAG, "checked");
+                    }
+                    else{
+                        Log.d(Constants.LOG_TAG, "empty");
+                    }
+                }
+            });
+
+
+
             Button button = (Button) itemView.findViewById(R.id.send_msg_button);
-            button.setOnClickListener(new View.OnClickListener(){
-                public void onClick(View v){
-                    Log.d("clicked","friend button");
-                    //TODO fix temp message id
-                    Database.instance.createMessage("TEMP",FirebaseAuth.getInstance().getCurrentUser().getUid(), friendUid, 0);   //SEDNS HAPPY GOAT
+            button.setOnClickListener(new View.OnClickListener() {
+                public void onClick(View v) {
+                    Log.d("clicked", "friend button");
+                    selectGoat(FirebaseAuth.getInstance().getCurrentUser().getUid(), friendUid);
+
+                    //          Database.instance.createMessage("TEMP",FirebaseAuth.getInstance().getCurrentUser().getUid(), friendUid, 0);   //SEDNS HAPPY GOAT
                 }
             });
             return itemView;
         }
 
     }
+
+    public void launchSelectGoat(ArrayList<String> senders, ArrayList<String> receivers)
+    {
+        //TODO
+    }
+    public void selectGoat(String sender, String receiver){
+
+        Intent intent = new Intent(FriendListFragment.this.getActivity(), GoatSelectionActivity.class);
+        Bundle bundle = new Bundle();
+        bundle.putString("sender", sender);
+        bundle.putString("receiver", receiver);
+        intent.putExtras(bundle);
+        startActivity(intent);
+    }
+
 }
