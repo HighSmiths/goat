@@ -83,7 +83,12 @@
         android:layout_alignLeft="@+id/button12"
         android:layout_alignStart="@+id/button12"
         android:background="#00000000"
-        android:onClick="sendHappyGoats"/>
+        android:onClick="sendHappyGoats"
+        android:gravity="bottom|center"/>
+
+    
+
+
 
     <TextView
         android:text="Select a Goat"
