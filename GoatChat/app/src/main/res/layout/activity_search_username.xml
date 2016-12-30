@@ -27,6 +27,13 @@
 
     </android.support.design.widget.AppBarLayout>
 
+    <TextView
+        android:text="no searches found"
+        android:id="@+id/fID"
+        android:layout_marginTop="300dp"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        />
     <android.support.design.widget.FloatingActionButton
         android:id="@+id/fab"
         android:layout_width="wrap_content"
@@ -34,5 +41,13 @@
         android:layout_gravity="bottom|end"
         android:layout_margin="@dimen/fab_margin"
         app:srcCompat="@android:drawable/ic_dialog_email" />
+
+    <Button
+        android:text="Add Friend"
+        android:layout_marginTop="400dp"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:id="@+id/addFriend" />
+
 
 </android.support.design.widget.CoordinatorLayout>

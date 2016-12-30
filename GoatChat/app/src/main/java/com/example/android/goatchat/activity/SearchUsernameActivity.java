@@ -13,10 +13,21 @@ import android.util.Log;
 import android.view.Menu;
 import android.view.MenuInflater;
 import android.view.View;
+import android.widget.Button;
 import android.widget.SearchView;
+import android.widget.TextView;
 
 import com.example.android.goatchat.Constants;
+import com.example.android.goatchat.Database;
 import com.example.android.goatchat.R;
+import com.example.android.goatchat.callback.GetUserCallback;
+import com.example.android.goatchat.callback.GetUsersCallback;
+import com.example.android.goatchat.models.User;
+import com.google.firebase.auth.FirebaseAuth;
+
+import org.w3c.dom.Text;
+
+import java.util.Map;
 
 public class SearchUsernameActivity extends AppCompatActivity {
 
@@ -61,13 +72,39 @@ public class SearchUsernameActivity extends AppCompatActivity {
             }
         });
 
+        final TextView textView = (TextView) findViewById(R.id.fID);
+        final Button button = (Button) findViewById(R.id.addFriend);
         SearchView searchView = (SearchView) findViewById(R.id.searchbar);
         searchView.setOnQueryTextListener(new SearchView.OnQueryTextListener(){
             @Override
             public boolean onQueryTextSubmit(String s) {
                 Log.d(Constants.LOG_TAG, "onQueryTextSubmit ");
+
+                class helper implements GetUsersCallback {
+                    @Override
+                    public void execute(Map<String, User> users) {
+                        Log.d(Constants.LOG_TAG,users.toString());
+                        for(User user :users.values()) {
+                            textView.setText(user.username);
+                        }
+                        for(User user: users.values()) {
+                            final User finUser = user;
+                            button.setOnClickListener(new View.OnClickListener() {
+                                public void onClick(View v) {
+                                    Log.d("clicked", "friendbutton");
+                                    Log.d(Constants.LOG_TAG, FirebaseAuth.getInstance().getCurrentUser().getUid() +","+ finUser.uid);
+                                    //TODO fix temp message id
+                                    Database.instance.addFriendForUserWithUID(FirebaseAuth.getInstance().getCurrentUser().getUid(), finUser.uid);
+                                }
+                            });
+                        }
+
+                    }
+                }
+                Database.instance.getUserWithUsername(s,new helper());
                 return false;
             }
+
 
             @Override
             public boolean onQueryTextChange(String s) {
