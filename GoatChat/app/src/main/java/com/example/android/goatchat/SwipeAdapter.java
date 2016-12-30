@@ -47,7 +47,7 @@ public class SwipeAdapter extends FragmentStatePagerAdapter {
 
     @Override
     public int getCount(){
-        return 5;
+        return 4;
     }
 
 
