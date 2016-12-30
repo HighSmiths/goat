@@ -52,15 +52,6 @@ public class AddFriendsFragment extends Fragment {
         Toolbar toolbar = (Toolbar) activity.findViewById(R.id.toolbar);
         activity.setSupportActionBar(toolbar);
 
-        FloatingActionButton fab = (FloatingActionButton) view.findViewById(R.id.fab);
-        fab.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View view) {
-                Snackbar.make(view, "Replace with your own action", Snackbar.LENGTH_LONG)
-                        .setAction("Action", null).show();
-            }
-        });
-
         final TextView textView = (TextView) view.findViewById(R.id.fID);
         final Button button = (Button) view.findViewById(R.id.addFriend);
         SearchView searchView = (SearchView) view.findViewById(R.id.searchbar);

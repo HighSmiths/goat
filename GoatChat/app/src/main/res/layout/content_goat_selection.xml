@@ -23,6 +23,7 @@
         android:layout_alignParentEnd="true"
         android:layout_marginRight="25dp"
         android:layout_marginEnd="25dp"
+        android:background="#00000000"
         android:onClick="sendSadGoats"/>
 
     <Button
@@ -34,6 +35,7 @@
         android:layout_below="@+id/button11"
         android:layout_alignLeft="@+id/button11"
         android:layout_alignStart="@+id/button11"
+        android:background="#00000000"
         android:onClick="sendSexyGoats"/>
 
     <Button
@@ -45,6 +47,7 @@
         android:layout_alignParentBottom="true"
         android:layout_alignLeft="@+id/button9"
         android:layout_alignStart="@+id/button9"
+        android:background="#00000000"
         android:onClick="sendFratGoats"/>
 
     <Button
@@ -56,6 +59,7 @@
         android:layout_alignParentBottom="true"
         android:layout_toLeftOf="@+id/button11"
         android:layout_toStartOf="@+id/button11"
+        android:background="#00000000"
         android:onClick="sendObsequiousGoats"/>
 
     <Button
@@ -67,6 +71,7 @@
         android:layout_above="@+id/button13"
         android:layout_alignLeft="@+id/button10"
         android:layout_alignStart="@+id/button10"
+        android:background="#00000000"
         android:onClick="sendNostalgicGoats"/>
 
     <Button
@@ -77,6 +82,7 @@
         android:layout_above="@+id/button12"
         android:layout_alignLeft="@+id/button12"
         android:layout_alignStart="@+id/button12"
+        android:background="#00000000"
         android:onClick="sendHappyGoats"/>
 
     <TextView
