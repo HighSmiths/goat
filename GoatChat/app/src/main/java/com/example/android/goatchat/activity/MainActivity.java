@@ -165,7 +165,6 @@ public  class MainActivity extends AppCompatActivity {
                             String uid = FirebaseAuth.getInstance().getCurrentUser().getUid();
 
                             String email = mAuth.getCurrentUser().getEmail();
-                            Database.instance.createNewUser(uid, email);
                         }
 
                         // If sign in fails, display a message to the user. If sign in succeeds
