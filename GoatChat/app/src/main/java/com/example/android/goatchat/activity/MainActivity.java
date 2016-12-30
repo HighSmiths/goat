@@ -2,6 +2,7 @@ package com.example.android.goatchat.activity;
 
 import android.content.Intent;
 import android.support.annotation.NonNull;
+import android.support.v4.view.ViewPager;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
 import android.util.*;
@@ -11,6 +12,7 @@ import android.widget.EditText;
 import com.example.android.goatchat.Constants;
 import com.example.android.goatchat.Database;
 import com.example.android.goatchat.R;
+import com.example.android.goatchat.SwipeAdapter;
 import com.example.android.goatchat.callback.GetUsersCallback;
 import com.example.android.goatchat.models.User;
 import com.facebook.AccessToken;
