@@ -15,7 +15,7 @@ import com.example.android.goatchat.Constants;
 import com.example.android.goatchat.R;
 import com.google.firebase.auth.FirebaseAuth;
 
-public class HappyGoatActivity extends AppCompatActivity {
+public class SadGoatActivity extends AppCompatActivity {
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -33,8 +33,8 @@ public class HappyGoatActivity extends AppCompatActivity {
         });
 
 
-        ImageView imageView = (ImageView)findViewById(R.id.happy_goat);
-        imageView.setImageResource(R.drawable.happy_goat);
+        ImageView imageView = (ImageView)findViewById(R.id.sad_goat);
+        imageView.setImageResource(R.drawable.sad_goat);
 
         final Handler handler = new Handler();
         handler.postDelayed(new Runnable() {

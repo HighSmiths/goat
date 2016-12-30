@@ -84,6 +84,10 @@
         <activity
             android:name=".activity.HappyGoatActivity"
             android:label="@string/title_activity_happy_goat"
+            android:theme="@style/AppTheme.NoActionBar" />
+        <activity
+            android:name=".activity.SadGoatActivity"
+            android:label="@string/title_activity_sad_goat"
             android:theme="@style/AppTheme.NoActionBar"></activity>
     </application>
 

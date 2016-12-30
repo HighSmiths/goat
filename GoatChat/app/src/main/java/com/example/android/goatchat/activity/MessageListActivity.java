@@ -91,29 +91,33 @@ public class MessageListActivity extends AppCompatActivity {
         list.setAdapter(adapter);
     }
 
-
     private void showGoat(int typeOfGoat) {
         switch (typeOfGoat){
             case 0:
                 showHappyGoat();
+                break;
+            case 1:
+                showSadGoat();
 
         }
 
     }
-
 
     private void showHappyGoat() {
         Intent intent = new Intent(this, HappyGoatActivity.class);
         intent.putExtra("uid", FirebaseAuth.getInstance().getCurrentUser().getUid());
         startActivity(intent);
     }
-    /*
+
     private void showSadGoat(){
         Intent intent = new Intent(this, SadGoatActivity.class);
         intent.putExtra("uid", FirebaseAuth.getInstance().getCurrentUser().getUid());
         startActivity(intent);
     }
-    */
+
+    private void showSexyGoat(){
+        //TODO
+    }
 
 
     private class MyListAdapter extends ArrayAdapter<ListEntity>{
@@ -133,27 +137,14 @@ public class MessageListActivity extends AppCompatActivity {
                 itemView = getLayoutInflater().inflate(R.layout.message_list_item, parent, false);
             }
 
-            //Find the car to work with
-//            final Message currentMessage = myMessages.get(position);
-//            final String messageId = currentMessage.getMessageId();
-
-            //Fill the view
-          //  ImageView imageView = (ImageView)itemView.findViewById(R.id.item_icon);
-           // imageView.setImageResource();
-
-            //Make:
             String str = "FROM: " + friendArr.get(position).fromUID;
             TextView makeText = (TextView) itemView.findViewById(R.id.friend_name);
             makeText.setText(str);
 
-            //Year:
+
             str = "Number of messages:" + friendArr.get(position).messages.size();
             TextView yearText = (TextView) itemView.findViewById(R.id.num_messages);
             yearText.setText(str);
-
-            //Condition:
-            //TextView conditionText = (TextView) itemView.findViewById(R.id.item_txtCondition);
-            //conditionText.setText(currentFriend.getCondition());
 
 
             Button button = (Button) itemView.findViewById(R.id.view_messages_button);
@@ -165,16 +156,6 @@ public class MessageListActivity extends AppCompatActivity {
                     showGoat(0);  //type of goat
                 }
             });
-
-//            TODO: Implement button press -> view message
-//            Button button = (Button) itemView.findViewById(R.id.bfbutton);
-//            Log.d(Constants.LOG_TAG, "making button");
-//            button.setOnClickListener(new View.OnClickListener(){
-//                public void onClick(View v){
-//                    Log.d(Constants.LOG_TAG,"message clicked");
-//                    Database.instance.setReceivedMessagetoSeen(messageId, currentMessage.fromUID);   //SEDNS HAPPY GOAT
-//                }
-//            });
 
             return itemView;
         }
