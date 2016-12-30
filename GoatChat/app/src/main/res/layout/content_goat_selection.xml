@@ -72,7 +72,7 @@
     <Button
         android:text="Happy"
         android:layout_width="150dp"
-        android:layout_height="40dp"
+        android:layout_height="120dp"
         android:id="@+id/button8"
         android:layout_above="@+id/button12"
         android:layout_alignLeft="@+id/button12"
@@ -89,12 +89,5 @@
         android:layout_centerHorizontal="true"
         android:layout_marginTop="31dp" />
 
-    <ImageView
-        android:id="@+id/happy_goatss"
-        android:layout_height="80dp"
-        android:layout_width="150dp"
-        app:srcCompat="@drawable/icon_goat"
-        android:layout_above="@+id/button8"
-        android:layout_alignLeft="@+id/button8"
-        android:layout_alignStart="@+id/button8" />
+
 </RelativeLayout>
