@@ -143,7 +143,7 @@ public class TabExample extends AppCompatActivity {
         @Override
         public int getCount() {
             // Show 3 total pages.
-            return 3;
+            return 4;
         }
 
         @Override
@@ -155,6 +155,9 @@ public class TabExample extends AppCompatActivity {
                     return "SEARCH";
                 case 2:
                     return "SEND GOATS";
+
+                case 3:
+                    return "LOGOUT";
             }
             return null;
         }
