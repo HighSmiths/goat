@@ -24,7 +24,9 @@
         android:layout_marginRight="25dp"
         android:layout_marginEnd="25dp"
         android:background="#00000000"
-        android:onClick="sendSadGoats"/>
+        android:onClick="sendSadGoats"
+        android:textColor="@android:color/white"
+        android:gravity="bottom|center"/>
 
     <Button
         android:enabled="false"
@@ -36,7 +38,8 @@
         android:layout_alignLeft="@+id/button11"
         android:layout_alignStart="@+id/button11"
         android:background="#00000000"
-        android:onClick="sendSexyGoats"/>
+        android:onClick="sendSexyGoats"
+        android:gravity="bottom|center"/>
 
     <Button
         android:enabled="false"
@@ -48,7 +51,8 @@
         android:layout_alignLeft="@+id/button9"
         android:layout_alignStart="@+id/button9"
         android:background="#00000000"
-        android:onClick="sendFratGoats"/>
+        android:onClick="sendFratGoats"
+        android:gravity="bottom|center"/>
 
     <Button
         android:text="Obsequious"
@@ -60,7 +64,8 @@
         android:layout_toLeftOf="@+id/button11"
         android:layout_toStartOf="@+id/button11"
         android:background="#00000000"
-        android:onClick="sendObsequiousGoats"/>
+        android:onClick="sendObsequiousGoats"
+        android:gravity="bottom|center"/>
 
     <Button
         android:text="Nostalgic"
@@ -72,7 +77,8 @@
         android:layout_alignLeft="@+id/button10"
         android:layout_alignStart="@+id/button10"
         android:background="#00000000"
-        android:onClick="sendNostalgicGoats"/>
+        android:onClick="sendNostalgicGoats"
+        android:gravity="bottom|center"/>
 
     <Button
         android:text="Happy"
@@ -84,6 +90,7 @@
         android:layout_alignStart="@+id/button12"
         android:background="#00000000"
         android:onClick="sendHappyGoats"
+        android:textColor="@android:color/white"
         android:gravity="bottom|center"/>
 
 
@@ -99,6 +106,29 @@
         android:layout_alignParentTop="true"
         android:layout_centerHorizontal="true"
         android:layout_marginTop="31dp" />
+
+    <ImageView
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        app:srcCompat="@drawable/happy_goat"
+        android:layout_alignTop="@+id/button8"
+        android:layout_alignLeft="@+id/button8"
+        android:layout_alignStart="@+id/button8"
+        android:id="@+id/imageView4"
+        android:layout_above="@+id/button9"
+        android:layout_toLeftOf="@+id/button11"
+        android:layout_toStartOf="@+id/button11" />
+
+    <ImageView
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        app:srcCompat="@drawable/sad_goat"
+        android:layout_alignTop="@+id/button11"
+        android:layout_toRightOf="@+id/button8"
+        android:id="@+id/imageView5"
+        android:layout_above="@+id/button9"
+        android:layout_alignRight="@+id/button11"
+        android:layout_alignEnd="@+id/button11" />
 
 
 </RelativeLayout>
