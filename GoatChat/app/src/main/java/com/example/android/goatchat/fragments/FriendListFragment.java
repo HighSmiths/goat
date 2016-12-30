@@ -35,8 +35,8 @@ public class FriendListFragment extends Fragment {
     Activity activity;
     View view;
     private List<Friend> myFriends = new ArrayList<Friend>();
-    private ArrayList<String> Senders;
-    private ArrayList<String> Receivers;
+    private ArrayList<String> senders;
+    private ArrayList<String> receivers;
 
     //    TODO: Something about having activity implement an interface???
 //    http://stackoverflow.com/questions/14354279/call-parents-activity-from-a-fragment
@@ -82,15 +82,15 @@ public class FriendListFragment extends Fragment {
         list.setAdapter(adapter);
 
 
-        Senders= new ArrayList<String>();
-        Receivers = new ArrayList<String>();
+        senders= new ArrayList<String>();
+        receivers = new ArrayList<String>();
 
         Button sendButton = (Button) activity.findViewById(R.id.SendGoat);
         sendButton.setText("Send Goat");
         sendButton.setOnClickListener(new View.OnClickListener() {
             public void onClick(View v) {
                 Log.d("clicked", "seriend button");
-                launchSelectGoat(Senders, Receivers);
+                launchSelectGoat(senders, receivers);
             }
         });
 
@@ -129,24 +129,28 @@ public class FriendListFragment extends Fragment {
                 public void onClick(View v) {
                     if(checkBox.isChecked()){
                         Log.d(Constants.LOG_TAG, "checked");
+                        receivers.add(friendUid);
+                        senders.add(FirebaseAuth.getInstance().getCurrentUser().getUid()) ;
                     }
                     else{
-                        Log.d(Constants.LOG_TAG, "empty");
+                        Log.d(Constants.LOG_TAG, "unched");
+                        receivers.remove(friendUid);
+                        senders.remove(FirebaseAuth.getInstance().getCurrentUser().getUid());
                     }
                 }
             });
 
 
 
-            Button button = (Button) itemView.findViewById(R.id.send_msg_button);
-            button.setOnClickListener(new View.OnClickListener() {
-                public void onClick(View v) {
-                    Log.d("clicked", "friend button");
-                    selectGoat(FirebaseAuth.getInstance().getCurrentUser().getUid(), friendUid);
+          //  Button button = (Button) itemView.findViewById(R.id.send_msg_button);
+          //  button.setOnClickListener(new View.OnClickListener() {
+          //      public void onClick(View v) {
+          //          Log.d("clicked", "friend button");
+          //          selectGoat(FirebaseAuth.getInstance().getCurrentUser().getUid(), friendUid);
 
                     //          Database.instance.createMessage("TEMP",FirebaseAuth.getInstance().getCurrentUser().getUid(), friendUid, 0);   //SEDNS HAPPY GOAT
-                }
-            });
+          //      }
+         //   });
             return itemView;
         }
 
@@ -154,7 +158,13 @@ public class FriendListFragment extends Fragment {
 
     public void launchSelectGoat(ArrayList<String> senders, ArrayList<String> receivers)
     {
-        //TODO
+        Log.d(Constants.LOG_TAG, senders.size()+"");
+        Intent intent = new Intent(FriendListFragment.this.getActivity(), GoatSelectionActivity.class);
+        Bundle bundle = new Bundle();
+        bundle.putStringArrayList("senders", senders);
+        bundle.putStringArrayList("receivers", receivers);
+        intent.putExtras(bundle);
+        startActivity(intent);
     }
     public void selectGoat(String sender, String receiver){
 
