@@ -72,6 +72,11 @@ public class MessageListFragment extends Fragment{
                 try {
                     friendMap = new HashMap<>();
                     for (Message msg : messages.values()) {
+                        if(msg.getOpened() == true){
+                            continue;
+                        }
+
+
                         String senderUID = msg.getFromUID();
 //                      If sender is already stored, just update its messages.
                         if (friendMap.keySet().contains(senderUID))
@@ -152,7 +157,7 @@ public class MessageListFragment extends Fragment{
 
         //this overrides ArrayAdapter's getView
         @Override
-        public View getView(int position, View convertView, ViewGroup parent) {
+        public View getView(final int position, View convertView, ViewGroup parent) {
             Log.d(Constants.LOG_TAG, "view seen");
             View itemView = convertView;
             if (itemView == null) {
@@ -176,7 +181,13 @@ public class MessageListFragment extends Fragment{
                 public void onClick(View v){
                     Log.d(Constants.LOG_TAG,"message clicked");
                     //Database.instance.setReceivedMessagetoSeen(messageId, currentMessage.fromUID);   //shows message
+                    Database.instance.setReceivedMessagetoSeen(friendArr.get(position).messages.get(0).messageId, "unusued field?",
+                            friendArr.get(position).messages.get(0).getToUID(), friendArr.get(position).messages.get(0).getFromUID());
+                    friendArr.get(position).messages.remove(0);
                     showGoat(0);  //type of goat
+                    populateListView();
+                    activity.getLayoutInflater();
+
                 }
             });
 

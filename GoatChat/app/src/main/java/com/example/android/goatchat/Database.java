@@ -95,17 +95,17 @@ public class Database {
     }
 
     //    Make these two users friends.
-    public void setReceivedMessagetoSeen(String messageID, String friendUID) {
+    public void setReceivedMessagetoSeen(String messageID, String friendUID, String toUID, String fromUID) {
         class Callback implements SetMessageSeenCallback {
             @Override
             public void execute() {}
         }
         Log.d(Constants.LOG_TAG, "2 parts");
-        setReceivedMessagetoSeen(messageID, new Callback());
+        setReceivedMessagetoSeen(messageID, new Callback(),toUID,fromUID);
     }
 
 
-    public void setReceivedMessagetoSeen(String messageId, SetMessageSeenCallback cb){
+    public void setReceivedMessagetoSeen(String messageId, SetMessageSeenCallback cb, String toUID, String fromUID){
         final SetMessageSeenCallback callback = cb;
         DatabaseReference.CompletionListener listener = new DatabaseReference.CompletionListener(){
             @Override
@@ -116,6 +116,10 @@ public class Database {
 
         Log.d(Constants.LOG_TAG, "3 parts");
         database.getReference().child("messages").child(messageId).child("opened").setValue(true);
+        database.getReference().child("users").child(fromUID).child("sentMessages").child(messageId).child("opened").setValue(true);
+        database.getReference().child("users").child(toUID).child("receivedMessages").child(messageId).child("opened").setValue(true);
+
+       // database.getReference().child("users").child(messageId).child("")
     }
 
    /* public void deleteMessage(String messageId, DeleteMessage cb){
