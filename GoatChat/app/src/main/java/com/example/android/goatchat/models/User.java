@@ -1,5 +1,10 @@
 package com.example.android.goatchat.models;
 
+import android.util.Log;
+
+import com.example.android.goatchat.Constants;
+import com.facebook.FacebookSdk;
+
 import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.List;
@@ -28,11 +33,21 @@ public class User {
 
     public User(String uid, String email) {
         this.uid = uid;
-        this.username = email.split("@")[0];
-        this.email = email;
+        Log.d(Constants.LOG_TAG, "email:"+email);
+        if(email != null) {
+            this.username = email.split("@")[0];
+            this.email = email;
+        }
+        else{
+            Log.d(Constants.LOG_TAG, "NOEMAL");
+            this.username = email;
+        }
         this.sentMessages = new HashMap<>();
         this.receivedMessages = new HashMap<>();
         this.friends = new HashMap<>();
+
+
+
     }
 
     public String getUid() {
