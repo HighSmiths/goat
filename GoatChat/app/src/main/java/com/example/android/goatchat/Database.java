@@ -3,6 +3,7 @@ package com.example.android.goatchat;
 import android.util.*;
 
 import com.example.android.goatchat.callback.AddFriendCallback;
+import com.example.android.goatchat.callback.DeleteMessage;
 import com.example.android.goatchat.callback.GetUsersCallback;
 import com.example.android.goatchat.callback.GetFriendsCallback;
 import com.example.android.goatchat.callback.GetMessagesCallback;
@@ -50,19 +51,20 @@ public class Database {
 
 
 //    TODO: IN PROGRESS
-    public void createMessage(String mid, String fromUID, String toUID, Boolean body) {
+    public void createMessage(String mid, String fromUID, String toUID, int body) {
         Log.d(Constants.LOG_TAG,"message being created");
 
+//      This is the msgID
         String msgKey = database.getReference().child("messages").push().getKey();
         Message msg = new Message(msgKey,fromUID, toUID, body);
 
 
-        String key1 = database.getReference().child("users").child(fromUID).child("sentMessages").push().getKey();
-        String key2 = database.getReference().child("users").child(toUID).child("receivedMessages").push().getKey();
+//        String key1 = database.getReference().child("users").child(fromUID).child("sentMessages").push().getKey();
+//        String key2 = database.getReference().child("users").child(toUID).child("receivedMessages").push().getKey();
 
         database.getReference().child("messages").child(msgKey).setValue(msg);
-        database.getReference().child("users").child(fromUID).child("sentMessages").child(key1).setValue(msg);
-        database.getReference().child("users").child(toUID).child("receivedMessages").child(key2).setValue(msg);
+        database.getReference().child("users").child(fromUID).child("sentMessages").child(msgKey).setValue(msg);
+        database.getReference().child("users").child(toUID).child("receivedMessages").child(msgKey).setValue(msg);
 
         Log.d(Constants.LOG_TAG, "In create message function");
         Log.d(Constants.LOG_TAG, "Path: " + "users/" + toUID );
@@ -94,16 +96,17 @@ public class Database {
     }
 
     //    Make these two users friends.
-    public void setReceivedMessagetoSeen(String messageID, String friendUID) {
+    public void setReceivedMessagetoSeen(String messageID, String friendUID, String toUID, String fromUID) {
         class Callback implements SetMessageSeenCallback {
             @Override
             public void execute() {}
         }
         Log.d(Constants.LOG_TAG, "2 parts");
-        setReceivedMessagetoSeen(messageID, new Callback());
+        setReceivedMessagetoSeen(messageID, new Callback(),toUID,fromUID);
     }
 
-    public void setReceivedMessagetoSeen(String messageId, SetMessageSeenCallback cb){
+
+    public void setReceivedMessagetoSeen(String messageId, SetMessageSeenCallback cb, String toUID, String fromUID){
         final SetMessageSeenCallback callback = cb;
         DatabaseReference.CompletionListener listener = new DatabaseReference.CompletionListener(){
             @Override
@@ -114,7 +117,25 @@ public class Database {
 
         Log.d(Constants.LOG_TAG, "3 parts");
         database.getReference().child("messages").child(messageId).child("opened").setValue(true);
+        database.getReference().child("users").child(fromUID).child("sentMessages").child(messageId).child("opened").setValue(true);
+        database.getReference().child("users").child(toUID).child("receivedMessages").child(messageId).child("opened").setValue(true);
+
+       // database.getReference().child("users").child(messageId).child("")
     }
+
+   /* public void deleteMessage(String messageId, DeleteMessage cb){
+        final DeleteMessage callback = cb;
+        DatabaseReference.CompletionListener listener = new DatabaseReference.CompletionListener(){
+            @Override
+            public void onComplete(DatabaseError databaseError, DatabaseReference databaseReference) {
+                callback.execute();
+            }
+        };
+
+        Log.d(Constants.LOG_TAG, "3 parts");
+       // database.getReference().child("messages").child(messageId).
+    }
+    */
 
     public void getReceivedMessagesOfUserWithUID(String uid, GetMessagesCallback cb) {
         final GetMessagesCallback callback = cb;
@@ -124,7 +145,12 @@ public class Database {
                 new ValueEventListener() {
                     @Override
                     public void onDataChange(DataSnapshot dataSnapshot) {
+
                         GenericTypeIndicator<Map<String, Message>> genericTypeIndicator = new GenericTypeIndicator<Map<String, Message>>() {};
+
+
+                      //  Log.d(Constants.LOG_TAG, dataSnapshot.getValue(genericTypeIndicator).toString());
+
 
                         Map<String, Message> messages = dataSnapshot.getValue(genericTypeIndicator);
                         callback.execute(messages);
@@ -144,6 +170,7 @@ public class Database {
                 new ValueEventListener() {
                     @Override
                     public void onDataChange(DataSnapshot dataSnapshot) {
+                        Log.d(Constants.LOG_TAG,"datachange");
                         GenericTypeIndicator<Map<String, Message>> genericTypeIndicator = new GenericTypeIndicator<Map<String, Message>>() {};
 
                         Map<String, Message> messages = dataSnapshot.getValue(genericTypeIndicator);
@@ -155,7 +182,6 @@ public class Database {
                     }
                 });
     }
-
 
 
 //             ____  ____  __  ____  __ _  ____    ____  _  _  __ _   ___  ____  __  __   __ _  ____
@@ -252,9 +278,13 @@ public class Database {
                     @Override
                     public void onDataChange(DataSnapshot dataSnapshot) {
                         GenericTypeIndicator<Map<String, User>> genericTypeIndicator = new GenericTypeIndicator<Map<String, User>>() {};
-
+                        Log.d(Constants.LOG_TAG, genericTypeIndicator.toString());
                         Map<String, User> users = dataSnapshot.getValue(genericTypeIndicator);
-                        callback.execute(users);
+                        boolean success = false;
+                        if (users != null)
+                            success = true;
+
+                        callback.execute(users, success);
                     }
                     @Override
                     public void onCancelled(DatabaseError databaseError) {
@@ -277,7 +307,10 @@ public class Database {
                         Log.d(Constants.LOG_TAG, "getALlUsers -> onDataChange");
                         GenericTypeIndicator<Map<String, User>> genericTypeIndicator = new GenericTypeIndicator<Map<String, User>>() {};
                         Map<String, User> users = dataSnapshot.getValue(genericTypeIndicator);
-                        callback.execute(users);
+                        boolean success = false;
+                        if (users != null)
+                            success = true;
+                        callback.execute(users, success);
                     }
                     @Override
                     public void onCancelled(DatabaseError databaseError) {
@@ -285,7 +318,6 @@ public class Database {
                     }
                 });
     }
-
 
     // Reads the user with given userId.
     // Accepts a String user Id `uid` and a reference to a User object, and stores the retrieved User in `user`.

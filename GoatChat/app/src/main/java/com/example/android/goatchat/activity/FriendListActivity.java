@@ -30,7 +30,7 @@ public class FriendListActivity extends AppCompatActivity {
     protected void onCreate(Bundle savedInstanceState) {
         Log.d(Constants.LOG_TAG, "created Friend List");
         super.onCreate(savedInstanceState);
-        setContentView(R.layout.activity_friend_list);
+        setContentView(R.layout.friend_list_view);
 
 
         class HelperFriendList implements GetFriendsCallback {
@@ -67,14 +67,14 @@ public class FriendListActivity extends AppCompatActivity {
 
     private void populateListView(){
         ArrayAdapter<Friend> adapter = new MyListAdapter();
-        ListView list = (ListView) findViewById(R.id.carsListView);
+        ListView list = (ListView) findViewById(R.id.friend_list_view);
         list.setAdapter(adapter);
 
     }
 
     private class MyListAdapter extends ArrayAdapter<Friend>{
         public MyListAdapter(){
-            super(FriendListActivity.this, R.layout.item_view, myFriends);
+            super(FriendListActivity.this, R.layout.friend_list_item, myFriends);
         }
 
         //this overrides ArrayAdapter's getView
@@ -82,7 +82,7 @@ public class FriendListActivity extends AppCompatActivity {
         public View getView(int position, View convertView, ViewGroup parent) {
             View itemView = convertView;
             if (itemView == null) {
-                itemView = getLayoutInflater().inflate(R.layout.item_view, parent, false);
+                itemView = getLayoutInflater().inflate(R.layout.friend_list_item, parent, false);
             }
 
             Log.d(Constants.LOG_TAG,"friends array adapter");
@@ -95,25 +95,25 @@ public class FriendListActivity extends AppCompatActivity {
             imageView.setImageResource(currentFriend.getIconID());
 
             //Make:
-            TextView makeText = (TextView) itemView.findViewById(R.id.item_txtMake);
-            makeText.setText(currentFriend.getUser());
-
-            //Year:
-            TextView yearText = (TextView) itemView.findViewById(R.id.item_txtYear);
-            yearText.setText("" + currentFriend.getGoats_sent());
-
-            //Condition:
-            TextView conditionText = (TextView) itemView.findViewById(R.id.item_txtCondition);
-            conditionText.setText(currentFriend.getCondition());
-
-            Button button = (Button) itemView.findViewById(R.id.bfbutton);
-            button.setOnClickListener(new View.OnClickListener(){
-                public void onClick(View v){
-                    Log.d("clicked","friendbutton");
-                    //TODO fix temp message id
-                    Database.instance.createMessage("TEMP",FirebaseAuth.getInstance().getCurrentUser().getUid(), friendUid, true);   //SEDNS HAPPY GOAT
-                }
-            });
+//            TextView makeText = (TextView) itemView.findViewById(R.id.item_txtMake);
+//            makeText.setText(currentFriend.getUser());
+//
+//            //Year:
+//            TextView yearText = (TextView) itemView.findViewById(R.id.item_txtYear);
+//            yearText.setText("" + currentFriend.getGoats_sent());
+//
+//            //Condition:
+//            TextView conditionText = (TextView) itemView.findViewById(R.id.item_txtCondition);
+//            conditionText.setText(currentFriend.getCondition());
+//
+//            Button button = (Button) itemView.findViewById(R.id.bfbutton);
+//            button.setOnClickListener(new View.OnClickListener(){
+//                public void onClick(View v){
+//                    Log.d("clicked","friendbutton");
+//                    //TODO fix temp message id
+//                    Database.instance.createMessage("TEMP",FirebaseAuth.getInstance().getCurrentUser().getUid(), friendUid, 0);   //SEDNS HAPPY GOAT
+//                }
+//            });
             return itemView;
         }
 

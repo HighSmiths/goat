@@ -8,13 +8,14 @@
     android:paddingLeft="@dimen/activity_horizontal_margin"
     android:paddingRight="@dimen/activity_horizontal_margin"
     android:paddingTop="@dimen/activity_vertical_margin"
-    tools:context="com.example.android.goatchat.activity.UserListActivity">
+    tools:context="com.example.android.goatchat.activity.AddFriendsActivity">
 
     <TextView
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:text="Looks like you have a message"
+        android:text="Messages"
         android:textSize="32dp"
+        android:layout_marginTop="100dp"
         android:id="@+id/textView" />
     <ListView
         android:layout_width="match_parent"
@@ -25,6 +26,6 @@
         android:layout_marginLeft="20dp"
         android:layout_marginStart="20dp"
         android:layout_marginTop="20dp"
-        android:id="@+id/carsListView" >
+        android:id="@+id/message_list" >
     </ListView>
 </RelativeLayout>

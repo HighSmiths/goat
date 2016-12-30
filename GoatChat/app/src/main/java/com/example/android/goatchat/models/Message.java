@@ -8,9 +8,9 @@ public class Message {
     public String fromUID;
     public String toUID;
     public String messageId;
-    public int timestamp;
+    public long timestamp;
     public boolean opened;
-    public boolean typeOGoat;
+    public int typeOGoat;
 
     public Message() {
         // Default constructor required for calls to DataSnapshot.getValue(User.class)
@@ -18,7 +18,7 @@ public class Message {
     }
 
     //1 for happy 0 for sad
-    public Message(String mid, String fr, String t, boolean tp){
+    public Message(String mid, String fr, String t, int tp){
         this.fromUID = fr;
         this.toUID =t;
         this.typeOGoat = tp;
@@ -40,16 +40,20 @@ public class Message {
     public void setToUID(String toUID) {
         this.toUID = toUID;
     }
-    public boolean isTypeOGoat() {
+
+
+//    Keep this as getTypeOGoat, not isTypeOGoat, so Firebase can convert data into a Message when reading from DB.
+    public int getTypeOGoat() {
+
         return typeOGoat;
     }
-    public void setTypeOGoat(boolean typeOGoat) {
+    public void setTypeOGoat(int typeOGoat) {
         this.typeOGoat = typeOGoat;
     }
-    public int getTimestamp() {
+    public long getTimestamp() {
         return timestamp;
     }
-    public void setTimestamp(int timestamp) {
+    public void setTimestamp(long timestamp) {
         this.timestamp = timestamp;
     }
     public String getMessageId() {
@@ -58,7 +62,8 @@ public class Message {
     public void setMessageId(String messageId) {
         this.messageId = messageId;
     }
-    public boolean isOpened() {
+    //    Keep this as getOpened, not isOpened, so Firebase can convert data into a Message when reading from DB.
+    public boolean getOpened() {
         return opened;
     }
     public void setOpened(boolean opened) {
