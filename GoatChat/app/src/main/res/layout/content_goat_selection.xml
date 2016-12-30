@@ -22,7 +22,8 @@
         android:layout_alignParentRight="true"
         android:layout_alignParentEnd="true"
         android:layout_marginRight="25dp"
-        android:layout_marginEnd="25dp" />
+        android:layout_marginEnd="25dp"
+        android:onClick="sendSadGoats"/>
 
     <Button
         android:enabled="false"
@@ -32,7 +33,8 @@
         android:id="@+id/button9"
         android:layout_below="@+id/button11"
         android:layout_alignLeft="@+id/button11"
-        android:layout_alignStart="@+id/button11" />
+        android:layout_alignStart="@+id/button11"
+        android:onClick="sendSexyGoats"/>
 
     <Button
         android:enabled="false"
@@ -42,7 +44,8 @@
         android:id="@+id/button13"
         android:layout_alignParentBottom="true"
         android:layout_alignLeft="@+id/button9"
-        android:layout_alignStart="@+id/button9" />
+        android:layout_alignStart="@+id/button9"
+        android:onClick="sendFratGoats"/>
 
     <Button
         android:text="Obsequious"
@@ -52,7 +55,8 @@
         android:id="@+id/button10"
         android:layout_alignParentBottom="true"
         android:layout_toLeftOf="@+id/button11"
-        android:layout_toStartOf="@+id/button11" />
+        android:layout_toStartOf="@+id/button11"
+        android:onClick="sendObsequiousGoats"/>
 
     <Button
         android:text="Nostalgic"
@@ -62,7 +66,8 @@
         android:id="@+id/button12"
         android:layout_above="@+id/button13"
         android:layout_alignLeft="@+id/button10"
-        android:layout_alignStart="@+id/button10" />
+        android:layout_alignStart="@+id/button10"
+        android:onClick="sendNostalgicGoats"/>
 
     <Button
         android:text="Happy"
@@ -71,10 +76,11 @@
         android:id="@+id/button8"
         android:layout_above="@+id/button12"
         android:layout_alignLeft="@+id/button12"
-        android:layout_alignStart="@+id/button12" />
+        android:layout_alignStart="@+id/button12"
+        android:onClick="sendHappyGoats"/>
 
     <TextView
-        android:text="Select Your Goat"
+        android:text="Select a Goat"
         android:textSize="20pt"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
