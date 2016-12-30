@@ -5,7 +5,7 @@
     <string name="facebook_app_id">206254653114978</string>
     <string name="fb_login_protocol_scheme">fb206254653114978</string>
     <string name="title_activity_user_list">UserListActivity</string>
-    <string name="title_activity_screen_manager">ScreenManagerActivity</string>
+    <string name="title_activity_screen_manager">Goat Chat</string>
     <string name="title_activity_friend_list">FriendListActivity</string>
     <string name="title_activity_message_list">MessageListActivity</string>
     <string name="title_activity_about_us">AboutUsActivity</string>
