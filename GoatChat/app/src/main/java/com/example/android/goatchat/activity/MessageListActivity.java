@@ -18,11 +18,23 @@ import com.example.android.goatchat.callback.GetMessagesCallback;
 import com.google.firebase.auth.FirebaseAuth;
 
 import java.util.ArrayList;
+import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
 
 public class MessageListActivity extends AppCompatActivity {
-    private List<Message> myMessages = new ArrayList<Message>();
+    class ListEntity {
+        public String fromUID;
+        public List<Message> messages;
+        public ListEntity(String fromUID) {
+            this.fromUID = fromUID;
+            messages = new ArrayList<>();
+        }
+    }
+
+    private List<ListEntity> friendArr = new ArrayList<>();
+//    Maps friend UID to corresponding ListEntity.
+    private Map<String, ListEntity> friendMap = new HashMap<>();
 
 //TODO change to list mesages not friends
     @Override
@@ -37,12 +49,27 @@ public class MessageListActivity extends AppCompatActivity {
                 Log.d(Constants.LOG_TAG, "Messages: " + messages);
 
                 try {
-                    myMessages = new ArrayList<>();
-
+                    friendMap = new HashMap<>();
                     for (Message msg : messages.values()) {
-                        String mid = msg.getMessageId();
-                        Log.d(Constants.LOG_TAG, mid + "");
-                        myMessages.add(msg);  //// TODO: 12/28/16  fix true to change per goat datum
+                        String senderUID = msg.getFromUID();
+//                      If sender is already stored, just update its messages.
+                        if (friendMap.keySet().contains(senderUID))
+                            friendMap.get(senderUID).messages.add(msg);
+//                      Otherwise, create a new entity
+                        else {
+                            ListEntity item = new ListEntity(senderUID);
+                            item.messages.add(msg);
+                            friendMap.put(senderUID, item);
+                        }
+
+//                        String mid = msg.getMessageId();
+//                        Log.d(Constants.LOG_TAG, mid + "");
+//                        myMessages.add(msg);  //// TODO: 12/28/16  fix true to change per goat datum
+                    }
+//                    TODO: Need to order the items in friendArr based on timestamp of last message sent.
+                    friendArr = new ArrayList<>();
+                    for (ListEntity e : friendMap.values()) {
+                        friendArr.add(e);
                     }
                     populateListView();
                 }
@@ -58,15 +85,15 @@ public class MessageListActivity extends AppCompatActivity {
 
 
     private void populateListView(){
-        ArrayAdapter<Message> adapter = new MyListAdapter();
+        ArrayAdapter<ListEntity> adapter = new MyListAdapter();
         ListView list = (ListView) findViewById(R.id.carsListView);
         list.setAdapter(adapter);
     }
 
-    private class MyListAdapter extends ArrayAdapter<Message>{
+    private class MyListAdapter extends ArrayAdapter<ListEntity>{
         public MyListAdapter(){
             //Log.d(Constants.LOG_TAG,"big berhta");
-            super(MessageListActivity.this, R.layout.item_view, myMessages);
+            super(MessageListActivity.this, R.layout.message_list_item, friendArr);
             Log.d(Constants.LOG_TAG,"big berhta");
         }
 
@@ -82,33 +109,36 @@ public class MessageListActivity extends AppCompatActivity {
 
             //Find the car to work with
             Log.d("this p","lease");
-            final Message currentMessage = myMessages.get(position);
-            final String messageId = currentMessage.getMessageId();
+//            final Message currentMessage = myMessages.get(position);
+//            final String messageId = currentMessage.getMessageId();
 
             //Fill the view
           //  ImageView imageView = (ImageView)itemView.findViewById(R.id.item_icon);
            // imageView.setImageResource();
 
             //Make:
-            //TextView makeText = (TextView) itemView.findViewById(R.id.item_txtMake);
-            //makeText.setText(currentFriend.getUser());
+            String str = "FROM: " + friendArr.get(position).fromUID;
+            TextView makeText = (TextView) itemView.findViewById(R.id.item_txtMake);
+            makeText.setText(str);
 
             //Year:
+            str = "Number of messages:" + friendArr.get(position).messages.size();
             TextView yearText = (TextView) itemView.findViewById(R.id.item_txtYear);
-            yearText.setText("" + currentMessage.typeOGoat);
+            yearText.setText(str);
 
             //Condition:
             //TextView conditionText = (TextView) itemView.findViewById(R.id.item_txtCondition);
             //conditionText.setText(currentFriend.getCondition());
 
-            Button button = (Button) itemView.findViewById(R.id.bfbutton);
-            Log.d(Constants.LOG_TAG, "making button");
-            button.setOnClickListener(new View.OnClickListener(){
-                public void onClick(View v){
-                    Log.d(Constants.LOG_TAG,"message clicked");
-                    Database.instance.setReceivedMessagetoSeen(messageId, currentMessage.fromUID);   //SEDNS HAPPY GOAT
-                }
-            });
+//            TODO: Implement button press -> view message
+//            Button button = (Button) itemView.findViewById(R.id.bfbutton);
+//            Log.d(Constants.LOG_TAG, "making button");
+//            button.setOnClickListener(new View.OnClickListener(){
+//                public void onClick(View v){
+//                    Log.d(Constants.LOG_TAG,"message clicked");
+//                    Database.instance.setReceivedMessagetoSeen(messageId, currentMessage.fromUID);   //SEDNS HAPPY GOAT
+//                }
+//            });
 
             return itemView;
         }
