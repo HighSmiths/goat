@@ -39,7 +39,6 @@ public class SwipeAdapter extends FragmentStatePagerAdapter {
                 break;
 
 
-
         }
 
         return fragment;
@@ -47,7 +46,22 @@ public class SwipeAdapter extends FragmentStatePagerAdapter {
 
     @Override
     public int getCount(){
-        return 5;
+        return 4;
+    }
+
+    @Override
+    public CharSequence getPageTitle(int position) {
+        switch (position) {
+            case 0:
+                return "INBOX";
+            case 1:
+                return "SEARCH";
+            case 2:
+                return "SEND GOATS";
+            case 3:
+                return "SETTINGS";
+        }
+        return null;
     }
 
 
