@@ -61,7 +61,7 @@ public class AddFriendsActivity extends AppCompatActivity {
 
     private class MyListAdapter extends ArrayAdapter<Friend>{
         public MyListAdapter(){
-            super(AddFriendsActivity.this, R.layout.item_view, myUsers);
+            super(AddFriendsActivity.this, R.layout.friend_list_item, myUsers);
         }
 
         //this overrides ArrayAdapter's getView
@@ -69,7 +69,7 @@ public class AddFriendsActivity extends AppCompatActivity {
         public View getView(int position, View convertView, ViewGroup parent) {
             View itemView = convertView;
             if (itemView == null) {
-                itemView = getLayoutInflater().inflate(R.layout.item_view, parent, false);
+                itemView = getLayoutInflater().inflate(R.layout.friend_list_item, parent, false);
             }
 
             //Find the car to work with
@@ -78,27 +78,27 @@ public class AddFriendsActivity extends AppCompatActivity {
             final String friendUid = currentFriend.getUser();
 
             //Fill the view
-            ImageView imageView = (ImageView)itemView.findViewById(R.id.item_icon);
-            imageView.setImageResource(currentFriend.getIconID());
-
-            //Make:
-            final TextView makeText = (TextView) itemView.findViewById(R.id.item_txtMake);
-            makeText.setText(currentFriend.getUser());
-
-            //Year:
-            TextView yearText = (TextView) itemView.findViewById(R.id.item_txtYear);
-            yearText.setText("" + currentFriend.getGoats_sent());
-
-            //Condition:
-            TextView conditionText = (TextView) itemView.findViewById(R.id.item_txtCondition);
-            conditionText.setText(currentFriend.getCondition());
-
-            Button button = (Button) itemView.findViewById(R.id.bfbutton);
-            button.setOnClickListener(new View.OnClickListener(){
-                public void onClick(View v){
-                    Database.instance.addFriendForUserWithUID(FirebaseAuth.getInstance().getCurrentUser().getUid(), friendUid);
-                }
-            });
+//            ImageView imageView = (ImageView)itemView.findViewById(R.id.item_icon);
+//            imageView.setImageResource(currentFriend.getIconID());
+//
+//            //Make:
+//            final TextView makeText = (TextView) itemView.findViewById(R.id.item_txtMake);
+//            makeText.setText(currentFriend.getUser());
+//
+//            //Year:
+//            TextView yearText = (TextView) itemView.findViewById(R.id.item_txtYear);
+//            yearText.setText("" + currentFriend.getGoats_sent());
+//
+//            //Condition:
+//            TextView conditionText = (TextView) itemView.findViewById(R.id.item_txtCondition);
+//            conditionText.setText(currentFriend.getCondition());
+//
+////            Button button = (Button) itemView.findViewById(R.id.bfbutton);
+//            button.setOnClickListener(new View.OnClickListener(){
+//                public void onClick(View v){
+//                    Database.instance.addFriendForUserWithUID(FirebaseAuth.getInstance().getCurrentUser().getUid(), friendUid);
+//                }
+//            });
             return itemView;
         }
 

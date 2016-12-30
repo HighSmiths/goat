@@ -16,7 +16,6 @@ import android.widget.TextView;
 import com.example.android.goatchat.Constants;
 import com.example.android.goatchat.Database;
 import com.example.android.goatchat.R;
-import com.example.android.goatchat.activity.FriendListActivity;
 import com.example.android.goatchat.callback.GetFriendsCallback;
 import com.example.android.goatchat.models.Friend;
 import com.google.firebase.auth.FirebaseAuth;
@@ -49,7 +48,7 @@ public class FriendListFragment extends Fragment {
     public View onCreateView(LayoutInflater inflater, ViewGroup container,
                              Bundle savedInstanceState) {
         Log.d(Constants.LOG_TAG, "creating logout view fragment");
-        this.view = inflater.inflate(R.layout.activity_friend_list, container, false);
+        this.view = inflater.inflate(R.layout.friend_list_view, container, false);
 
         class HelperFriendList implements GetFriendsCallback {
             @Override
@@ -77,14 +76,14 @@ public class FriendListFragment extends Fragment {
 
     private void populateListView(){
         ArrayAdapter<Friend> adapter = new FriendListFragment.MyListAdapter();
-        ListView list = (ListView) view.findViewById(R.id.friend_list_view);
+        ListView list = (ListView) view.findViewById(R.id.content_friend_list);
         list.setAdapter(adapter);
 
     }
 
     private class MyListAdapter extends ArrayAdapter<Friend>{
         public MyListAdapter(){
-            super(activity, R.layout.item_view, myFriends);
+            super(activity, R.layout.friend_list_item, myFriends);
         }
 
         //this overrides ArrayAdapter's getView
@@ -92,7 +91,7 @@ public class FriendListFragment extends Fragment {
         public View getView(int position, View convertView, ViewGroup parent) {
             View itemView = convertView;
             if (itemView == null) {
-                itemView = activity.getLayoutInflater().inflate(R.layout.item_view, parent, false);
+                itemView = activity.getLayoutInflater().inflate(R.layout.friend_list_item, parent, false);
             }
 
             Log.d(Constants.LOG_TAG,"friends array adapter");
@@ -105,21 +104,14 @@ public class FriendListFragment extends Fragment {
             imageView.setImageResource(currentFriend.getIconID());
 
             //Make:
-            TextView makeText = (TextView) itemView.findViewById(R.id.item_txtMake);
-            makeText.setText(currentFriend.getUser());
+            TextView nameText = (TextView) itemView.findViewById(R.id.item_name);
+            nameText.setText(currentFriend.getUser());
 
-            //Year:
-            TextView yearText = (TextView) itemView.findViewById(R.id.item_txtYear);
-            yearText.setText("" + currentFriend.getGoats_sent());
 
-            //Condition:
-            TextView conditionText = (TextView) itemView.findViewById(R.id.item_txtCondition);
-            conditionText.setText(currentFriend.getCondition());
-
-            Button button = (Button) itemView.findViewById(R.id.bfbutton);
+            Button button = (Button) itemView.findViewById(R.id.send_msg_button);
             button.setOnClickListener(new View.OnClickListener(){
                 public void onClick(View v){
-                    Log.d("clicked","friendbutton");
+                    Log.d("clicked","friend button");
                     //TODO fix temp message id
                     Database.instance.createMessage("TEMP",FirebaseAuth.getInstance().getCurrentUser().getUid(), friendUid, 0);   //SEDNS HAPPY GOAT
                 }

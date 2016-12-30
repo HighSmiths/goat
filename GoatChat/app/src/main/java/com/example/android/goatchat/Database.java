@@ -54,16 +54,17 @@ public class Database {
     public void createMessage(String mid, String fromUID, String toUID, int body) {
         Log.d(Constants.LOG_TAG,"message being created");
 
+//      This is the msgID
         String msgKey = database.getReference().child("messages").push().getKey();
         Message msg = new Message(msgKey,fromUID, toUID, body);
 
 
-        String key1 = database.getReference().child("users").child(fromUID).child("sentMessages").push().getKey();
-        String key2 = database.getReference().child("users").child(toUID).child("receivedMessages").push().getKey();
+//        String key1 = database.getReference().child("users").child(fromUID).child("sentMessages").push().getKey();
+//        String key2 = database.getReference().child("users").child(toUID).child("receivedMessages").push().getKey();
 
         database.getReference().child("messages").child(msgKey).setValue(msg);
-        database.getReference().child("users").child(fromUID).child("sentMessages").child(key1).setValue(msg);
-        database.getReference().child("users").child(toUID).child("receivedMessages").child(key2).setValue(msg);
+        database.getReference().child("users").child(fromUID).child("sentMessages").child(msgKey).setValue(msg);
+        database.getReference().child("users").child(toUID).child("receivedMessages").child(msgKey).setValue(msg);
 
         Log.d(Constants.LOG_TAG, "In create message function");
         Log.d(Constants.LOG_TAG, "Path: " + "users/" + toUID );
