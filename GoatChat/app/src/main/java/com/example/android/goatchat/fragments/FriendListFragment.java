@@ -58,6 +58,7 @@ public class FriendListFragment extends Fragment {
             public void execute(Map<String, String> users) {
                 Log.d(Constants.LOG_TAG, "executed friendly call of the wild");
                 try {
+                    myFriends = new ArrayList<>();
                     for (String uid : users.values()) {
                         // Log.d(Constants.LOG_TAG, uid+"");
                         myFriends.add(new Friend(uid, -99, R.drawable.blank_user, "-99", "button"));

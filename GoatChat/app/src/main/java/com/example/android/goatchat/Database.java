@@ -165,7 +165,6 @@ public class Database {
     public void getSentMessagesOfUserWithUID(String uid, GetMessagesCallback cb) {
         final GetMessagesCallback callback = cb;
 
-        // Query for current user, appending all friends to the input array `arr`.
         database.getReference().child("users").child(uid).child("sentMessages").addListenerForSingleValueEvent(
                 new ValueEventListener() {
                     @Override
@@ -245,7 +244,7 @@ public class Database {
         final GetFriendsCallback callback = cb;
 
         // Query for current user, appending all friends to the input array `arr`.
-        database.getReference().child("users").child(uid).child("friends").addListenerForSingleValueEvent(
+        database.getReference().child("users").child(uid).child("friends").addValueEventListener(
                 new ValueEventListener() {
                     @Override
                     public void onDataChange(DataSnapshot dataSnapshot) {
