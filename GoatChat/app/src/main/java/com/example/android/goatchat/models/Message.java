@@ -10,7 +10,7 @@ public class Message {
     public String messageId;
     public int timestamp;
     public boolean opened;
-    public boolean typeOGoat;
+    public int typeOGoat;
 
     public Message() {
         // Default constructor required for calls to DataSnapshot.getValue(User.class)
@@ -18,7 +18,7 @@ public class Message {
     }
 
     //1 for happy 0 for sad
-    public Message(String mid, String fr, String t, boolean tp){
+    public Message(String mid, String fr, String t, int tp){
         this.fromUID = fr;
         this.toUID =t;
         this.typeOGoat = tp;
@@ -40,10 +40,10 @@ public class Message {
     public void setToUID(String toUID) {
         this.toUID = toUID;
     }
-    public boolean isTypeOGoat() {
+    public int isTypeOGoat() {
         return typeOGoat;
     }
-    public void setTypeOGoat(boolean typeOGoat) {
+    public void setTypeOGoat(int typeOGoat) {
         this.typeOGoat = typeOGoat;
     }
     public int getTimestamp() {

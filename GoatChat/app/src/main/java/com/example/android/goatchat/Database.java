@@ -3,6 +3,7 @@ package com.example.android.goatchat;
 import android.util.*;
 
 import com.example.android.goatchat.callback.AddFriendCallback;
+import com.example.android.goatchat.callback.DeleteMessage;
 import com.example.android.goatchat.callback.GetUsersCallback;
 import com.example.android.goatchat.callback.GetFriendsCallback;
 import com.example.android.goatchat.callback.GetMessagesCallback;
@@ -50,7 +51,7 @@ public class Database {
 
 
 //    TODO: IN PROGRESS
-    public void createMessage(String mid, String fromUID, String toUID, Boolean body) {
+    public void createMessage(String mid, String fromUID, String toUID, int body) {
         Log.d(Constants.LOG_TAG,"message being created");
 
         String msgKey = database.getReference().child("messages").push().getKey();
@@ -103,6 +104,7 @@ public class Database {
         setReceivedMessagetoSeen(messageID, new Callback());
     }
 
+
     public void setReceivedMessagetoSeen(String messageId, SetMessageSeenCallback cb){
         final SetMessageSeenCallback callback = cb;
         DatabaseReference.CompletionListener listener = new DatabaseReference.CompletionListener(){
@@ -116,6 +118,20 @@ public class Database {
         database.getReference().child("messages").child(messageId).child("opened").setValue(true);
     }
 
+   /* public void deleteMessage(String messageId, DeleteMessage cb){
+        final DeleteMessage callback = cb;
+        DatabaseReference.CompletionListener listener = new DatabaseReference.CompletionListener(){
+            @Override
+            public void onComplete(DatabaseError databaseError, DatabaseReference databaseReference) {
+                callback.execute();
+            }
+        };
+
+        Log.d(Constants.LOG_TAG, "3 parts");
+       // database.getReference().child("messages").child(messageId).
+    }
+    */
+
     public void getReceivedMessagesOfUserWithUID(String uid, GetMessagesCallback cb) {
         final GetMessagesCallback callback = cb;
 
@@ -124,7 +140,12 @@ public class Database {
                 new ValueEventListener() {
                     @Override
                     public void onDataChange(DataSnapshot dataSnapshot) {
+
                         GenericTypeIndicator<Map<String, Message>> genericTypeIndicator = new GenericTypeIndicator<Map<String, Message>>() {};
+
+
+                        Log.d(Constants.LOG_TAG, dataSnapshot.getValue(genericTypeIndicator).toString());
+
 
                         Map<String, Message> messages = dataSnapshot.getValue(genericTypeIndicator);
                         callback.execute(messages);
@@ -144,6 +165,7 @@ public class Database {
                 new ValueEventListener() {
                     @Override
                     public void onDataChange(DataSnapshot dataSnapshot) {
+                        Log.d(Constants.LOG_TAG,"datachange");
                         GenericTypeIndicator<Map<String, Message>> genericTypeIndicator = new GenericTypeIndicator<Map<String, Message>>() {};
 
                         Map<String, Message> messages = dataSnapshot.getValue(genericTypeIndicator);
@@ -155,7 +177,6 @@ public class Database {
                     }
                 });
     }
-
 
 
 //             ____  ____  __  ____  __ _  ____    ____  _  _  __ _   ___  ____  __  __   __ _  ____

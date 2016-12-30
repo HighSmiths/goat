@@ -111,7 +111,7 @@ public class FriendListActivity extends AppCompatActivity {
                 public void onClick(View v){
                     Log.d("clicked","friendbutton");
                     //TODO fix temp message id
-                    Database.instance.createMessage("TEMP",FirebaseAuth.getInstance().getCurrentUser().getUid(), friendUid, true);   //SEDNS HAPPY GOAT
+                    Database.instance.createMessage("TEMP",FirebaseAuth.getInstance().getCurrentUser().getUid(), friendUid, 0);   //SEDNS HAPPY GOAT
                 }
             });
             return itemView;

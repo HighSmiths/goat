@@ -52,6 +52,15 @@ public class MessageListActivity extends AppCompatActivity {
                 try {
                     friendMap = new HashMap<>();
                     for (Message msg : messages.values()) {
+                        if(msg.isOpened() == true){
+                            Log.d(Constants.LOG_TAG, "blocked");
+                            //skip message that have already been seen
+                            continue;
+                        }
+                        else{
+                            Log.d(Constants.LOG_TAG, "Seem");
+                        }
+
                         String senderUID = msg.getFromUID();
 //                      If sender is already stored, just update its messages.
                         if (friendMap.keySet().contains(senderUID))
@@ -98,6 +107,10 @@ public class MessageListActivity extends AppCompatActivity {
                 break;
             case 1:
                 showSadGoat();
+                break;
+            case 2:
+                showSexyGoat();
+                break;
 
         }
 
@@ -129,7 +142,7 @@ public class MessageListActivity extends AppCompatActivity {
 
         //this overrides ArrayAdapter's getView
         @Override
-        public View getView(int position, View convertView, ViewGroup parent) {
+        public View getView(final int position, final View convertView, final ViewGroup parent) {
             Log.d(Constants.LOG_TAG, "view seen");
             View itemView = convertView;
             if (itemView == null) {
@@ -152,8 +165,18 @@ public class MessageListActivity extends AppCompatActivity {
             button.setOnClickListener(new View.OnClickListener(){
                 public void onClick(View v){
                     Log.d(Constants.LOG_TAG,"message clicked");
+                    //Database.instance.deleteMessage(messageId);
                     //Database.instance.setReceivedMessagetoSeen(messageId, currentMessage.fromUID);   //shows message
-                    showGoat(0);  //type of goat
+                    Log.d(Constants.LOG_TAG, friendArr.get(position).messages.get(0).isTypeOGoat()+"");
+                    friendArr.get(position).messages.remove(0);
+                    recreate();
+                    Database.instance.setReceivedMessagetoSeen(friendArr.get(position).messages.get(0).messageId, "useless" );
+                  //  Database.instance.getReceivedMessagesOfUserWithUID(FirebaseAuth.getInstance().getCurrentUser().getUid(), new  HelperMessageList());
+
+                    //getView(position, convertView, parent);
+                    recreate();
+                    showGoat(friendArr.get(position).messages.get(0).isTypeOGoat());  //type of goat
+                    populateListView();
                 }
             });
 

@@ -16,4 +16,5 @@
     <string name="search_hint">TODO</string>
     <string name="title_activity_happy_goat">HappyGoatActivity</string>
     <string name="title_activity_sad_goat">SadGoatActivity</string>
+    <string name="title_activity_goat_selection">GoatSelectionActivity</string>
 </resources>

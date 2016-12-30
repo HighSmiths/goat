@@ -88,6 +88,10 @@
         <activity
             android:name=".activity.SadGoatActivity"
             android:label="@string/title_activity_sad_goat"
+            android:theme="@style/AppTheme.NoActionBar" />
+        <activity
+            android:name=".activity.GoatSelectionActivity"
+            android:label="@string/title_activity_goat_selection"
             android:theme="@style/AppTheme.NoActionBar"></activity>
     </application>
 

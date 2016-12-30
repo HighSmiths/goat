@@ -1,25 +1,20 @@
 package com.example.android.goatchat.activity;
 
-import android.content.Intent;
 import android.os.Bundle;
-import android.os.Handler;
 import android.support.design.widget.FloatingActionButton;
 import android.support.design.widget.Snackbar;
 import android.support.v7.app.AppCompatActivity;
 import android.support.v7.widget.Toolbar;
-import android.util.Log;
 import android.view.View;
-import android.widget.ImageView;
 
-import com.example.android.goatchat.Constants;
 import com.example.android.goatchat.R;
-import com.google.firebase.auth.FirebaseAuth;
 
-public class SadGoatActivity extends AppCompatActivity {
+public class GoatSelectionActivity extends AppCompatActivity {
+
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-        setContentView(R.layout.activity_sad_goat);
+        setContentView(R.layout.activity_goat_selection);
         Toolbar toolbar = (Toolbar) findViewById(R.id.toolbar);
         setSupportActionBar(toolbar);
 
@@ -31,21 +26,6 @@ public class SadGoatActivity extends AppCompatActivity {
                         .setAction("Action", null).show();
             }
         });
-
-
-        ImageView imageView = (ImageView)findViewById(R.id.sad_goat);
-        imageView.setImageResource(R.drawable.sad_goat);
-
-        final Handler handler = new Handler();
-        handler.postDelayed(new Runnable() {
-            @Override
-            public void run() {
-                //goatSelfDestruct();
-                finish();
-                Log.d(Constants.LOG_TAG, "goat now deletes");
-                //Do something after 100ms
-            }
-        }, 3000);
     }
 
 }
