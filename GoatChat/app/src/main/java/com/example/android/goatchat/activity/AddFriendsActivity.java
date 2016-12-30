@@ -40,12 +40,16 @@ public class AddFriendsActivity extends AppCompatActivity {
     private void createUserCallBackHelperObject(){
         class HelperUserList implements GetUsersCallback {
             @Override
-            public void execute(Map<String, User> users){
-                for (String uid: users.keySet()){
-                    //TODO implements goat sent
-                    myUsers.add(new Friend(users.get(uid).getUid(), -99, R.drawable.blank_user, "-99", "Add Friend"));
+            public void execute(Map<String, User> users, boolean success){
+                if (success) {
+                    for (String uid : users.keySet()) {
+                        //TODO implements goat sent
+                        myUsers.add(new Friend(users.get(uid).getUid(), -99, R.drawable.blank_user, "-99", "Add Friend"));
+                    }
+                    populateListView();
+                } else {
+                    Toast.makeText(getBaseContext(), Constants.USER_DOESNT_EXIST, Toast.LENGTH_SHORT).show();
                 }
-                populateListView();
             }
         }
 

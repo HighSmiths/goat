@@ -8,6 +8,7 @@ import android.os.Bundle;
 import android.util.*;
 import android.view.View;
 import android.widget.EditText;
+import android.widget.Toast;
 
 import com.example.android.goatchat.Constants;
 import com.example.android.goatchat.Database;
@@ -129,6 +130,7 @@ public  class MainActivity extends AppCompatActivity {
     {
         return em.contains("@")&&(em.contains(".com")||em.contains(".edu"));
     }
+
     public boolean passwordIsValid(String ps)
     {
         return ps.length() >4;
@@ -148,10 +150,12 @@ public  class MainActivity extends AppCompatActivity {
             }
             else {
                 Log.d("login", "password to short");  //TODO TOAST
+                Toast.makeText(getBaseContext(), Constants.PASSWORD_TOO_SHORT, Toast.LENGTH_SHORT).show();
             }
         }
         else{
             Log.d("login","Faulty Email");
+            Toast.makeText(getBaseContext(), Constants.EMAIL_INVALID, Toast.LENGTH_SHORT).show();
         }
     }
 
@@ -163,7 +167,6 @@ public  class MainActivity extends AppCompatActivity {
                         Log.d("STUF", "createUserWithEmail:onComplete:" + task.isSuccessful());
                         if (task.isSuccessful()) {
                             String uid = FirebaseAuth.getInstance().getCurrentUser().getUid();
-
                             String email = mAuth.getCurrentUser().getEmail();
                         }
 
@@ -172,6 +175,8 @@ public  class MainActivity extends AppCompatActivity {
                         // signed in user can be handled in the listener.
                         if (!task.isSuccessful()) {
                             Log.w(Constants.LOG_TAG, "signInWithEmail:failed", task.getException());
+                            Toast.makeText(getBaseContext(), Constants.CANT_SIGN_IN, Toast.LENGTH_SHORT).show();
+
                         }
 
                         // ...
@@ -191,10 +196,12 @@ public  class MainActivity extends AppCompatActivity {
             }
             else {
                 Log.d("login", "password to short");
+                Toast.makeText(getBaseContext(), Constants.PASSWORD_TOO_SHORT, Toast.LENGTH_SHORT).show();
             }
         }
         else{
             Log.d("login","Faulty Email");
+            Toast.makeText(getBaseContext(), Constants.EMAIL_INVALID, Toast.LENGTH_SHORT).show();
         }
 
     }
@@ -207,6 +214,7 @@ public  class MainActivity extends AppCompatActivity {
                         public void onComplete(@NonNull Task<AuthResult> task) {
                             if (!task.isSuccessful()) {
                                 Log.d(Constants.LOG_TAG, "Failed to Create Account");
+                                Toast.makeText(getBaseContext(), Constants.CANT_CREATE_ACCOUNT, Toast.LENGTH_SHORT).show();
                             }
                             else {
                                 String uid = mAuth.getCurrentUser().getUid();
@@ -221,9 +229,6 @@ public  class MainActivity extends AppCompatActivity {
                             // If sign in fails, display a message to the user. If sign in succeeds
                             // the auth state listener will be notified and logic to handle the
                             // signed in user can be handled in the listener.
-
-
-                            // ...
                         }
                     });
         }
@@ -250,6 +255,7 @@ public  class MainActivity extends AppCompatActivity {
                         // signed in user can be handled in the listener.
                         if (!task.isSuccessful()) {
                             Log.w("TAG", "signInWithCredential", task.getException());
+                            Toast.makeText(getBaseContext(), Constants.CANT_SIGN_IN, Toast.LENGTH_SHORT).show();
                         }
 
                         // ...
@@ -263,5 +269,6 @@ public  class MainActivity extends AppCompatActivity {
         intent.putExtra("uid", FirebaseAuth.getInstance().getCurrentUser().getUid());
         startActivity(intent);
     }
+
 
 }

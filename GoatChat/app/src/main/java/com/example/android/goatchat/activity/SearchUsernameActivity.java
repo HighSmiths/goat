@@ -16,6 +16,7 @@ import android.view.View;
 import android.widget.Button;
 import android.widget.SearchView;
 import android.widget.TextView;
+import android.widget.Toast;
 
 import com.example.android.goatchat.Constants;
 import com.example.android.goatchat.Database;
@@ -82,21 +83,25 @@ public class SearchUsernameActivity extends AppCompatActivity {
 
                 class helper implements GetUsersCallback {
                     @Override
-                    public void execute(Map<String, User> users) {
+                    public void execute(Map<String, User> users, boolean success) {
                         Log.d(Constants.LOG_TAG,users.toString());
-                        for(User user :users.values()) {
-                            textView.setText(user.username);
-                        }
-                        for(User user: users.values()) {
-                            final User finUser = user;
-                            button.setOnClickListener(new View.OnClickListener() {
-                                public void onClick(View v) {
-                                    Log.d("clicked", "friendbutton");
-                                    Log.d(Constants.LOG_TAG, FirebaseAuth.getInstance().getCurrentUser().getUid() +","+ finUser.uid);
-                                    //TODO fix temp message id
-                                    Database.instance.addFriendForUserWithUID(FirebaseAuth.getInstance().getCurrentUser().getUid(), finUser.uid);
-                                }
-                            });
+                        if (success) {
+                            for (User user : users.values()) {
+                                textView.setText(user.username);
+                            }
+                            for (User user : users.values()) {
+                                final User finUser = user;
+                                button.setOnClickListener(new View.OnClickListener() {
+                                    public void onClick(View v) {
+                                        Log.d("clicked", "friendbutton");
+                                        Log.d(Constants.LOG_TAG, FirebaseAuth.getInstance().getCurrentUser().getUid() + "," + finUser.uid);
+                                        //TODO fix temp message id
+                                        Database.instance.addFriendForUserWithUID(FirebaseAuth.getInstance().getCurrentUser().getUid(), finUser.uid);
+                                    }
+                                });
+                            }
+                        } else {
+                            Toast.makeText(getBaseContext(), Constants.USER_DOESNT_EXIST, Toast.LENGTH_SHORT).show();
                         }
 
                     }
