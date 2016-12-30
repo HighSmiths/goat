@@ -9,5 +9,5 @@ import java.util.Map;
  */
 
 public interface GetUsersCallback {
-    public void execute(Map<String, User> users);
+    public void execute(Map<String, User> users, boolean success);
 }

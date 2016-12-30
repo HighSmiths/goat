@@ -276,7 +276,11 @@ public class Database {
                         GenericTypeIndicator<Map<String, User>> genericTypeIndicator = new GenericTypeIndicator<Map<String, User>>() {};
                         Log.d(Constants.LOG_TAG, genericTypeIndicator.toString());
                         Map<String, User> users = dataSnapshot.getValue(genericTypeIndicator);
-                        callback.execute(users);
+                        boolean success = false;
+                        if (users != null)
+                            success = true;
+
+                        callback.execute(users, success);
                     }
                     @Override
                     public void onCancelled(DatabaseError databaseError) {
@@ -299,7 +303,10 @@ public class Database {
                         Log.d(Constants.LOG_TAG, "getALlUsers -> onDataChange");
                         GenericTypeIndicator<Map<String, User>> genericTypeIndicator = new GenericTypeIndicator<Map<String, User>>() {};
                         Map<String, User> users = dataSnapshot.getValue(genericTypeIndicator);
-                        callback.execute(users);
+                        boolean success = false;
+                        if (users != null)
+                            success = true;
+                        callback.execute(users, success);
                     }
                     @Override
                     public void onCancelled(DatabaseError databaseError) {
