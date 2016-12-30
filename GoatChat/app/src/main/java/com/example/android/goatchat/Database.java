@@ -286,7 +286,6 @@ public class Database {
                 });
     }
 
-
     // Reads the user with given userId.
     // Accepts a String user Id `uid` and a reference to a User object, and stores the retrieved User in `user`.
     public void getUserWithUID(String userId, GetUserCallback cb) {

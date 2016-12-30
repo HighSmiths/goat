@@ -25,6 +25,6 @@
         android:layout_marginLeft="20dp"
         android:layout_marginStart="20dp"
         android:layout_marginTop="20dp"
-        android:id="@+id/carsListView" >
+        android:id="@+id/message_list" >
     </ListView>
 </RelativeLayout>
