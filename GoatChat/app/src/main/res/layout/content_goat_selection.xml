@@ -86,7 +86,7 @@
         android:onClick="sendHappyGoats"
         android:gravity="bottom|center"/>
 
-    
+
 
 
 
