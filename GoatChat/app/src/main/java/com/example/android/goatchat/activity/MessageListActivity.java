@@ -86,7 +86,7 @@ public class MessageListActivity extends AppCompatActivity {
 
     private void populateListView(){
         ArrayAdapter<ListEntity> adapter = new MyListAdapter();
-        ListView list = (ListView) findViewById(R.id.carsListView);
+        ListView list = (ListView) findViewById(R.id.message_list);
         list.setAdapter(adapter);
     }
 
@@ -94,7 +94,6 @@ public class MessageListActivity extends AppCompatActivity {
         public MyListAdapter(){
             //Log.d(Constants.LOG_TAG,"big berhta");
             super(MessageListActivity.this, R.layout.message_list_item, friendArr);
-            Log.d(Constants.LOG_TAG,"big berhta");
         }
 
         //this overrides ArrayAdapter's getView
@@ -104,11 +103,10 @@ public class MessageListActivity extends AppCompatActivity {
             View itemView = convertView;
             if (itemView == null) {
                 Log.d(Constants.LOG_TAG, "view nnuul");
-                itemView = getLayoutInflater().inflate(R.layout.item_view, parent, false);
+                itemView = getLayoutInflater().inflate(R.layout.message_list_item, parent, false);
             }
 
             //Find the car to work with
-            Log.d("this p","lease");
 //            final Message currentMessage = myMessages.get(position);
 //            final String messageId = currentMessage.getMessageId();
 
@@ -118,12 +116,12 @@ public class MessageListActivity extends AppCompatActivity {
 
             //Make:
             String str = "FROM: " + friendArr.get(position).fromUID;
-            TextView makeText = (TextView) itemView.findViewById(R.id.item_txtMake);
+            TextView makeText = (TextView) itemView.findViewById(R.id.friend_name);
             makeText.setText(str);
 
             //Year:
             str = "Number of messages:" + friendArr.get(position).messages.size();
-            TextView yearText = (TextView) itemView.findViewById(R.id.item_txtYear);
+            TextView yearText = (TextView) itemView.findViewById(R.id.num_messages);
             yearText.setText(str);
 
             //Condition:

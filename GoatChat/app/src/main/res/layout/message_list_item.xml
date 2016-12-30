@@ -7,33 +7,32 @@
         android:text="View Messages"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:id="@+id/bfbutton"
+        android:id="@+id/view_messages_button"
+        android:layout_alignParentTop="true"
         android:layout_alignParentRight="true"
         android:layout_alignParentEnd="true"
-        android:layout_alignBottom="@+id/textView3" />
+        android:layout_marginTop="77dp" />
+
+    <TextView
+        android:text="Friend Name"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:id="@+id/friend_name"
+        android:layout_marginLeft="26dp"
+        android:layout_marginStart="26dp"
+        android:layout_alignParentTop="true"
+        android:layout_alignParentLeft="true"
+        android:layout_alignParentStart="true"
+        android:layout_marginTop="16dp" />
 
     <TextView
         android:text="0"
         android:id="@+id/num_messages"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:layout_marginLeft="39dp"
-        android:layout_marginStart="39dp"
-        android:layout_alignBaseline="@+id/item_txtMake"
-        android:layout_alignBottom="@+id/item_txtMake"
-        android:layout_alignParentLeft="true"
-        android:layout_alignParentStart="true" />
-
-    <TextView
-        android:text="Friend Name"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:id="@+id/item_txtMake"
-        android:layout_alignBaseline="@+id/bfbutton"
-        android:layout_alignBottom="@+id/bfbutton"
-        android:layout_toRightOf="@+id/num_messages"
-        android:layout_toEndOf="@+id/num_messages"
-        android:layout_marginLeft="59dp"
-        android:layout_marginStart="59dp" />
+        android:layout_below="@+id/friend_name"
+        android:layout_alignLeft="@+id/friend_name"
+        android:layout_alignStart="@+id/friend_name"
+        android:layout_marginTop="13dp" />
 
 </RelativeLayout>
