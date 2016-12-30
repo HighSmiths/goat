@@ -24,6 +24,7 @@ public class PageFragment extends android.support.v4.app.Fragment {
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container,
                              Bundle savedInstanceState) {
+        // inflater.inflate(resource, root, false)`
         View view = inflater.inflate(R.layout.page_fragment_layout, container, false);
         textView = (TextView)view.findViewById(R.id.textView);
         Bundle bundle = getArguments();
