@@ -16,6 +16,8 @@ import com.example.android.goatchat.R;
 import com.example.android.goatchat.SwipeAdapter;
 import com.example.android.goatchat.callback.GetUsersCallback;
 import com.example.android.goatchat.models.User;
+import com.example.android.goatchat.util.IabHelper;
+import com.example.android.goatchat.util.IabResult;
 import com.facebook.AccessToken;
 import com.facebook.CallbackManager;
 import com.facebook.FacebookCallback;
@@ -38,7 +40,7 @@ public  class MainActivity extends AppCompatActivity {
     private FirebaseAuth mAuth;
     private FirebaseAuth.AuthStateListener mAuthListener;
     private CallbackManager callbackManager;
-
+    IabHelper mHelper;
 
     //{{Main Activity Life cycle
     @Override
@@ -60,6 +62,8 @@ public  class MainActivity extends AppCompatActivity {
         super.onCreate(savedInstanceState);
         manageFirebaseAuth();
         accessFirebaseThroughFB();
+        setupBilling();
+
     }
     //}}
 
@@ -270,5 +274,26 @@ public  class MainActivity extends AppCompatActivity {
         startActivity(intent);
     }
 
+    private void setupBilling() {
+
+        String base64EncodedPublicKey = Constants.LICENSE_KEY;
+
+        // compute your public key and store it in base64EncodedPublicKey
+        mHelper = new IabHelper(this, base64EncodedPublicKey);
+
+
+        mHelper.startSetup(new IabHelper.OnIabSetupFinishedListener() {
+            public void onIabSetupFinished(IabResult result) {
+                if (!result.isSuccess()) {
+                    // Oh no, there was a problem.
+                    Log.d(Constants.LOG_TAG, "Problem setting up In-app Billing: " + result);
+                } else {
+                    Log.d(Constants.LOG_TAG, "In-app Billing set up:" + result);
+                }
+
+
+            }
+        });
+    }
 
 }
