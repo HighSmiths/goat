@@ -65,12 +65,11 @@ public class FriendListFragment extends Fragment {
                 Log.d(Constants.LOG_TAG, "executed friendly call of the wild");
                 try {
                     myFriends = new ArrayList<>();
-                    if (!users.isEmpty()) {
+                    if (users != null) {
                         for (String uid : users.values()) {
                             Log.d(Constants.LOG_TAG, "os toj jkf+"+uid+"");
                             myFriends.add(new Friend(uid, -99, R.drawable.blank_user, "-99", "button"));
                         }
-
                     }
 
 
