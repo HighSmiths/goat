@@ -65,14 +65,18 @@ public class FriendListFragment extends Fragment {
                 Log.d(Constants.LOG_TAG, "executed friendly call of the wild");
                 try {
                     myFriends = new ArrayList<>();
-                    for (String uid : users.values()) {
-                        Log.d(Constants.LOG_TAG, "os toj jkf+"+uid+"");
-                        myFriends.add(new Friend(uid, -99, R.drawable.blank_user, "-99", "button"));
+                    if (!users.isEmpty()) {
+                        for (String uid : users.values()) {
+                            Log.d(Constants.LOG_TAG, "os toj jkf+"+uid+"");
+                            myFriends.add(new Friend(uid, -99, R.drawable.blank_user, "-99", "button"));
+                        }
+
                     }
+
 
                     populateListView();
                 } catch (Exception e) {
-                    Log.d(Constants.LOG_TAG, "Uh oh, looks like you have no friends");
+                    Log.d(Constants.LOG_TAG, "Uh oh, looks like you have no friends: " + e.getMessage());
                 }
             }
 

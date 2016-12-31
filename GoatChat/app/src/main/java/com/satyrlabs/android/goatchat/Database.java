@@ -200,59 +200,8 @@ public class Database {
         addFriendForUserWithUID(userUID, friendUID, new Callback());
     }
 
-    public void addFriendForUserWithUID(final String userUID, final String friendUID, String profpic){
-        Log.d(Constants.LOG_TAG, "Adding friends with image");
-        class Callback implements AddFriendCallback {
-            @Override
-            public void execute() {}
-        }
-        addFriendForUserWithUID(userUID, friendUID, profpic, new Callback());
-    }
-
 
     //  Overloaded function with additional callback parameter.
-    public void addFriendForUserWithUID(final String userUID, final String friendUID, String profpic, AddFriendCallback cb) {
-        final AddFriendCallback callback = cb;
-        DatabaseReference.CompletionListener listener = new DatabaseReference.CompletionListener() {
-            @Override
-            public void onComplete(DatabaseError databaseError, DatabaseReference databaseReference) {
-                callback.execute();
-            }
-        };
-
-        class Callback implements GetFriendsCallback {
-            @Override
-            public void execute(Map<String, String> friends) {
-                if (friends == null || !friends.containsValue(friendUID)) {
-                    if (friends == null)
-                        Log.d(Constants.LOG_TAG, "friends is null");
-
-                    database.getReference().child("users").child(userUID + "/friends").push().setValue(friendUID);
-
-                    database.getReference().child("users").child(userUID).runTransaction(new Transaction.Handler() {
-                        @Override
-                        public Transaction.Result doTransaction(MutableData mutableData) {
-                            User user = mutableData.getValue(User.class);
-                            // TODO: This isn't safe if user adds friends from multiple clients simultaneously.
-                            user.numFriends = user.getFriends().size();
-                            mutableData.setValue(user);
-                            return Transaction.success(mutableData);
-                        }
-
-                        @Override
-                        public void onComplete(DatabaseError databaseError, boolean b, DataSnapshot dataSnapshot) {
-                        }
-                    });
-                }
-            }
-        }
-        getFriendsOfUserWithUID(userUID, new Callback());
-    }
-
-
-
-
-//  Overloaded function with additional callback parameter.
     public void addFriendForUserWithUID(final String userUID, final String friendUID, AddFriendCallback cb) {
         final AddFriendCallback callback = cb;
         DatabaseReference.CompletionListener listener = new DatabaseReference.CompletionListener() {
@@ -262,7 +211,7 @@ public class Database {
             }
         };
 
-        database.getReference().child("users").child(userUID).child("friends").addValueEventListener(
+        database.getReference().child("users").child(userUID).child("friends").addListenerForSingleValueEvent(
                 new ValueEventListener() {
                     @Override
                     public void onDataChange(DataSnapshot dataSnapshot) {
@@ -280,6 +229,58 @@ public class Database {
                     }
                 });
     }
+
+
+//    public void addFriendForUserWithUID(final String userUID, final String friendUID, String profpic){
+//        Log.d(Constants.LOG_TAG, "Adding friends with image");
+//        class Callback implements AddFriendCallback {
+//            @Override
+//            public void execute() {}
+//        }
+//        addFriendForUserWithUID(userUID, friendUID, profpic, new Callback());
+//    }
+
+//
+//    //  Overloaded function with additional callback parameter.
+//    public void addFriendForUserWithUID(final String userUID, final String friendUID, String profpic, AddFriendCallback cb) {
+//        final AddFriendCallback callback = cb;
+//        DatabaseReference.CompletionListener listener = new DatabaseReference.CompletionListener() {
+//            @Override
+//            public void onComplete(DatabaseError databaseError, DatabaseReference databaseReference) {
+//                callback.execute();
+//            }
+//        };
+//
+//        class Callback implements GetFriendsCallback {
+//            @Override
+//            public void execute(Map<String, String> friends) {
+//                if (friends == null || !friends.containsValue(friendUID)) {
+//                    if (friends == null)
+//                        Log.d(Constants.LOG_TAG, "friends is null");
+//
+//                    database.getReference().child("users").child(userUID + "/friends").push().setValue(friendUID);
+//
+//                    database.getReference().child("users").child(userUID).runTransaction(new Transaction.Handler() {
+//                        @Override
+//                        public Transaction.Result doTransaction(MutableData mutableData) {
+//                            User user = mutableData.getValue(User.class);
+//                            // TODO: This isn't safe if user adds friends from multiple clients simultaneously.
+//                            user.numFriends = user.getFriends().size();
+//                            mutableData.setValue(user);
+//                            return Transaction.success(mutableData);
+//                        }
+//
+//                        @Override
+//                        public void onComplete(DatabaseError databaseError, boolean b, DataSnapshot dataSnapshot) {
+//                        }
+//                    });
+//                }
+//            }
+//        }
+//        getFriendsOfUserWithUID(userUID, new Callback());
+//    }
+
+
 
 
     // Reads all of user's friends from Firebase, and stores them in `arr`.
