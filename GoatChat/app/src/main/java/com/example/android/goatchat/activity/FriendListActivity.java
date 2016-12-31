@@ -1,5 +1,8 @@
 package com.example.android.goatchat.activity;
 
+import android.graphics.Bitmap;
+import android.graphics.BitmapFactory;
+import android.net.Uri;
 import android.os.Bundle;
 import android.support.v7.app.AppCompatActivity;
 import android.util.Log;
@@ -18,6 +21,8 @@ import com.example.android.goatchat.R;
 import com.example.android.goatchat.callback.GetFriendsCallback;
 import com.google.firebase.auth.FirebaseAuth;
 
+import java.io.InputStream;
+import java.net.URL;
 import java.util.ArrayList;
 import java.util.List;
 import java.util.Map;
@@ -89,10 +94,14 @@ public class FriendListActivity extends AppCompatActivity {
             //Find the car to work with
             Friend currentFriend = myFriends.get(position);
             final String friendUid = currentFriend.getUser();
+           // Uri imag = FirebaseAuth.getInstance().getCurrentUser().getProviderData().get(0).getPhotoUrl();
+
 
             //Fill the view
             ImageView imageView = (ImageView)itemView.findViewById(R.id.item_icon);
             imageView.setImageResource(currentFriend.getIconID());
+           // imageView.setImageResource();
+
 
             //Make:
 //            TextView makeText = (TextView) itemView.findViewById(R.id.item_txtMake);

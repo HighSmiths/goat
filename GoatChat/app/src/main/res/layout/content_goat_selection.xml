@@ -13,6 +13,32 @@
     tools:context="com.example.android.goatchat.activity.GoatSelectionActivity"
     tools:showIn="@layout/activity_goat_selection">
 
+    <ImageView
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        app:srcCompat="@drawable/shadow_goat"
+        android:id="@+id/imageView12"
+        android:layout_above="@+id/button13"
+        android:layout_alignLeft="@+id/button12"
+        android:layout_alignStart="@+id/button12"
+        android:layout_marginBottom="30dp"
+        android:layout_below="@+id/button11"
+        android:layout_toLeftOf="@+id/button11"
+        android:layout_toStartOf="@+id/button11" />
+
+    <ImageView
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        app:srcCompat="@drawable/shadow_goat"
+        android:id="@+id/imageView8"
+        android:layout_above="@+id/button13"
+        android:layout_alignLeft="@+id/button12"
+        android:layout_alignStart="@+id/button12"
+        android:layout_marginBottom="30dp"
+        android:layout_below="@+id/button11"
+        android:layout_toLeftOf="@+id/button11"
+        android:layout_toStartOf="@+id/button11" />
+
     <Button
         android:text="Sad"
         android:layout_width="150dp"
@@ -39,6 +65,7 @@
         android:layout_alignStart="@+id/button11"
         android:background="#00000000"
         android:onClick="sendSexyGoats"
+        android:textColor="@android:color/black"
         android:gravity="bottom|center"/>
 
     <Button
@@ -52,32 +79,7 @@
         android:layout_alignStart="@+id/button9"
         android:background="#00000000"
         android:onClick="sendFratGoats"
-        android:gravity="bottom|center"/>
-
-    <Button
-        android:text="Obsequious"
-        android:enabled="false"
-        android:layout_width="150dp"
-        android:layout_height="120dp"
-        android:id="@+id/button10"
-        android:layout_alignParentBottom="true"
-        android:layout_toLeftOf="@+id/button11"
-        android:layout_toStartOf="@+id/button11"
-        android:background="#00000000"
-        android:onClick="sendObsequiousGoats"
-        android:gravity="bottom|center"/>
-
-    <Button
-        android:text="Nostalgic"
-        android:enabled="false"
-        android:layout_width="150dp"
-        android:layout_height="120dp"
-        android:id="@+id/button12"
-        android:layout_above="@+id/button13"
-        android:layout_alignLeft="@+id/button10"
-        android:layout_alignStart="@+id/button10"
-        android:background="#00000000"
-        android:onClick="sendNostalgicGoats"
+        android:textColor="@android:color/black"
         android:gravity="bottom|center"/>
 
     <Button
@@ -129,6 +131,66 @@
         android:layout_above="@+id/button9"
         android:layout_alignRight="@+id/button11"
         android:layout_alignEnd="@+id/button11" />
+
+    <ImageView
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        app:srcCompat="@drawable/shadow_goat"
+        android:id="@+id/imageView9"
+        android:layout_toRightOf="@+id/imageView8"
+        android:layout_below="@+id/button11"
+        android:layout_alignRight="@+id/button11"
+        android:layout_alignEnd="@+id/button11"
+        android:layout_alignBottom="@+id/imageView8" />
+
+
+    <Button
+        android:text="Obsequious"
+        android:enabled="false"
+        android:layout_width="150dp"
+        android:layout_height="120dp"
+        android:id="@+id/button10"
+        android:background="#00000000"
+        android:onClick="sendObsequiousGoats"
+        android:textColor="@android:color/black"
+        android:gravity="bottom|center"
+        android:layout_alignParentBottom="true"
+        android:layout_toLeftOf="@+id/button9"
+        android:layout_toStartOf="@+id/button9" />
+
+    <ImageView
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        app:srcCompat="@drawable/shadow_goat"
+        android:id="@+id/imageView7"
+        android:layout_below="@+id/button9"
+        android:layout_toRightOf="@+id/button12"
+        android:layout_alignRight="@+id/button9"
+        android:layout_alignEnd="@+id/button9" />
+
+    <ImageView
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        app:srcCompat="@drawable/shadow_goat"
+        android:id="@+id/imageView11"
+        android:layout_toLeftOf="@+id/button11"
+        android:layout_below="@+id/imageView12"
+        android:layout_alignLeft="@+id/button12"
+        android:layout_alignStart="@+id/button12" />
+
+    <Button
+        android:text="Nostalgic"
+        android:enabled="false"
+        android:layout_width="150dp"
+        android:layout_height="120dp"
+        android:id="@+id/button12"
+        android:background="#00000000"
+        android:onClick="sendNostalgicGoats"
+        android:textColor="@android:color/black"
+        android:gravity="bottom|center"
+        android:layout_above="@+id/button13"
+        android:layout_toLeftOf="@+id/button11"
+        android:layout_toStartOf="@+id/button11" />
 
 
 </RelativeLayout>

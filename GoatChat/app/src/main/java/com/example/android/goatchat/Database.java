@@ -1,5 +1,7 @@
 package com.example.android.goatchat;
 
+import android.graphics.Bitmap;
+import android.net.Uri;
 import android.util.*;
 
 import com.example.android.goatchat.callback.AddFriendCallback;
@@ -20,6 +22,7 @@ import com.google.firebase.database.MutableData;
 import com.google.firebase.database.Transaction;
 import com.google.firebase.database.ValueEventListener;
 
+import java.net.URL;
 import java.util.List;
 import java.util.Map;
 
@@ -195,6 +198,58 @@ public class Database {
         }
         addFriendForUserWithUID(userUID, friendUID, new Callback());
     }
+/*
+    public void addFriendForUserWithUID(final String userUID, final String friendUID, URL profpic){
+        Log.d(Constants.LOG_TAG, "Adding friends with image");
+        class Callback implements AddFriendCallback {
+            @Override
+            public void execute() {}
+        }
+        addFriendForUserWithUID(userUID, friendUID, profpic, new Callback());
+    }
+
+
+    //  Overloaded function with additional callback parameter.
+    public void addFriendForUserWithUID(final String userUID, final String friendUID, URL profpic, AddFriendCallback cb) {
+        final AddFriendCallback callback = cb;
+        DatabaseReference.CompletionListener listener = new DatabaseReference.CompletionListener() {
+            @Override
+            public void onComplete(DatabaseError databaseError, DatabaseReference databaseReference) {
+                callback.execute();
+            }
+        };
+
+        class Callback implements GetFriendsCallback {
+            @Override
+            public void execute(Map<String, String> friends) {
+                if (friends == null || !friends.containsValue(friendUID)) {
+                    if (friends == null)
+                        Log.d(Constants.LOG_TAG, "friends is null");
+
+                    database.getReference().child("users").child(userUID + "/friends").push().setValue(friendUID);
+
+                    database.getReference().child("users").child(userUID).runTransaction(new Transaction.Handler() {
+                        @Override
+                        public Transaction.Result doTransaction(MutableData mutableData) {
+                            User user = mutableData.getValue(User.class);
+                            // TODO: This isn't safe if user adds friends from multiple clients simultaneously.
+                            user.numFriends = user.getFriends().size();
+                            mutableData.setValue(user);
+                            return Transaction.success(mutableData);
+                        }
+
+                        @Override
+                        public void onComplete(DatabaseError databaseError, boolean b, DataSnapshot dataSnapshot) {
+                        }
+                    });
+                }
+            }
+        }
+        getFriendsOfUserWithUID(userUID, new Callback());
+    }
+
+
+*/
 
 //  Overloaded function with additional callback parameter.
     public void addFriendForUserWithUID(final String userUID, final String friendUID, AddFriendCallback cb) {
@@ -263,10 +318,20 @@ public class Database {
 
     // Creates a new user record in Firebase with given userId and email.
     public void createNewUser(String userId, String email) {
+        //User user = new User(userId, email);
         User user = new User(userId, email);
 //        user.friends.put(userId);
         database.getReference().child("users").child(userId).setValue(user);
     }
+
+    public void createNewUser(String userId, String email, Bitmap profpic) {
+        //User user = new User(userId, email);
+        User user = new User(userId, email, profpic);
+//        user.friends.put(userId);
+        database.getReference().child("users").child(userId).setValue(user);
+    }
+
+
 
     // Retrieves the User with the given username from Firebase.
     public void getUserWithUsername(final String username, final GetUsersCallback callback) {

@@ -1,6 +1,12 @@
 package com.example.android.goatchat.activity;
 
+import android.app.Activity;
+import android.content.Context;
 import android.content.Intent;
+import android.graphics.Bitmap;
+import android.graphics.BitmapFactory;
+import android.net.Uri;
+import android.provider.MediaStore;
 import android.support.annotation.NonNull;
 import android.support.v4.view.ViewPager;
 import android.support.v7.app.AppCompatActivity;
@@ -31,6 +37,7 @@ import com.google.firebase.auth.FirebaseAuth;
 import com.google.firebase.auth.FirebaseUser;
 import com.facebook.FacebookSdk;
 
+import java.net.URL;
 import java.util.Map;
 
 public  class MainActivity extends AppCompatActivity {
@@ -38,6 +45,7 @@ public  class MainActivity extends AppCompatActivity {
     private FirebaseAuth mAuth;
     private FirebaseAuth.AuthStateListener mAuthListener;
     private CallbackManager callbackManager;
+    private AccessToken accessToken;
 
 
     //{{Main Activity Life cycle
@@ -62,6 +70,8 @@ public  class MainActivity extends AppCompatActivity {
         accessFirebaseThroughFB();
     }
     //}}
+
+
 
 
     @Override
@@ -95,6 +105,7 @@ public  class MainActivity extends AppCompatActivity {
     //manage facebook access callback
     public void accessFirebaseThroughFB() {
         FacebookSdk.sdkInitialize(getApplicationContext());
+       // accessToken = AccessToken.getCurrentAccessToken();
         callbackManager = CallbackManager.Factory.create();
         setContentView(com.example.android.goatchat.R.layout.activity_main);
         LoginButton loginButton = (LoginButton) findViewById(R.id.connectWithFbButton);
@@ -242,14 +253,32 @@ public  class MainActivity extends AppCompatActivity {
     //Sign in via facebook
     private void handleFacebookAccessToken(AccessToken token) {
         AuthCredential credential = FacebookAuthProvider.getCredential(token.getToken());
+
+        final Activity act = this;
         mAuth.signInWithCredential(credential)
                 .addOnCompleteListener(this, new OnCompleteListener<AuthResult>() {
                     @Override
                     public void onComplete(@NonNull Task<AuthResult> task) {
                         Log.d("TAG", "signInWithCredential:onComplete:" + task.isSuccessful());
                         String uid = mAuth.getCurrentUser().getUid();
-                        String email = mAuth.getCurrentUser().getEmail();
-                        Database.instance.createNewUser(uid, email);
+                        String email = FirebaseAuth.getInstance().getCurrentUser().getProviderData().get(0).getDisplayName();
+                        //Uri profpic = FirebaseAuth.getInstance().getCurrentUser().getProviderData().get(0).getPhotoUrl();
+
+                        try {
+                            Uri imageUri = FirebaseAuth.getInstance().getCurrentUser().getProviderData().get(0).getPhotoUrl();
+                            Log.d(Constants.LOG_TAG,"uri"+ imageUri);
+                            Bitmap bitmap = MediaStore.Images.Media.getBitmap(act.getContentResolver(), imageUri);
+                            Database.instance.createNewUser(uid, email, bitmap);
+                        }
+                        catch(Exception e)
+                        {
+                            Log.d(Constants.LOG_TAG, "not even close"+e.toString());
+                            Database.instance.createNewUser(uid, email);
+
+                        }
+
+
+
                         // If sign in fails, display a message to the user. If sign in succeeds
                         // the auth state listener will be notified and logic to handle the
                         // signed in user can be handled in the listener.
@@ -265,6 +294,7 @@ public  class MainActivity extends AppCompatActivity {
 
     //Go to Logged in Screen
     public void openButtonManager() {
+        Log.d(Constants.LOG_TAG, "Firebase user auth"+FirebaseAuth.getInstance().getCurrentUser().getProviderData().get(0).getDisplayName());
         Intent intent = new Intent(this, ScreenManagerActivity.class);
         intent.putExtra("uid", FirebaseAuth.getInstance().getCurrentUser().getUid());
         startActivity(intent);
