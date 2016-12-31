@@ -20,9 +20,12 @@ import com.satyrlabs.android.goatchat.Database;
 import com.satyrlabs.android.goatchat.R;
 import com.satyrlabs.android.goatchat.activity.GoatSelectionActivity;
 import com.satyrlabs.android.goatchat.callback.GetFriendsCallback;
+import com.satyrlabs.android.goatchat.callback.GetUserCallback;
 import com.satyrlabs.android.goatchat.callback.GetUsernameCallback;
+import com.satyrlabs.android.goatchat.callback.GetUsersCallback;
 import com.satyrlabs.android.goatchat.models.Friend;
 import com.google.firebase.auth.FirebaseAuth;
+import com.satyrlabs.android.goatchat.models.User;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -120,33 +123,23 @@ public class FriendListFragment extends Fragment {
             imageView.setImageResource(currentFriend.getIconID());
 
 
-
-
-
-
             //Make:
            final TextView nameText = (TextView) itemView.findViewById(R.id.item_name);
             nameText.setText(currentFriend.getUser());
 
-
              String username;
 
-            class HelperGetUserName implements GetUsernameCallback {
+            class HelperGetUserName implements GetUserCallback {
                 @Override
-                public void execute(String s) {
-                   nameText.setText(s);
+                public void execute(User user) {
+
+
+                            nameText.setText(user.getUsername());
 
                 }
             }
 
-            Database.instance.getUsernameWithUID(friendUid, new HelperGetUserName());
-
-
-
-
-
-
-
+            Database.instance.getUserWithUID(friendUid, new HelperGetUserName());
 
             final CheckBox checkBox = (CheckBox) itemView.findViewById(R.id.checkBox);
             checkBox.setOnClickListener(new View.OnClickListener() {

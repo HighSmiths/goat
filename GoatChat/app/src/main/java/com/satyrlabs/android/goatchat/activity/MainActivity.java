@@ -115,7 +115,6 @@ public  class MainActivity extends AppCompatActivity {
         loginButton.registerCallback(callbackManager, new FacebookCallback<LoginResult>() {
             @Override
             public void onSuccess(LoginResult loginResult) {
-
                 Log.d("suc", "CEst");
                 handleFacebookAccessToken(loginResult.getAccessToken());
             }
@@ -227,7 +226,8 @@ public  class MainActivity extends AppCompatActivity {
                         @Override
                         public void onComplete(@NonNull Task<AuthResult> task) {
                             if (!task.isSuccessful()) {
-                                Log.d(Constants.LOG_TAG, "Failed to Create Account");
+
+                                Log.d(Constants.LOG_TAG, "Failed to Create Account: " + task.getResult());
                                 Toast.makeText(getBaseContext(), Constants.CANT_CREATE_ACCOUNT, Toast.LENGTH_SHORT).show();
                             }
                             else {
@@ -265,37 +265,37 @@ public  class MainActivity extends AppCompatActivity {
                         String email = FirebaseAuth.getInstance().getCurrentUser().getProviderData().get(0).getDisplayName();
                         //Uri profpic = FirebaseAuth.getInstance().getCurrentUser().getProviderData().get(0).getPhotoUrl();
 
-                        try {
-
-                            final Uri imageUri = FirebaseAuth.getInstance().getCurrentUser().getProviderData().get(0).getPhotoUrl();
-                            Log.d(Constants.LOG_TAG,"uri"+ imageUri);
-//                            run on a background thread
-                            AsyncTask.execute(new Runnable() {
-                                @Override
-                                public void run() {
-                                    try {
-                                        Bitmap aoeu = Glide.with(act).
-                                                load(imageUri.toString()).
-                                                asBitmap().
-                                                into(100, 100). // Width and height
-                                                get();
-                                        Log.d(Constants.LOG_TAG, "bitmap" + aoeu.toString());
-                                    } catch (Exception e) {
-                                        Log.d(Constants.LOG_TAG, "bitmap exception: " + e.getMessage());
-                                    }
-                                }
-                            });
-
-
-                            Bitmap bitmap = MediaStore.Images.Media.getBitmap(act.getContentResolver(), imageUri);
-                            Database.instance.createNewUser(uid, email, bitmap);
-                        }
-                        catch(Exception e)
-                        {
-                            Log.d(Constants.LOG_TAG, "not even close"+e.toString());
-                            Database.instance.createNewUser(uid, email);
-
-                        }
+//                        try {
+//
+//                            final Uri imageUri = FirebaseAuth.getInstance().getCurrentUser().getProviderData().get(0).getPhotoUrl();
+//                            Log.d(Constants.LOG_TAG,"uri"+ imageUri);
+////                            run on a background thread
+//                            AsyncTask.execute(new Runnable() {
+//                                @Override
+//                                public void run() {
+//                                    try {
+//                                        Bitmap aoeu = Glide.with(act).
+//                                                load(imageUri.toString()).
+//                                                asBitmap().
+//                                                into(100, 100). // Width and height
+//                                                get();
+//                                        Log.d(Constants.LOG_TAG, "bitmap" + aoeu.toString());
+//                                    } catch (Exception e) {
+//                                        Log.d(Constants.LOG_TAG, "bitmap exception: " + e.getMessage());
+//                                    }
+//                                }
+//                            });
+//
+//
+//                            Bitmap bitmap = MediaStore.Images.Media.getBitmap(act.getContentResolver(), imageUri);
+//                            Database.instance.createNewUser(uid, email, bitmap);
+//                        }
+//                        catch(Exception e)
+//                        {
+//                            Log.d(Constants.LOG_TAG, "not even close"+e.toString());
+//                            Database.instance.createNewUser(uid, email);
+//
+//                        }
 
 
 

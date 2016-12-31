@@ -162,24 +162,6 @@ public class Database {
 
 
 
-    public void getUsernameWithUID(String uid, GetUsernameCallback cb){
-        final GetUsernameCallback callback = cb;
-
-        database.getReference().child("users").child(uid).child("username").addValueEventListener(
-                new ValueEventListener() {
-                    @Override
-                    public void onDataChange(DataSnapshot dataSnapshot) {
-                        Log.d(Constants.LOG_TAG,"PLEASE GIVE ME THIS");
-                        String username = (String) dataSnapshot.getValue();
-                        callback.execute(username);
-                    }
-
-                    @Override
-                    public void onCancelled(DatabaseError databaseError) {
-                    }
-                });
-    }
-
 
 
     public void getSentMessagesOfUserWithUID(String uid, GetMessagesCallback cb) {
@@ -280,33 +262,23 @@ public class Database {
             }
         };
 
-        class Callback implements GetFriendsCallback {
-            @Override
-            public void execute(Map<String, String> friends) {
-                if (friends == null || !friends.containsValue(friendUID)) {
-                    if (friends == null)
-                        Log.d(Constants.LOG_TAG, "friends is null");
+        database.getReference().child("users").child(userUID).child("friends").addValueEventListener(
+                new ValueEventListener() {
+                    @Override
+                    public void onDataChange(DataSnapshot dataSnapshot) {
+                        Map<String, String> friends = (Map<String, String>) dataSnapshot.getValue();
 
-                    database.getReference().child("users").child(userUID + "/friends").push().setValue(friendUID);
+                        if (friends == null || !friends.containsValue(friendUID)) {
+                            if (friends == null)
+                                Log.d(Constants.LOG_TAG, "friends is null");
 
-//                    database.getReference().child("users").child(userUID).runTransaction(new Transaction.Handler() {
-//                        @Override
-//                        public Transaction.Result doTransaction(MutableData mutableData) {
-//                            User user = mutableData.getValue(User.class);
-//                            // TODO: This isn't safe if user adds friends from multiple clients simultaneously.
-//                            user.numFriends = user.getFriends().size();
-//                            mutableData.setValue(user);
-//                            return Transaction.success(mutableData);
-//                        }
-//
-//                        @Override
-//                        public void onComplete(DatabaseError databaseError, boolean b, DataSnapshot dataSnapshot) {
-//                        }
-//                    });
-                }
-            }
-        }
-        getFriendsOfUserWithUID(userUID, new Callback());
+                            database.getReference().child("users").child(userUID + "/friends").push().setValue(friendUID);
+                        }
+                    }
+                    @Override
+                    public void onCancelled(DatabaseError databaseError) {
+                    }
+                });
     }
 
 
@@ -343,12 +315,12 @@ public class Database {
         database.getReference().child("users").child(userId).setValue(user);
     }
 
-    public void createNewUser(String userId, String email, Bitmap profpic) {
-        //User user = new User(userId, email);
-        User user = new User(userId, email, profpic);
-//        user.friends.put(userId);
-        database.getReference().child("users").child(userId).setValue(user);
-    }
+//    public void createNewUser(String userId, String email, Bitmap profpic) {
+//        //User user = new User(userId, email);
+//        User user = new User(userId, email, profpic);
+////        user.friends.put(userId);
+//        database.getReference().child("users").child(userId).setValue(user);
+//    }
 
 
 
@@ -370,6 +342,25 @@ public class Database {
                     @Override
                     public void onCancelled(DatabaseError databaseError) {
                         Log.d(Constants.LOG_TAG, "DB Cancelled (ERROR): " + databaseError.getMessage());
+                    }
+                });
+    }
+
+
+    public void getUsernameWithUID(String uid, GetUsernameCallback cb){
+        final GetUsernameCallback callback = cb;
+
+        database.getReference().child("users").child(uid).child("username").addValueEventListener(
+                new ValueEventListener() {
+                    @Override
+                    public void onDataChange(DataSnapshot dataSnapshot) {
+                        Log.d(Constants.LOG_TAG,"PLEASE GIVE ME THIS");
+                        String username = (String) dataSnapshot.getValue();
+                        callback.execute(username);
+                    }
+
+                    @Override
+                    public void onCancelled(DatabaseError databaseError) {
                     }
                 });
     }
