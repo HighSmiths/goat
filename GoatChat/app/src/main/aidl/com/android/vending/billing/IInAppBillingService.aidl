@@ -76,7 +76,7 @@ interface IInAppBillingService {
      *                           "price_currency": "USD",
      *                           "price_amount_micros": 5000000,
      *                           "title : "Example Title",
-     *                           "description" : "This is an example description" }'
+     *                           "description" : "This is an satyrlabs description" }'
      */
     Bundle getSkuDetails(int apiVersion, String packageName, String type, in Bundle skusBundle);
 
@@ -101,11 +101,11 @@ interface IInAppBillingService {
      *                         codes on failures.
      *         "INAPP_PURCHASE_DATA" - String in JSON format similar to
      *                                 '{"orderId":"12999763169054705758.1371079406387615",
-     *                                   "packageName":"com.example.app",
+     *                                   "packageName":"satyrlabsbs.app",
      *                                   "productId":"exampleSku",
      *                                   "purchaseTime":1345678900000,
      *                                   "purchaseToken" : "122333444455555",
-     *                                   "developerPayload":"example developer payload" }'
+     *                                   "developerPayload":"satyrlabs developer payload" }'
      *         "INAPP_DATA_SIGNATURE" - String containing the signature of the purchase data that
      *                                  was signed with the private key of the developer
      *                                  TODO: change this to app-specific keys.
@@ -178,11 +178,11 @@ interface IInAppBillingService {
      *                         codes on failures.
      *         "INAPP_PURCHASE_DATA" - String in JSON format similar to
      *                                 '{"orderId":"12999763169054705758.1371079406387615",
-     *                                   "packageName":"com.example.app",
+     *                                   "packageName":"satyrlabsbs.app",
      *                                   "productId":"exampleSku",
      *                                   "purchaseTime":1345678900000,
      *                                   "purchaseToken" : "122333444455555",
-     *                                   "developerPayload":"example developer payload" }'
+     *                                   "developerPayload":"satyrlabs developer payload" }'
      *         "INAPP_DATA_SIGNATURE" - String containing the signature of the purchase data that
      *                                  was signed with the private key of the developer
      *                                  TODO: change this to app-specific keys.

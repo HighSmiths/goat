@@ -1,6 +1,6 @@
 <?xml version="1.0" encoding="utf-8"?>
 <manifest xmlns:android="http://schemas.android.com/apk/res/android"
-    package="com.example.android.goatchat">
+    package="com.satyrlabs.android.goatchat">
     <uses-permission android:name="com.android.vending.BILLING" />
 
     <uses-permission android:name="android.permission.READ_CONTACTS" />
@@ -35,7 +35,7 @@
             android:value="@string/facebook_app_id" />
 
         <activity
-            android:name=".activity.MainActivity"
+            android:name="com.satyrlabs.android.goatchat.activity.MainActivity"
             android:label="Goat Chat">
             <intent-filter>
                 <action android:name="android.intent.action.MAIN" />
@@ -44,31 +44,31 @@
             </intent-filter>
         </activity>
         <activity
-            android:name=".activity.AddFriendsActivity"
+            android:name="com.satyrlabs.android.goatchat.activity.AddFriendsActivity"
             android:label="@string/title_activity_user_list"
             android:theme="@style/AppTheme.NoActionBar" />
         <activity
-            android:name=".activity.ScreenManagerActivity"
+            android:name="com.satyrlabs.android.goatchat.activity.ScreenManagerActivity"
             android:label="@string/title_activity_screen_manager"
             android:theme="@style/AppTheme.NoActionBar" />
         <activity
-            android:name=".activity.FriendListActivity"
+            android:name="com.satyrlabs.android.goatchat.activity.FriendListActivity"
             android:label="@string/title_activity_friend_list"
             android:theme="@style/AppTheme.NoActionBar" />
         <activity
-            android:name=".activity.MessageListActivity"
+            android:name="com.satyrlabs.android.goatchat.activity.MessageListActivity"
             android:label="@string/title_activity_message_list"
             android:theme="@style/AppTheme.NoActionBar" />
         <activity
-            android:name=".activity.AboutUsActivity"
+            android:name="com.satyrlabs.android.goatchat.activity.AboutUsActivity"
             android:label="@string/title_activity_about_us"
             android:theme="@style/AppTheme.NoActionBar" />
         <activity
-            android:name=".activity.FacebookFriendsActivity"
+            android:name="com.satyrlabs.android.goatchat.activity.FacebookFriendsActivity"
             android:label="@string/title_activity_facebook_friends"
             android:theme="@style/AppTheme.NoActionBar" />
         <activity
-            android:name=".activity.SearchUsernameActivity"
+            android:name="com.satyrlabs.android.goatchat.activity.SearchUsernameActivity"
             android:label="SearchUsernameActivity"
             android:theme="@style/AppTheme.NoActionBar">
             <intent-filter>
@@ -80,15 +80,15 @@
                 android:resource="@xml/searchable" />
         </activity>
         <activity
-            android:name=".activity.HappyGoatActivity"
+            android:name="com.satyrlabs.android.goatchat.activity.HappyGoatActivity"
             android:label="@string/title_activity_happy_goat"
             android:theme="@style/AppTheme.NoActionBar" />
         <activity
-            android:name=".activity.SadGoatActivity"
+            android:name="com.satyrlabs.android.goatchat.activity.SadGoatActivity"
             android:label="@string/title_activity_sad_goat"
             android:theme="@style/AppTheme.NoActionBar" />
         <activity
-            android:name=".activity.GoatSelectionActivity"
+            android:name="com.satyrlabs.android.goatchat.activity.GoatSelectionActivity"
             android:label="@string/title_activity_goat_selection"
             android:theme="@style/AppTheme.NoActionBar"></activity>
     </application>
