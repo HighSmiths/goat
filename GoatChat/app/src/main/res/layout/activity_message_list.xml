@@ -16,6 +16,7 @@
         android:text="Messages"
         android:textSize="32dp"
         android:layout_marginTop="100dp"
+        android:layout_marginLeft="100dp"
         android:id="@+id/textView" />
     <ListView
         android:layout_width="match_parent"
