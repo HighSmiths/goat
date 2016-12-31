@@ -32,6 +32,10 @@ import com.google.firebase.auth.FacebookAuthProvider;
 import com.google.firebase.auth.FirebaseAuth;
 import com.google.firebase.auth.FirebaseUser;
 import com.facebook.FacebookSdk;
+import com.satyrlabs.android.goatchat.util.Inventory;
+
+import java.util.ArrayList;
+import java.util.List;
 
 public  class MainActivity extends AppCompatActivity {
 
@@ -314,11 +318,42 @@ public  class MainActivity extends AppCompatActivity {
                     Log.d(Constants.LOG_TAG, "Problem setting up In-app Billing: " + result);
                 } else {
                     Log.d(Constants.LOG_TAG, "In-app Billing set up:" + result);
+
+
                 }
 
 
             }
         });
+    }
+
+    private void getPurchasableProducts() {
+        final String sexyGoatString = "sexy_goat";
+
+        IabHelper.QueryInventoryFinishedListener
+                mQueryFinishedListener = new IabHelper.QueryInventoryFinishedListener() {
+            public void onQueryInventoryFinished(IabResult result, Inventory inventory)
+            {
+                if (result.isFailure()) {
+                    // handle error
+                    return;
+                }
+
+                String sexyGoatPrice = inventory.getSkuDetails(sexyGoatString).getPrice();
+                Log.d(Constants.LOG_TAG, "Sexy Goat PRice: " + sexyGoatPrice);
+                // update the UI
+            }
+        };
+
+
+        ArrayList<String> additionalSkuList = new ArrayList<>();
+        additionalSkuList.add(sexyGoatString);
+        try {
+            mHelper.queryInventoryAsync(true, additionalSkuList, null, mQueryFinishedListener);
+        } catch (Exception e) {
+            Log.d(Constants.LOG_TAG, "Exception trying to query inventory: " + e.getMessage());
+        }
+
     }
 
 }
