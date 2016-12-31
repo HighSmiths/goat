@@ -10,8 +10,12 @@ public class Friend {
     private int iconID;
     private String condition;
     private String button;
+    private String image;
    // private ImageView imageView;
 
+    public Friend(){
+
+    }
     public Friend(String user, int goats_sent, int iconID, String condition) {
         super();
         this.user = user;
@@ -29,10 +33,26 @@ public class Friend {
         this.button = button;
     }
 
-  //  public ImageView getImageView() { return imageView;}
+    public Friend(String user, int goats_sent, int iconID, String condition, String button, String image) {
+        super();
+        this.user = user;
+        this.goats_sent = goats_sent;
+        this.iconID = iconID;
+        this.condition = condition;
+        this.button = button;
+        this.image = image;
+    }
+
+
+
+    //  public ImageView getImageView() { return imageView;}
    // public void setImageView(ImageView imageView){this.imageView = imageView;}
     public String getUser() {
         return user;
+    }
+    public String getImage()
+    {
+        return image;
     }
     public int getGoats_sent() {
         return goats_sent;

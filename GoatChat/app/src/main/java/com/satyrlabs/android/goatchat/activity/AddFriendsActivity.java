@@ -44,7 +44,7 @@ public class AddFriendsActivity extends AppCompatActivity {
 
 
 
-                        myUsers.add(new Friend(users.get(uid).getUid(), -99, R.drawable.blank_user, "-99", "Add Friend"));
+                        myUsers.add(new Friend(users.get(uid).getUid(), -99, R.drawable.blank_user, "-99", "Add Friend", users.get(uid).getProfPic()));
                     }
                     populateListView();
                 } else {

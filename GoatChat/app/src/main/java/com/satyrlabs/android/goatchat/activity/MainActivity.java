@@ -12,12 +12,15 @@ import android.os.Bundle;
 import android.util.*;
 import android.view.View;
 import android.widget.EditText;
+import android.widget.ImageView;
 import android.widget.Toast;
 
 import com.bumptech.glide.Glide;
 import com.satyrlabs.android.goatchat.Constants;
 import com.satyrlabs.android.goatchat.Database;
 import com.satyrlabs.android.goatchat.R;
+import com.satyrlabs.android.goatchat.callback.GetUserCallback;
+import com.satyrlabs.android.goatchat.models.User;
 import com.satyrlabs.android.goatchat.util.IabHelper;
 import com.satyrlabs.android.goatchat.util.IabResult;
 import com.facebook.AccessToken;
@@ -36,6 +39,7 @@ import com.google.firebase.auth.FirebaseUser;
 import com.facebook.FacebookSdk;
 import com.satyrlabs.android.goatchat.util.Inventory;
 
+import java.io.ByteArrayOutputStream;
 import java.util.ArrayList;
 import java.util.List;
 
@@ -264,7 +268,7 @@ public  class MainActivity extends AppCompatActivity {
                         String uid = mAuth.getCurrentUser().getUid();
                         String email = FirebaseAuth.getInstance().getCurrentUser().getProviderData().get(0).getDisplayName();
                         //Uri profpic = FirebaseAuth.getInstance().getCurrentUser().getProviderData().get(0).getPhotoUrl();
-
+/*
                         try {
 
                             final Uri imageUri = FirebaseAuth.getInstance().getCurrentUser().getProviderData().get(0).getPhotoUrl();
@@ -287,8 +291,8 @@ public  class MainActivity extends AppCompatActivity {
                             });
 
 
-                            Bitmap bitmap = MediaStore.Images.Media.getBitmap(act.getContentResolver(), imageUri);
-                            Database.instance.createNewUser(uid, email, bitmap);
+                          //  Bitmap bitmap = MediaStore.Images.Media.getBitmap(act.getContentResolver(), imageUri);
+                            Database.instance.createNewUser(uid, email);
                         }
                         catch(Exception e)
                         {
@@ -296,6 +300,51 @@ public  class MainActivity extends AppCompatActivity {
                             Database.instance.createNewUser(uid, email);
 
                         }
+
+*/
+
+                        try {
+
+                            final Uri imageUri = FirebaseAuth.getInstance().getCurrentUser().getProviderData().get(0).getPhotoUrl();
+                            Log.d(Constants.LOG_TAG,"uri"+ imageUri);
+//                            run on a background thread
+                            AsyncTask.execute(new Runnable() {
+                                @Override
+                                public void run() {
+                                    try {
+                                        final Bitmap aoeu = Glide.with(act).
+                                                load(imageUri.toString()).
+                                                asBitmap().
+                                                into(100, 100). // Width and height
+                                                get();
+                                        act.runOnUiThread(new Runnable() {
+                                            @Override
+                                            public void run() {
+
+                                                Database.instance.createNewUser(FirebaseAuth.getInstance().getCurrentUser().getUid(), FirebaseAuth.getInstance().getCurrentUser().getDisplayName(), encodeTobase64(aoeu));
+                                                // ((ImageView) view.findViewById(R.id.imageView)).setImageBitmap(aoeu);
+                                            }
+                                        });
+                                        Log.d(Constants.LOG_TAG, "bitmap" + aoeu.toString());
+                                    } catch (Exception e) {
+                                        Log.d(Constants.LOG_TAG, "bitmap exception: " + e.getMessage());
+                                    }
+                                }
+                            });
+
+                        }
+                        catch(Exception e)
+                        {
+                            Log.d(Constants.LOG_TAG, "not even close"+e.toString());
+                        }
+
+
+
+
+
+
+
+
 
 
 
@@ -310,6 +359,16 @@ public  class MainActivity extends AppCompatActivity {
                         // ...
                     }
                 });
+    }
+
+    public static String encodeTobase64(Bitmap image)
+    {
+        Bitmap immagex=image;
+        ByteArrayOutputStream baos = new ByteArrayOutputStream();
+        immagex.compress(Bitmap.CompressFormat.PNG, 100, baos);
+        byte[] b = baos.toByteArray();
+        String imageEncoded = Base64.encodeToString(b,Base64.DEFAULT);
+        return imageEncoded;
     }
 
     //Go to Logged in Screen

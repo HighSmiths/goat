@@ -25,7 +25,7 @@ public class User {
     public Map<String, Message> receivedMessages;
     public Map<String, String> friends;
     public ImageView imageView;
-    public Bitmap profPic;
+    public String profPic;
 
     public User() {
         // Default constructor required for calls to DataSnapshot.getValue(User.class)
@@ -48,7 +48,7 @@ public class User {
         this.friends = new HashMap<>();
     }
 
-    public User(String uid, String email, Bitmap im)
+    public User(String uid, String email, String im)
     {
         this.uid = uid;
         Log.d(Constants.LOG_TAG, "email:"+email);
@@ -94,7 +94,7 @@ public class User {
     }
     public String getPhoneNumber() {return phoneNumber;}
     public String getUsername() {return username;}
-
+    public String getProfPic(){return  profPic;}
     public String toString() {
         return "User "
                 + uid + "\n"

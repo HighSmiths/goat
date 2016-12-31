@@ -20,13 +20,17 @@ import com.satyrlabs.android.goatchat.Database;
 import com.satyrlabs.android.goatchat.R;
 import com.satyrlabs.android.goatchat.activity.GoatSelectionActivity;
 import com.satyrlabs.android.goatchat.callback.GetFriendsCallback;
+import com.satyrlabs.android.goatchat.callback.GetUserCallback;
 import com.satyrlabs.android.goatchat.callback.GetUsernameCallback;
 import com.satyrlabs.android.goatchat.models.Friend;
 import com.google.firebase.auth.FirebaseAuth;
+import com.satyrlabs.android.goatchat.models.User;
 
 import java.util.ArrayList;
 import java.util.List;
 import java.util.Map;
+
+import static com.satyrlabs.android.goatchat.fragments.LogoutFragment.decodeBase64;
 
 /**
  * Created by mz on 12/30/16.
@@ -61,7 +65,7 @@ public class FriendListFragment extends Fragment {
                 try {
                     myFriends = new ArrayList<>();
                     for (String uid : users.values()) {
-                        // Log.d(Constants.LOG_TAG, uid+"");
+                        Log.d(Constants.LOG_TAG, "os toj jkf+"+uid+"");
                         myFriends.add(new Friend(uid, -99, R.drawable.blank_user, "-99", "button"));
                     }
 
@@ -116,8 +120,20 @@ public class FriendListFragment extends Fragment {
             final String friendUid = currentFriend.getUser();
 
             //Fill the view
-            ImageView imageView = (ImageView) itemView.findViewById(R.id.item_icon);
-            imageView.setImageResource(currentFriend.getIconID());
+           final ImageView imageView = (ImageView) itemView.findViewById(R.id.item_icon);
+
+          //  imageView.setImageBitmap(decodeBase64(myFriends.get(position).getImage()));
+
+
+            class HelperGetUser implements GetUserCallback{
+                @Override
+                public void execute(User user) {
+                    imageView.setImageBitmap(decodeBase64(user.getProfPic()));
+
+                }
+            }
+            Database.instance.getUserWithUID(friendUid, new HelperGetUser());
+
 
 
 
