@@ -1,5 +1,9 @@
 package com.example.android.goatchat.models;
 
+import android.widget.ImageView;
+
+import com.example.android.goatchat.R;
+
 /**
  * Created by Michael Highsmith on 12/27/16.
  */
@@ -10,6 +14,7 @@ public class Friend {
     private int iconID;
     private String condition;
     private String button;
+   // private ImageView imageView;
 
     public Friend(String user, int goats_sent, int iconID, String condition) {
         super();
@@ -28,6 +33,8 @@ public class Friend {
         this.button = button;
     }
 
+  //  public ImageView getImageView() { return imageView;}
+   // public void setImageView(ImageView imageView){this.imageView = imageView;}
     public String getUser() {
         return user;
     }
