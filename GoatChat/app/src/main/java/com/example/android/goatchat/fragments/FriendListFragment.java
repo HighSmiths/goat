@@ -20,6 +20,7 @@ import com.example.android.goatchat.Database;
 import com.example.android.goatchat.R;
 import com.example.android.goatchat.activity.GoatSelectionActivity;
 import com.example.android.goatchat.callback.GetFriendsCallback;
+import com.example.android.goatchat.callback.GetUsernameCallback;
 import com.example.android.goatchat.models.Friend;
 import com.google.firebase.auth.FirebaseAuth;
 
@@ -118,9 +119,33 @@ public class FriendListFragment extends Fragment {
             ImageView imageView = (ImageView) itemView.findViewById(R.id.item_icon);
             imageView.setImageResource(currentFriend.getIconID());
 
+
+
+
+
+
             //Make:
-            TextView nameText = (TextView) itemView.findViewById(R.id.item_name);
+           final TextView nameText = (TextView) itemView.findViewById(R.id.item_name);
             nameText.setText(currentFriend.getUser());
+
+
+             String username;
+
+            class HelperGetUserName implements GetUsernameCallback {
+                @Override
+                public void execute(String s) {
+                   nameText.setText(s);
+
+                }
+            }
+
+            Database.instance.getUsernameWithUID(friendUid, new HelperGetUserName());
+
+
+
+
+
+
 
 
             final CheckBox checkBox = (CheckBox) itemView.findViewById(R.id.checkBox);

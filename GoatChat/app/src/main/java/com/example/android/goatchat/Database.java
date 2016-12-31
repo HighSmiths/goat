@@ -6,6 +6,7 @@ import android.util.*;
 
 import com.example.android.goatchat.callback.AddFriendCallback;
 import com.example.android.goatchat.callback.DeleteMessage;
+import com.example.android.goatchat.callback.GetUsernameCallback;
 import com.example.android.goatchat.callback.GetUsersCallback;
 import com.example.android.goatchat.callback.GetFriendsCallback;
 import com.example.android.goatchat.callback.GetMessagesCallback;
@@ -162,6 +163,28 @@ public class Database {
                     }
                 });
     }
+
+
+
+    public void getUsernameWithUID(String uid, GetUsernameCallback cb){
+        final GetUsernameCallback callback = cb;
+
+        database.getReference().child("users").child(uid).child("username").addValueEventListener(
+                new ValueEventListener() {
+                    @Override
+                    public void onDataChange(DataSnapshot dataSnapshot) {
+                        Log.d(Constants.LOG_TAG,"PLEASE GIVE ME THIS");
+                        String username = (String) dataSnapshot.getValue();
+                        callback.execute(username);
+                    }
+
+                    @Override
+                    public void onCancelled(DatabaseError databaseError) {
+                    }
+                });
+    }
+
+
 
     public void getSentMessagesOfUserWithUID(String uid, GetMessagesCallback cb) {
         final GetMessagesCallback callback = cb;

@@ -20,6 +20,7 @@ import com.example.android.goatchat.activity.HappyGoatActivity;
 import com.example.android.goatchat.activity.MainActivity;
 import com.example.android.goatchat.activity.SadGoatActivity;
 import com.example.android.goatchat.callback.GetMessagesCallback;
+import com.example.android.goatchat.callback.GetUsernameCallback;
 import com.example.android.goatchat.models.Message;
 import com.google.firebase.auth.FirebaseAuth;
 
@@ -175,12 +176,33 @@ public class MessageListFragment extends Fragment{
                 itemView = activity.getLayoutInflater().inflate(R.layout.message_list_item, parent, false);
             }
 
-            String str = "FROM: " + friendArr.get(position).fromUID;
-            TextView makeText = (TextView) itemView.findViewById(R.id.friend_name);
-            makeText.setText(str);
 
 
-            str = "Number of messages:" + friendArr.get(position).messages.size();
+
+
+
+
+            final TextView makeText = (TextView) itemView.findViewById(R.id.friend_name);
+            //makeText.setText(str);
+
+
+            class HelperGetUserName implements GetUsernameCallback {
+                @Override
+                public void execute(String s) {
+                    makeText.setText(s);
+
+                }
+            }
+
+            Database.instance.getUsernameWithUID(friendArr.get(position).fromUID, new HelperGetUserName());
+
+
+
+
+
+
+
+            String str = "Number of messages:" + friendArr.get(position).messages.size();
             TextView yearText = (TextView) itemView.findViewById(R.id.num_messages);
             yearText.setText(str);
 
