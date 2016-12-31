@@ -4,6 +4,7 @@ import android.app.Activity;
 import android.content.Intent;
 import android.graphics.Bitmap;
 import android.net.Uri;
+import android.os.AsyncTask;
 import android.provider.MediaStore;
 import android.support.annotation.NonNull;
 import android.support.v7.app.AppCompatActivity;
@@ -13,6 +14,7 @@ import android.view.View;
 import android.widget.EditText;
 import android.widget.Toast;
 
+import com.bumptech.glide.Glide;
 import com.satyrlabs.android.goatchat.Constants;
 import com.satyrlabs.android.goatchat.Database;
 import com.satyrlabs.android.goatchat.R;
@@ -42,9 +44,8 @@ public  class MainActivity extends AppCompatActivity {
     private FirebaseAuth mAuth;
     private FirebaseAuth.AuthStateListener mAuthListener;
     private CallbackManager callbackManager;
-
-
     private AccessToken accessToken;
+    Activity act;
 
 
 
@@ -68,6 +69,7 @@ public  class MainActivity extends AppCompatActivity {
         super.onCreate(savedInstanceState);
         manageFirebaseAuth();
         accessFirebaseThroughFB();
+        act = this;
 
     }
     //}}
@@ -254,8 +256,6 @@ public  class MainActivity extends AppCompatActivity {
     //Sign in via facebook
     private void handleFacebookAccessToken(AccessToken token) {
         AuthCredential credential = FacebookAuthProvider.getCredential(token.getToken());
-
-        final Activity act = this;
         mAuth.signInWithCredential(credential)
                 .addOnCompleteListener(this, new OnCompleteListener<AuthResult>() {
                     @Override
@@ -266,8 +266,27 @@ public  class MainActivity extends AppCompatActivity {
                         //Uri profpic = FirebaseAuth.getInstance().getCurrentUser().getProviderData().get(0).getPhotoUrl();
 
                         try {
-                            Uri imageUri = FirebaseAuth.getInstance().getCurrentUser().getProviderData().get(0).getPhotoUrl();
+
+                            final Uri imageUri = FirebaseAuth.getInstance().getCurrentUser().getProviderData().get(0).getPhotoUrl();
                             Log.d(Constants.LOG_TAG,"uri"+ imageUri);
+//                            run on a background thread
+                            AsyncTask.execute(new Runnable() {
+                                @Override
+                                public void run() {
+                                    try {
+                                        Bitmap aoeu = Glide.with(act).
+                                                load(imageUri.toString()).
+                                                asBitmap().
+                                                into(100, 100). // Width and height
+                                                get();
+                                        Log.d(Constants.LOG_TAG, "bitmap" + aoeu.toString());
+                                    } catch (Exception e) {
+                                        Log.d(Constants.LOG_TAG, "bitmap exception: " + e.getMessage());
+                                    }
+                                }
+                            });
+
+
                             Bitmap bitmap = MediaStore.Images.Media.getBitmap(act.getContentResolver(), imageUri);
                             Database.instance.createNewUser(uid, email, bitmap);
                         }
