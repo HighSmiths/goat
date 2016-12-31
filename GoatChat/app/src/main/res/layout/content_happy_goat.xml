@@ -18,9 +18,9 @@
         android:id="@+id/happy_goat"
         android:layout_width="900dp"
         android:layout_height="800dp"
-        app:srcCompat="@drawable/blank_user"
         android:adjustViewBounds="true"
         android:layout_alignParentTop="true"
-        android:layout_alignParentLeft="true" />
+        android:layout_alignParentLeft="true"
+        android:src="@drawable/happy_goat"/>
 
 </RelativeLayout>
