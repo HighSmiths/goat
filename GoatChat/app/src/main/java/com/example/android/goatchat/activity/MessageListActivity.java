@@ -13,6 +13,7 @@ import android.widget.TextView;
 
 import com.example.android.goatchat.Constants;
 import com.example.android.goatchat.Database;
+import com.example.android.goatchat.callback.GetUsernameCallback;
 import com.example.android.goatchat.models.Message;
 import com.example.android.goatchat.R;
 import com.example.android.goatchat.callback.GetMessagesCallback;
@@ -153,9 +154,30 @@ public class MessageListActivity extends AppCompatActivity {
                 itemView = getLayoutInflater().inflate(R.layout.message_list_item, parent, false);
             }
 
+
+
+
             String str = "FROM: " + friendArr.get(position).fromUID;
-            TextView makeText = (TextView) itemView.findViewById(R.id.friend_name);
-            makeText.setText(str);
+            final TextView makeText = (TextView) itemView.findViewById(R.id.friend_name);
+            //makeText.setText(str);
+
+
+            class HelperGetUserName implements GetUsernameCallback {
+                @Override
+                public void execute(String s) {
+                    makeText.setText(s);
+
+                }
+            }
+
+            Database.instance.getUsernameWithUID(friendArr.get(position).fromUID, new HelperGetUserName());
+
+
+
+
+
+
+
 
 
             str = "Number of messages:" + friendArr.get(position).messages.size();
