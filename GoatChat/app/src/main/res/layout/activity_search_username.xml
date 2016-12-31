@@ -22,7 +22,7 @@
         <android.support.v7.widget.Toolbar
             android:id="@+id/toolbar"
             android:layout_width="match_parent"
-            android:layout_height="?attr/actionBarSize"
+            android:layout_height="0dp"
             android:background="?attr/colorPrimary"
             app:popupTheme="@style/AppTheme.PopupOverlay" />
 
@@ -31,9 +31,11 @@
     <TextView
         android:text="no searches found"
         android:id="@+id/fID"
-        android:layout_marginTop="300dp"
+        android:layout_marginTop="250dp"
+        android:layout_marginLeft="25dp"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
+        android:textSize="20dp"
         />
     <android.support.design.widget.FloatingActionButton
         android:id="@+id/fab"
@@ -45,7 +47,8 @@
 
     <Button
         android:text="Add Friend"
-        android:layout_marginTop="400dp"
+        android:layout_marginTop="240dp"
+        android:layout_marginLeft="270dp"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:id="@+id/addFriend" />

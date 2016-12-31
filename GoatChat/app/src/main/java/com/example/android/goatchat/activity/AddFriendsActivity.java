@@ -44,6 +44,9 @@ public class AddFriendsActivity extends AppCompatActivity {
                 if (success) {
                     for (String uid : users.keySet()) {
                         //TODO implements goat sent
+
+
+
                         myUsers.add(new Friend(users.get(uid).getUid(), -99, R.drawable.blank_user, "-99", "Add Friend"));
                     }
                     populateListView();
