@@ -75,7 +75,7 @@ public class AddFriendsFragment extends Fragment {
                                         Log.d("clicked", "friendbutton");
                                         Log.d(Constants.LOG_TAG, FirebaseAuth.getInstance().getCurrentUser().getUid() + "," + finUser.uid);
                                         //TODO fix temp message id
-                                        Database.instance.addFriendForUserWithUID(FirebaseAuth.getInstance().getCurrentUser().getUid(), finUser.uid);
+                                        Database.instance.addFriendForUserWithUID(FirebaseAuth.getInstance().getCurrentUser().getUid(),finUser.getUid());
                                     }
                                 });
                             }

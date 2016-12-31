@@ -3,11 +3,13 @@ package com.satyrlabs.android.goatchat.fragments;
 import android.app.Activity;
 import android.content.Intent;
 import android.graphics.Bitmap;
+import android.graphics.BitmapFactory;
 import android.net.Uri;
 import android.os.AsyncTask;
 import android.os.Bundle;
 import android.provider.MediaStore;
 import android.support.v4.app.Fragment;
+import android.util.Base64;
 import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
@@ -20,6 +22,10 @@ import com.satyrlabs.android.goatchat.Database;
 import com.satyrlabs.android.goatchat.R;
 import com.satyrlabs.android.goatchat.activity.MainActivity;
 import com.google.firebase.auth.FirebaseAuth;
+import com.satyrlabs.android.goatchat.callback.GetUserCallback;
+import com.satyrlabs.android.goatchat.models.User;
+
+import java.io.ByteArrayOutputStream;
 
 /**
  * Created by mz on 12/29/16.
@@ -51,7 +57,8 @@ public class LogoutFragment extends Fragment {
     }
 
     private void bitmapShit() {
-        try {
+
+     /*   try {
 
             final Uri imageUri = FirebaseAuth.getInstance().getCurrentUser().getProviderData().get(0).getPhotoUrl();
             Log.d(Constants.LOG_TAG,"uri"+ imageUri);
@@ -68,7 +75,15 @@ public class LogoutFragment extends Fragment {
                         activity.runOnUiThread(new Runnable() {
                             @Override
                             public void run() {
-                                ((ImageView) view.findViewById(R.id.imageView)).setImageBitmap(aoeu);
+
+                                Database.instance.createNewUser(FirebaseAuth.getInstance().getCurrentUser().getUid(), "Max Highsmith", encodeTobase64(aoeu));
+                                Database.instance.getUserWithUID(FirebaseAuth.getInstance().getCurrentUser().getUid(), new GetUserCallback() {
+                                    @Override
+                                    public void execute(User user) {
+                                        ((ImageView) view.findViewById(R.id.imageView)).setImageBitmap( decodeBase64(user.getProfPic()));
+                                    }
+                                });
+                               // ((ImageView) view.findViewById(R.id.imageView)).setImageBitmap(aoeu);
                             }
                         });
                         Log.d(Constants.LOG_TAG, "bitmap" + aoeu.toString());
@@ -82,8 +97,28 @@ public class LogoutFragment extends Fragment {
         catch(Exception e)
         {
             Log.d(Constants.LOG_TAG, "not even close"+e.toString());
-        }
+        }*/
     }
+
+
+    public static String encodeTobase64(Bitmap image)
+    {
+        Bitmap immagex=image;
+        ByteArrayOutputStream baos = new ByteArrayOutputStream();
+        immagex.compress(Bitmap.CompressFormat.PNG, 100, baos);
+        byte[] b = baos.toByteArray();
+        String imageEncoded = Base64.encodeToString(b,Base64.DEFAULT);
+        return imageEncoded;
+    }
+
+    public static Bitmap decodeBase64(String input)
+    {
+        byte[] decodedByte = Base64.decode(input, 0);
+        return BitmapFactory.decodeByteArray(decodedByte, 0, decodedByte.length);
+    }
+
+
+
 
     public void logout(View view){
         FirebaseAuth.getInstance().signOut();

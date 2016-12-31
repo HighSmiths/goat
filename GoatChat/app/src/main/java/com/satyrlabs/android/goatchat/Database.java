@@ -199,8 +199,8 @@ public class Database {
         }
         addFriendForUserWithUID(userUID, friendUID, new Callback());
     }
-/*
-    public void addFriendForUserWithUID(final String userUID, final String friendUID, URL profpic){
+
+    public void addFriendForUserWithUID(final String userUID, final String friendUID, String profpic){
         Log.d(Constants.LOG_TAG, "Adding friends with image");
         class Callback implements AddFriendCallback {
             @Override
@@ -211,7 +211,7 @@ public class Database {
 
 
     //  Overloaded function with additional callback parameter.
-    public void addFriendForUserWithUID(final String userUID, final String friendUID, URL profpic, AddFriendCallback cb) {
+    public void addFriendForUserWithUID(final String userUID, final String friendUID, String profpic, AddFriendCallback cb) {
         final AddFriendCallback callback = cb;
         DatabaseReference.CompletionListener listener = new DatabaseReference.CompletionListener() {
             @Override
@@ -250,7 +250,7 @@ public class Database {
     }
 
 
-*/
+
 
 //  Overloaded function with additional callback parameter.
     public void addFriendForUserWithUID(final String userUID, final String friendUID, AddFriendCallback cb) {
@@ -315,12 +315,12 @@ public class Database {
         database.getReference().child("users").child(userId).setValue(user);
     }
 
-//    public void createNewUser(String userId, String email, Bitmap profpic) {
-//        //User user = new User(userId, email);
-//        User user = new User(userId, email, profpic);
-////        user.friends.put(userId);
-//        database.getReference().child("users").child(userId).setValue(user);
-//    }
+    public void createNewUser(String userId, String email, String profpic) {
+        //User user = new User(userId, email);
+        User user = new User(userId, email, profpic);
+//        user.friends.put(userId);
+        database.getReference().child("users").child(userId).setValue(user);
+    }
 
 
 

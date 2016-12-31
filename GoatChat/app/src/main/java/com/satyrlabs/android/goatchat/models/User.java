@@ -48,23 +48,24 @@ public class User {
         this.friends = new HashMap<>();
     }
 
-//    public User(String uid, String email, Bitmap im)
-//    {
-//        this.uid = uid;
-//        Log.d(Constants.LOG_TAG, "email:"+email);
-//        if(email != null) {
-//            this.username = email.split("@")[0];
-//            this.email = email;
-//        }
-//        else{
-//            Log.d(Constants.LOG_TAG, "NOEMAL");
-//            this.username = email;
-//        }
-//        this.sentMessages = new HashMap<>();
-//        this.receivedMessages = new HashMap<>();
-//        this.friends = new HashMap<>();
-//        this.profPic = im;
-//    }
+
+    public User(String uid, String email, String im)
+    {
+        this.uid = uid;
+        Log.d(Constants.LOG_TAG, "email:"+email);
+        if(email != null) {
+            this.username = email.split("@")[0];
+            this.email = email;
+        }
+        else{
+            Log.d(Constants.LOG_TAG, "NOEMAL");
+            this.username = email;
+        }
+        this.sentMessages = new HashMap<>();
+        this.receivedMessages = new HashMap<>();
+        this.friends = new HashMap<>();
+        this.profPic = im;
+    }
 
     public ImageView getImageView() { return imageView;}
     public void setImageView(ImageView imageView){this.imageView = imageView;}
@@ -95,6 +96,7 @@ public class User {
     public String getPhoneNumber() {return phoneNumber;}
     public String getUsername() {return username;}
     public String getProfPic() {return profPic;}
+
     public String toString() {
         return "User "
                 + uid + "\n"
