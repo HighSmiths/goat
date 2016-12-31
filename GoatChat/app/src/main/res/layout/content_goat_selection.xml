@@ -83,20 +83,6 @@
         android:gravity="bottom|center"/>
 
     <Button
-        android:text="Nostalgic"
-        android:enabled="false"
-        android:layout_width="150dp"
-        android:layout_height="120dp"
-        android:id="@+id/button12"
-        android:layout_above="@+id/button13"
-        android:layout_alignLeft="@+id/button10"
-        android:layout_alignStart="@+id/button10"
-        android:background="#00000000"
-        android:onClick="sendNostalgicGoats"
-        android:textColor="@android:color/black"
-        android:gravity="bottom|center"/>
-
-    <Button
         android:text="Happy"
         android:layout_width="150dp"
         android:layout_height="120dp"
@@ -191,6 +177,20 @@
         android:layout_below="@+id/imageView12"
         android:layout_alignLeft="@+id/button12"
         android:layout_alignStart="@+id/button12" />
+
+    <Button
+        android:text="Nostalgic"
+        android:enabled="false"
+        android:layout_width="150dp"
+        android:layout_height="120dp"
+        android:id="@+id/button12"
+        android:background="#00000000"
+        android:onClick="sendNostalgicGoats"
+        android:textColor="@android:color/black"
+        android:gravity="bottom|center"
+        android:layout_above="@+id/button13"
+        android:layout_toLeftOf="@+id/button11"
+        android:layout_toStartOf="@+id/button11" />
 
 
 </RelativeLayout>
