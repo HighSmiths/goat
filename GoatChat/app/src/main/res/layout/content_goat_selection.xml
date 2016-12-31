@@ -160,7 +160,7 @@
 
     <ImageView
         android:layout_width="match_parent"
-        android:layout_height="match_parent"
+        android:layout_height="90dp"
         app:srcCompat="@drawable/shadow_goat"
         android:id="@+id/imageView7"
         android:layout_below="@+id/button9"
@@ -170,7 +170,7 @@
 
     <ImageView
         android:layout_width="match_parent"
-        android:layout_height="match_parent"
+        android:layout_height="90dp"
         app:srcCompat="@drawable/shadow_goat"
         android:id="@+id/imageView11"
         android:layout_toLeftOf="@+id/button11"
