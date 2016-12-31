@@ -11,11 +11,14 @@ import android.view.View;
 import com.satyrlabs.android.goatchat.Constants;
 import com.satyrlabs.android.goatchat.Database;
 import com.satyrlabs.android.goatchat.R;
+import com.satyrlabs.android.goatchat.util.IabHelper;
+import com.satyrlabs.android.goatchat.util.IabResult;
+import com.satyrlabs.android.goatchat.util.Inventory;
 
 import java.util.ArrayList;
 
 public class GoatSelectionActivity extends AppCompatActivity {
-
+    IabHelper mHelper;
     String receiver;
     String sender;
     ArrayList<String> senders;
@@ -26,6 +29,10 @@ public class GoatSelectionActivity extends AppCompatActivity {
         setContentView(R.layout.activity_goat_selection);
         Toolbar toolbar = (Toolbar) findViewById(R.id.toolbar);
         setSupportActionBar(toolbar);
+
+
+        setupBilling();
+
 
         FloatingActionButton fab = (FloatingActionButton) findViewById(R.id.fab);
         fab.setOnClickListener(new View.OnClickListener() {
@@ -68,7 +75,16 @@ public class GoatSelectionActivity extends AppCompatActivity {
         }
         finish();
     }
-    public void sendSexyGoats(){
+
+    public void sendSexyGoats(View view){
+        Log.d(Constants.LOG_TAG, "Clicked on sexygoat");
+        try {
+//            https://developer.android.com/google/play/billing/billing_testing.html#billing-testing-static
+//            https://developer.android.com/training/in-app-billing/purchase-iab-products.html
+            mHelper.launchPurchaseFlow(this, "android.test.canceled", 1, null, null);
+        } catch (Exception e) {
+            Log.d(Constants.LOG_TAG, "Exception on Purchase Flow: " + e.getMessage());
+        }
 
     }
     public void sendObsequiousGoats(){
@@ -78,6 +94,61 @@ public class GoatSelectionActivity extends AppCompatActivity {
 
     }
     public void sendFratGoats(){
+
+    }
+
+    private void setupBilling() {
+
+        String base64EncodedPublicKey = Constants.LICENSE_KEY;
+
+        // compute your public key and store it in base64EncodedPublicKey
+        mHelper = new IabHelper(this, base64EncodedPublicKey);
+
+
+        mHelper.startSetup(new IabHelper.OnIabSetupFinishedListener() {
+            public void onIabSetupFinished(IabResult result) {
+                if (!result.isSuccess()) {
+                    // Oh no, there was a problem.
+                    Log.d(Constants.LOG_TAG, "Problem setting up In-app Billing: " + result);
+                }
+//                If it works!!!
+                else {
+                    Log.d(Constants.LOG_TAG, "In-app Billing set up:" + result);
+                    getPurchasableProducts();
+
+                }
+
+
+            }
+        });
+    }
+
+    private void getPurchasableProducts() {
+        final String sexyGoatString = "android.test.purchased";
+
+        IabHelper.QueryInventoryFinishedListener
+                mQueryFinishedListener = new IabHelper.QueryInventoryFinishedListener() {
+            public void onQueryInventoryFinished(IabResult result, Inventory inventory)
+            {
+                if (result.isFailure()) {
+                    // handle error
+                    return;
+                }
+                Log.d(Constants.LOG_TAG, inventory.toString());
+                String sexyGoatPrice = inventory.getSkuDetails(sexyGoatString).getPrice();
+                Log.d(Constants.LOG_TAG, "Sexy Goat PRice: " + sexyGoatPrice);
+                // update the UI
+            }
+        };
+
+
+        ArrayList<String> additionalSkuList = new ArrayList<>();
+        additionalSkuList.add(sexyGoatString);
+        try {
+            mHelper.queryInventoryAsync(true, additionalSkuList, null, mQueryFinishedListener);
+        } catch (Exception e) {
+            Log.d(Constants.LOG_TAG, "Exception trying to query inventory: " + e.getMessage());
+        }
 
     }
 

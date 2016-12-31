@@ -43,7 +43,6 @@ public  class MainActivity extends AppCompatActivity {
     private FirebaseAuth.AuthStateListener mAuthListener;
     private CallbackManager callbackManager;
 
-    IabHelper mHelper;
 
     private AccessToken accessToken;
 
@@ -69,7 +68,6 @@ public  class MainActivity extends AppCompatActivity {
         super.onCreate(savedInstanceState);
         manageFirebaseAuth();
         accessFirebaseThroughFB();
-        setupBilling();
 
     }
     //}}
@@ -303,57 +301,6 @@ public  class MainActivity extends AppCompatActivity {
         startActivity(intent);
     }
 
-    private void setupBilling() {
 
-        String base64EncodedPublicKey = Constants.LICENSE_KEY;
-
-        // compute your public key and store it in base64EncodedPublicKey
-        mHelper = new IabHelper(this, base64EncodedPublicKey);
-
-
-        mHelper.startSetup(new IabHelper.OnIabSetupFinishedListener() {
-            public void onIabSetupFinished(IabResult result) {
-                if (!result.isSuccess()) {
-                    // Oh no, there was a problem.
-                    Log.d(Constants.LOG_TAG, "Problem setting up In-app Billing: " + result);
-                } else {
-                    Log.d(Constants.LOG_TAG, "In-app Billing set up:" + result);
-
-
-                }
-
-
-            }
-        });
-    }
-
-    private void getPurchasableProducts() {
-        final String sexyGoatString = "sexy_goat";
-
-        IabHelper.QueryInventoryFinishedListener
-                mQueryFinishedListener = new IabHelper.QueryInventoryFinishedListener() {
-            public void onQueryInventoryFinished(IabResult result, Inventory inventory)
-            {
-                if (result.isFailure()) {
-                    // handle error
-                    return;
-                }
-
-                String sexyGoatPrice = inventory.getSkuDetails(sexyGoatString).getPrice();
-                Log.d(Constants.LOG_TAG, "Sexy Goat PRice: " + sexyGoatPrice);
-                // update the UI
-            }
-        };
-
-
-        ArrayList<String> additionalSkuList = new ArrayList<>();
-        additionalSkuList.add(sexyGoatString);
-        try {
-            mHelper.queryInventoryAsync(true, additionalSkuList, null, mQueryFinishedListener);
-        } catch (Exception e) {
-            Log.d(Constants.LOG_TAG, "Exception trying to query inventory: " + e.getMessage());
-        }
-
-    }
 
 }
