@@ -113,6 +113,8 @@ public class LogoutFragment extends Fragment {
 
     public static Bitmap decodeBase64(String input)
     {
+        if (input == null)
+            return null;
         byte[] decodedByte = Base64.decode(input, 0);
         return BitmapFactory.decodeByteArray(decodedByte, 0, decodedByte.length);
     }

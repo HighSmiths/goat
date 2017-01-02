@@ -9,6 +9,9 @@ import android.support.v7.widget.Toolbar;
 import android.util.Log;
 import android.view.View;
 
+import com.facebook.FacebookSdk;
+import com.facebook.login.LoginManager;
+import com.google.firebase.auth.FacebookAuthProvider;
 import com.satyrlabs.android.goatchat.Constants;
 import com.satyrlabs.android.goatchat.R;
 import com.satyrlabs.android.goatchat.SwipeAdapter;
@@ -20,6 +23,7 @@ public class ScreenManagerActivity extends AppCompatActivity {
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
 //        setContentView(R.layout.activity_screen_manager);
+
         setContentView(R.layout.swipe_view_layout);
 
         Toolbar toolbar = (Toolbar) findViewById(R.id.toolbar);
@@ -71,11 +75,12 @@ public class ScreenManagerActivity extends AppCompatActivity {
     }
 
     public void logout(View view){
+//      Sign out of Firebase and Facebook
         FirebaseAuth.getInstance().signOut();
+        FacebookSdk.sdkInitialize(getApplicationContext());
+        LoginManager.getInstance().logOut();
+
         Intent intent = new Intent(this, MainActivity.class);
-        if(isFacebookUser()){
-            //TODo logout of fb
-        }
         startActivity(intent);
         Log.d(Constants.LOG_TAG, "Logging out");
     }
