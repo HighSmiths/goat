@@ -17,4 +17,5 @@
     <string name="title_activity_happy_goat">Happy Goat</string>
     <string name="title_activity_sad_goat">Sad Goat</string>
     <string name="title_activity_goat_selection">Goat Chat</string>
+    <string name="title_activity_sexy_goat">SexyGoatActivity</string>
 </resources>

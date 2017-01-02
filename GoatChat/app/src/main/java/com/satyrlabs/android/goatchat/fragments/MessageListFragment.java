@@ -15,9 +15,10 @@ import android.widget.TextView;
 
 import com.satyrlabs.android.goatchat.Constants;
 import com.satyrlabs.android.goatchat.Database;
+import com.satyrlabs.android.goatchat.GoatActivity.SexyGoatActivity;
 import com.satyrlabs.android.goatchat.R;
-import com.satyrlabs.android.goatchat.activity.HappyGoatActivity;
-import com.satyrlabs.android.goatchat.activity.SadGoatActivity;
+import com.satyrlabs.android.goatchat.GoatActivity.HappyGoatActivity;
+import com.satyrlabs.android.goatchat.GoatActivity.SadGoatActivity;
 import com.satyrlabs.android.goatchat.callback.GetMessagesCallback;
 import com.satyrlabs.android.goatchat.callback.GetUsernameCallback;
 import com.satyrlabs.android.goatchat.models.Message;
@@ -154,7 +155,19 @@ public class MessageListFragment extends Fragment{
     }
 
     private void showSexyGoat(){
-        //TODO
+        Intent intent = new Intent(activity, SexyGoatActivity.class);
+        intent.putExtra("uid", FirebaseAuth.getInstance().getCurrentUser().getUid());
+        startActivity(intent);
+    }
+    private void showObsequiousGoat(){
+
+    }
+
+    private void showNostalgicGoat(){
+
+    }
+    private void showFratGoat(){
+
     }
 
 
@@ -212,13 +225,27 @@ public class MessageListFragment extends Fragment{
                 public void onClick(View v){
                     Log.d(Constants.LOG_TAG,"message clicked");
                     //Database.instance.setReceivedMessagetoSeen(messageId, currentMessage.fromUID);   //shows message
-                    Database.instance.setReceivedMessagetoSeen(friendArr.get(position).messages.get(0).messageId, "unusued field?",
-                            friendArr.get(position).messages.get(0).getToUID(), friendArr.get(position).messages.get(0).getFromUID());
+           //         Database.instance.setReceivedMessagetoSeen(friendArr.get(position).messages.get(0).messageId, "unusued field?",
+             //               friendArr.get(position).messages.get(0).getToUID(), friendArr.get(position).messages.get(0).getFromUID());
+
+                    /*
                     int typeOGoat = friendArr.get(position).messages.get(0).typeOGoat;
                     friendArr.get(position).messages.remove(0);
                     showGoat(typeOGoat);  //type of goat
                     populateListView();
                     activity.getLayoutInflater();
+                    */
+                    for(Message message: friendArr.get(position).messages){
+
+                        Database.instance.setReceivedMessagetoSeen(message.messageId, "unusued field?",
+                                message.getToUID(), message.getFromUID());
+
+                        int typeOGoat=message.getTypeOGoat();
+                        showGoat(typeOGoat);
+
+
+                    }
+
 
                 }
             });

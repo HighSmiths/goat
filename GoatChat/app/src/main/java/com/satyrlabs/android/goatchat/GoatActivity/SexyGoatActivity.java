@@ -1,4 +1,4 @@
-package com.satyrlabs.android.goatchat.activity;
+package com.satyrlabs.android.goatchat.GoatActivity;
 
 import android.os.Bundle;
 import android.os.Handler;
@@ -13,11 +13,11 @@ import android.widget.ImageView;
 import com.satyrlabs.android.goatchat.Constants;
 import com.satyrlabs.android.goatchat.R;
 
-public class SadGoatActivity extends AppCompatActivity {
+public class SexyGoatActivity extends AppCompatActivity {
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-        setContentView(R.layout.activity_sad_goat);
+        setContentView(R.layout.activity_sexy_goat);
         Toolbar toolbar = (Toolbar) findViewById(R.id.toolbar);
         setSupportActionBar(toolbar);
 
@@ -31,8 +31,8 @@ public class SadGoatActivity extends AppCompatActivity {
         });
 
 
-        ImageView imageView = (ImageView)findViewById(R.id.sad_goat);
-        imageView.setImageResource(R.drawable.sad_goat);
+        ImageView imageView = (ImageView)findViewById(R.id.sexy_goat);
+        imageView.setImageResource(R.drawable.sexy_goat);
 
         final Handler handler = new Handler();
         handler.postDelayed(new Runnable() {

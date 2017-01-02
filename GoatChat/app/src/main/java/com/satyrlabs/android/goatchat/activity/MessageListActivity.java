@@ -13,6 +13,8 @@ import android.widget.TextView;
 
 import com.satyrlabs.android.goatchat.Constants;
 import com.satyrlabs.android.goatchat.Database;
+import com.satyrlabs.android.goatchat.GoatActivity.HappyGoatActivity;
+import com.satyrlabs.android.goatchat.GoatActivity.SadGoatActivity;
 import com.satyrlabs.android.goatchat.callback.GetUsernameCallback;
 import com.satyrlabs.android.goatchat.models.Message;
 import com.satyrlabs.android.goatchat.R;

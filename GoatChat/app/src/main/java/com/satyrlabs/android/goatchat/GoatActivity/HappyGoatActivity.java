@@ -1,4 +1,4 @@
-package com.satyrlabs.android.goatchat.activity;
+package com.satyrlabs.android.goatchat.GoatActivity;
 
 import android.os.Bundle;
 import android.os.Handler;
