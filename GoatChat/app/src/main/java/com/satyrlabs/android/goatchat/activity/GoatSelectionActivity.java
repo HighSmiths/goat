@@ -1,5 +1,7 @@
 package com.satyrlabs.android.goatchat.activity;
 
+import android.graphics.Bitmap;
+import android.graphics.drawable.BitmapDrawable;
 import android.os.Bundle;
 import android.support.design.widget.FloatingActionButton;
 import android.support.design.widget.Snackbar;
@@ -50,7 +52,22 @@ public class GoatSelectionActivity extends AppCompatActivity {
         }
 
         ImageView happy = (ImageView) findViewById(R.id.HappyG);
+        ImageView sex = (ImageView) findViewById(R.id.SexyG);
+        sex.setImageBitmap(blur(sex));
+        ImageView nostalgic = (ImageView) findViewById(R.id.NostalgicG);
+        nostalgic.setImageBitmap(blur(nostalgic));
+        ImageView obsequious = (ImageView) findViewById(R.id.ObsequiousG);
+        obsequious.setImageBitmap(blur(obsequious));
+        ImageView frat = (ImageView) findViewById(R.id.FratGoat);
+        frat.setImageBitmap(blur(frat));
+    }
 
+    public Bitmap blur(ImageView im)
+    {
+        BitmapDrawable drawable = (BitmapDrawable) im.getDrawable();
+        Bitmap src = drawable.getBitmap();
+        src= Bitmap.createScaledBitmap(src, 10,10, true);
+        return src;
     }
 
     public void sendHappyGoats(View view){
@@ -85,7 +102,6 @@ public class GoatSelectionActivity extends AppCompatActivity {
 
     }
     public void sendObsequiousGoats(){
-
 
 
     }

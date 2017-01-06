@@ -151,9 +151,10 @@
         android:layout_height="140dp"
         android:layout_marginLeft="190dp"
         android:layout_marginTop="370dp"
-        app:srcCompat="@drawable/shadow_goat"
+        app:srcCompat="@drawable/sexy_goat"
         android:background="@drawable/rounded_btn"
         android:id="@+id/SexyG"
+        android:scaleType="fitXY"
         android:onClick="sendSexyGoats"
        />
 
