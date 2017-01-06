@@ -4,9 +4,12 @@ import android.os.Bundle;
 import android.support.design.widget.FloatingActionButton;
 import android.support.design.widget.Snackbar;
 import android.support.v7.app.AppCompatActivity;
+import android.support.v7.view.menu.MenuView;
 import android.support.v7.widget.Toolbar;
 import android.util.Log;
 import android.view.View;
+import android.widget.ImageView;
+import android.widget.TextView;
 
 import com.satyrlabs.android.goatchat.Constants;
 import com.satyrlabs.android.goatchat.Database;
@@ -27,21 +30,11 @@ public class GoatSelectionActivity extends AppCompatActivity {
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_goat_selection);
-        Toolbar toolbar = (Toolbar) findViewById(R.id.toolbar);
-        setSupportActionBar(toolbar);
+       // Toolbar toolbar = (Toolbar) findViewById(R.id.toolbar);
+      //  setSupportActionBar(toolbar);
 
 
         setupBilling();
-
-
-        FloatingActionButton fab = (FloatingActionButton) findViewById(R.id.fab);
-        fab.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View view) {
-                Snackbar.make(view, "Replace with your own action", Snackbar.LENGTH_LONG)
-                        .setAction("Action", null).show();
-            }
-        });
 
         Bundle bundle = getIntent().getExtras();
       //  receiver = bundle.getString("receiver");
@@ -54,6 +47,9 @@ public class GoatSelectionActivity extends AppCompatActivity {
         {
 
         }
+
+        ImageView happy = (ImageView) findViewById(R.id.HappyG);
+
     }
 
     public void sendHappyGoats(View view){
@@ -89,6 +85,8 @@ public class GoatSelectionActivity extends AppCompatActivity {
     }
     public void sendObsequiousGoats(){
 
+
+
     }
     public void sendNostalgicGoats(){
 
@@ -98,7 +96,6 @@ public class GoatSelectionActivity extends AppCompatActivity {
     }
 
     private void setupBilling() {
-
         String base64EncodedPublicKey = Constants.LICENSE_KEY;
 
         // compute your public key and store it in base64EncodedPublicKey
