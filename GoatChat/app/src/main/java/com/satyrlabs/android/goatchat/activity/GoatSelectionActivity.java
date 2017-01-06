@@ -36,6 +36,7 @@ public class GoatSelectionActivity extends AppCompatActivity {
 
         setupBilling();
 
+
         Bundle bundle = getIntent().getExtras();
       //  receiver = bundle.getString("receiver");
        // sender = bundle.getString("sender");

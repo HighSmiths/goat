@@ -2,27 +2,34 @@ package com.satyrlabs.android.goatchat.fragments;
 
 import android.app.Activity;
 import android.content.Intent;
+import android.graphics.Bitmap;
+import android.graphics.Typeface;
 import android.os.Bundle;
 import android.support.v4.app.Fragment;
 import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.widget.AdapterView;
 import android.widget.ArrayAdapter;
 import android.widget.Button;
+import android.widget.ImageView;
 import android.widget.ListView;
 import android.widget.TextView;
 
 import com.satyrlabs.android.goatchat.Constants;
 import com.satyrlabs.android.goatchat.Database;
 import com.satyrlabs.android.goatchat.GoatActivity.SexyGoatActivity;
+import com.satyrlabs.android.goatchat.ImageConverter;
 import com.satyrlabs.android.goatchat.R;
 import com.satyrlabs.android.goatchat.GoatActivity.HappyGoatActivity;
 import com.satyrlabs.android.goatchat.GoatActivity.SadGoatActivity;
 import com.satyrlabs.android.goatchat.callback.GetMessagesCallback;
+import com.satyrlabs.android.goatchat.callback.GetUserCallback;
 import com.satyrlabs.android.goatchat.callback.GetUsernameCallback;
 import com.satyrlabs.android.goatchat.models.Message;
 import com.google.firebase.auth.FirebaseAuth;
+import com.satyrlabs.android.goatchat.models.User;
 
 import java.util.ArrayList;
 import java.util.HashMap;
@@ -116,6 +123,7 @@ public class MessageListFragment extends Fragment{
     private void populateListView(){
         ArrayAdapter<MessageListFragment.ListEntity> adapter = new MessageListFragment.MyListAdapter();
         ListView list = (ListView) view.findViewById(R.id.message_list);
+
         list.setAdapter(adapter);
     }
 
@@ -174,7 +182,6 @@ public class MessageListFragment extends Fragment{
     private class MyListAdapter extends ArrayAdapter<MessageListFragment.ListEntity>{
 
         public MyListAdapter(){
-            //Log.d(Constants.LOG_TAG,"big berhta");
             super(activity.getApplicationContext(), R.layout.message_list_item, friendArr);
         }
 
@@ -188,67 +195,53 @@ public class MessageListFragment extends Fragment{
                 itemView = activity.getLayoutInflater().inflate(R.layout.message_list_item, parent, false);
             }
 
-
-
-
-
-
-
-            final TextView makeText = (TextView) itemView.findViewById(R.id.friend_name);
-            //makeText.setText(str);
-
-
-            class HelperGetUserName implements GetUsernameCallback {
-                @Override
-                public void execute(String s) {
-                    makeText.setText(s);
-
-                }
-            }
-
-            Database.instance.getUsernameWithUID(friendArr.get(position).fromUID, new HelperGetUserName());
-
-
-
-
-
-
-
-            String str = "Number of messages:" + friendArr.get(position).messages.size();
-            TextView yearText = (TextView) itemView.findViewById(R.id.num_messages);
-            yearText.setText(str);
-
-
-            Button button = (Button) itemView.findViewById(R.id.view_messages_button);
-            Log.d(Constants.LOG_TAG, "making button");
-            button.setOnClickListener(new View.OnClickListener(){
-                public void onClick(View v){
-                    Log.d(Constants.LOG_TAG,"message clicked");
-                    //Database.instance.setReceivedMessagetoSeen(messageId, currentMessage.fromUID);   //shows message
-           //         Database.instance.setReceivedMessagetoSeen(friendArr.get(position).messages.get(0).messageId, "unusued field?",
-             //               friendArr.get(position).messages.get(0).getToUID(), friendArr.get(position).messages.get(0).getFromUID());
-
-                    /*
-                    int typeOGoat = friendArr.get(position).messages.get(0).typeOGoat;
-                    friendArr.get(position).messages.remove(0);
-                    showGoat(typeOGoat);  //type of goat
-                    populateListView();
-                    activity.getLayoutInflater();
-                    */
-                    for(Message message: friendArr.get(position).messages){
-
+//          Configure the on click event to view messages
+            itemView.setOnClickListener(new View.OnClickListener() {
+                public void onClick(View v) {
+                    for (Message message: friendArr.get(position).messages){
                         Database.instance.setReceivedMessagetoSeen(message.messageId, "unusued field?",
                                 message.getToUID(), message.getFromUID());
-
                         int typeOGoat=message.getTypeOGoat();
                         showGoat(typeOGoat);
+                    }
+                }
+            });
 
-
+//            Set the friend's profile image
+            final ImageView imageView = (ImageView) itemView.findViewById(R.id.item_icon);
+            class HelperGetUser implements GetUserCallback {
+                @Override
+                public void execute(User user) {
+                    if (user.getProfPic() == null) {
+                        Log.d(Constants.LOG_TAG, "Prof pic: " + user.getProfPic());
+//                        imageView.setImageResource(R.drawable.profile_default);
+                    } else {
+                        Bitmap bm = Constants.decodeBase64(user.getProfPic());
+                        imageView.setImageBitmap(ImageConverter.getRoundedCornerBitmap(bm, 30));
                     }
 
 
                 }
-            });
+            }
+            Database.instance.getUserWithUID(friendArr.get(position).fromUID, new HelperGetUser());
+
+//          Set the friend's name
+            final TextView nameText = (TextView) itemView.findViewById(R.id.friend_name);
+            class HelperGetUserName implements GetUsernameCallback {
+                @Override
+                public void execute(String s) {
+                    nameText.setText(s);
+                    nameText.setTypeface(Constants.tf(activity));
+                }
+            }
+            Database.instance.getUsernameWithUID(friendArr.get(position).fromUID, new HelperGetUserName());
+
+//            Set the number of messages from this friend.
+            String str = "Number of messages:" + friendArr.get(position).messages.size();
+            TextView numMsgText = (TextView) itemView.findViewById(R.id.num_messages);
+            numMsgText.setText(str);
+            numMsgText.setTypeface(Constants.tf(activity));
+
 
             return itemView;
         }

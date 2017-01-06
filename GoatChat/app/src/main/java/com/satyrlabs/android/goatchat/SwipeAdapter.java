@@ -37,8 +37,6 @@ public class SwipeAdapter extends FragmentStatePagerAdapter {
             default:
                 fragment = new LogoutFragment();
                 break;
-
-
         }
 
         return fragment;
@@ -55,7 +53,7 @@ public class SwipeAdapter extends FragmentStatePagerAdapter {
             case 0:
                 return "INBOX";
             case 1:
-                return "SEARCH";
+                return "ADD FRIENDS";
             case 2:
                 return "SEND GOATS";
             case 3:

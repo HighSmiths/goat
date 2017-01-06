@@ -10,29 +10,18 @@
     android:paddingTop="@dimen/activity_vertical_margin"
     tools:context="com.satyrlabs.android.goatchat.activity.AddFriendsActivity">
 
-    <TextView
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:text="Send a Message!!!"
-        android:layout_marginTop="100dp"
-        android:textSize="32dp"
-        android:id="@+id/textView" />
     <ListView
         android:layout_width="match_parent"
         android:layout_height="match_parent"
         android:layout_below="@+id/textView"
-        android:layout_alignParentLeft="true"
-        android:layout_alignParentStart="true"
-        android:layout_marginLeft="20dp"
-        android:layout_marginStart="20dp"
-        android:layout_marginTop="20dp"
+        android:layout_marginTop="100dp"
         android:id="@+id/content_friend_list" >
     </ListView>
     <Button
         android:id="@+id/SendGoat"
         android:text="Send a Goat"
-        android:layout_marginTop="400dp"
-        android:layout_marginLeft="230dp"
+        android:layout_marginTop="450dp"
+        android:layout_marginLeft="210dp"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content" />
 </RelativeLayout>

@@ -5,46 +5,41 @@
 
     <ImageView
         android:id="@+id/item_icon"
-        android:layout_width="80dp"
-        android:layout_height="80dp"
+        android:layout_width="60dp"
+        android:layout_height="60dp"
         app:srcCompat="@drawable/blank_user"
+        android:background="@drawable/circle"
         android:adjustViewBounds="true"
-        android:layout_alignParentTop="true"
-        android:layout_alignParentLeft="true" />
+        android:layout_marginLeft="20dp"
+        android:layout_marginTop="10dp"
+        android:layout_marginBottom="10dp" />
 
 
     <TextView
         android:text="Name"
+        android:textColor="#000"
+
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:id="@+id/item_name"
-        android:layout_marginLeft="27dp"
-        android:layout_marginStart="27dp"
-        android:layout_alignBottom="@+id/item_icon"
+        android:layout_marginTop="20dp"
+        android:layout_marginStart="30dp"
+        android:layout_marginLeft="30dp"
         android:layout_toRightOf="@+id/item_icon"
         android:layout_toEndOf="@+id/item_icon"
-        android:layout_marginBottom="30dp" />
+        />
 
-    <!--
-    <Button
-        android:text="Send a message"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:id="@+id/send_msg_button"
-        android:layout_marginRight="11dp"
-        android:layout_marginEnd="11dp"
-        android:layout_alignBottom="@+id/item_icon"
-        android:layout_alignParentRight="true"
-        android:layout_alignParentEnd="true" />
-    -->
 
     <CheckBox
         android:text="Include"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:id="@+id/checkBox"
-        android:layout_alignBottom="@+id/item_icon"
         android:layout_toRightOf="@+id/item_icon"
-        android:layout_toEndOf="@+id/item_icon" />
+        android:layout_toEndOf="@+id/item_icon"
+        android:layout_marginStart="30dp"
+        android:layout_marginLeft="30dp"
+        android:layout_marginTop="40dp"
+        />
 
 </RelativeLayout>
