@@ -116,12 +116,12 @@
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:text="Sad"
+        android:layout_marginLeft="60dp"
         android:layout_alignLeft="@+id/sadG"
         android:layout_alignRight="@+id/sadG"
-        android:layout_alignTop="@+id/sadG"
         android:layout_alignBottom="@+id/sadG"
         android:textColor="@color/goatYellow"
-        android:textSize="20pt"/>
+        android:textSize="10pt"/>
 
     <ImageView
         android:layout_width="150dp"
@@ -141,16 +141,15 @@
         android:text="Happy"
         android:layout_alignLeft="@+id/HappyG"
         android:layout_alignRight="@+id/HappyG"
-        android:layout_alignTop="@+id/HappyG"
+        android:layout_marginLeft="45dp"
         android:layout_alignBottom="@+id/HappyG"
         android:textColor="@color/goatYellow"
-        android:textSize="20pt" />
+        android:textSize="10pt" />
 
     <ImageView
         android:layout_width="150dp"
         android:layout_height="140dp"
-        android:layout_marginLeft="190dp"
-        android:layout_marginTop="370dp"
+        android:layout_marginTop="190dp"
         app:srcCompat="@drawable/sexy_goat"
         android:background="@drawable/rounded_btn"
         android:id="@+id/SexyG"
@@ -165,18 +164,19 @@
         android:text="Sexy"
         android:layout_alignLeft="@+id/SexyG"
         android:layout_alignRight="@+id/SexyG"
-        android:layout_alignTop="@+id/SexyG"
+        android:layout_marginLeft="53dp"
         android:layout_alignBottom="@+id/SexyG"
         android:textColor="@color/goatYellow"
-        android:textSize="20pt" />
+        android:textSize="10pt" />
 
     <ImageView
         android:layout_width="150dp"
         android:layout_height="140dp"
         android:layout_marginLeft="190dp"
         android:layout_marginTop="190dp"
-        app:srcCompat="@drawable/shadow_goat"
+        app:srcCompat="@drawable/obsequious_goat"
         android:id="@+id/ObsequiousG"
+        android:scaleType="fitXY"
         android:background="@drawable/rounded_btn"
         />
     <TextView
@@ -186,28 +186,30 @@
         android:text="Obsequious"
         android:layout_alignLeft="@+id/ObsequiousG"
         android:layout_alignRight="@+id/ObsequiousG"
-        android:layout_alignTop="@+id/ObsequiousG"
+        android:layout_marginLeft="17dp"
         android:layout_alignBottom="@+id/ObsequiousG"
         android:textColor="@color/goatYellow"
-        android:textSize="12pt" />
-
-    <ImageView
-        android:layout_width="150dp"
-        android:layout_height="140dp"
-        android:layout_marginTop="190dp"
-        app:srcCompat="@drawable/shadow_goat"
-        android:id="@+id/FratGoat"
-        android:background="@drawable/rounded_btn"
-        />
-
+        android:textSize="10pt" />
 
     <ImageView
         android:layout_width="150dp"
         android:layout_height="140dp"
         android:layout_marginTop="370dp"
-        app:srcCompat="@drawable/shadow_goat"
+        android:layout_marginLeft="190dp"
+        app:srcCompat="@drawable/frat_goat"
+        android:id="@+id/FratGoat"
+        android:scaleType="fitXY"
+        android:background="@drawable/rounded_btn"
+        />
+
+    <ImageView
+        android:layout_width="150dp"
+        android:layout_height="140dp"
+        android:layout_marginTop="370dp"
+        app:srcCompat="@drawable/nostalgic_goat"
         android:id="@+id/NostalgicG"
         android:background="@drawable/rounded_btn"
+        android:scaleType="fitXY"
         />
 
     <TextView
@@ -217,10 +219,10 @@
         android:text="Nostalgic"
         android:layout_alignLeft="@+id/NostalgicG"
         android:layout_alignRight="@+id/NostalgicG"
-        android:layout_alignTop="@+id/NostalgicG"
+        android:layout_marginLeft="30dp"
         android:layout_alignBottom="@+id/NostalgicG"
         android:textColor="@color/goatYellow"
-        android:textSize="14pt" />
+        android:textSize="10pt" />
 
     <TextView
         android:id="@+id/frat_text"
@@ -229,10 +231,10 @@
         android:text="Frat"
         android:layout_alignLeft="@+id/FratGoat"
         android:layout_alignRight="@+id/FratGoat"
-        android:layout_alignTop="@+id/FratGoat"
         android:layout_alignBottom="@+id/FratGoat"
+        android:layout_marginLeft="50dp"
         android:textColor="@color/goatYellow"
-        android:textSize="20pt" />
+        android:textSize="10pt" />
 
 
 </RelativeLayout>
