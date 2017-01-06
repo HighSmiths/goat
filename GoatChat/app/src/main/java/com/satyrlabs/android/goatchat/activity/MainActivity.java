@@ -11,6 +11,7 @@ import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
 import android.util.*;
 import android.view.View;
+import android.view.Window;
 import android.widget.EditText;
 import android.widget.ImageView;
 import android.widget.Toast;
@@ -114,7 +115,10 @@ public  class MainActivity extends AppCompatActivity {
         FacebookSdk.sdkInitialize(getApplicationContext());
        // accessToken = AccessToken.getCurrentAccessToken();
         callbackManager = CallbackManager.Factory.create();
+        requestWindowFeature(Window.FEATURE_NO_TITLE);
         setContentView(com.satyrlabs.android.goatchat.R.layout.activity_main);
+
+
         LoginButton loginButton = (LoginButton) findViewById(R.id.connectWithFbButton);
         loginButton.registerCallback(callbackManager, new FacebookCallback<LoginResult>() {
             @Override

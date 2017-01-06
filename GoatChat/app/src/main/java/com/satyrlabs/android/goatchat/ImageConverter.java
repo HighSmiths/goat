@@ -1,3 +1,5 @@
+package com.satyrlabs.android.goatchat;
+
 import android.graphics.Bitmap;
 import android.graphics.Canvas;
 import android.graphics.Paint;

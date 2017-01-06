@@ -34,15 +34,6 @@ public class GoatSelectionActivity extends AppCompatActivity {
         setupBilling();
 
 
-        FloatingActionButton fab = (FloatingActionButton) findViewById(R.id.fab);
-        fab.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View view) {
-                Snackbar.make(view, "Replace with your own action", Snackbar.LENGTH_LONG)
-                        .setAction("Action", null).show();
-            }
-        });
-
         Bundle bundle = getIntent().getExtras();
       //  receiver = bundle.getString("receiver");
        // sender = bundle.getString("sender");

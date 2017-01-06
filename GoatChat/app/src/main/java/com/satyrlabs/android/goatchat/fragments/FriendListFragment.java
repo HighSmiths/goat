@@ -2,12 +2,14 @@ package com.satyrlabs.android.goatchat.fragments;
 
 import android.app.Activity;
 import android.content.Intent;
+import android.graphics.Bitmap;
 import android.os.Bundle;
 import android.support.v4.app.Fragment;
 import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.widget.AdapterView;
 import android.widget.ArrayAdapter;
 import android.widget.Button;
 import android.widget.CheckBox;
@@ -17,6 +19,7 @@ import android.widget.TextView;
 
 import com.satyrlabs.android.goatchat.Constants;
 import com.satyrlabs.android.goatchat.Database;
+import com.satyrlabs.android.goatchat.ImageConverter;
 import com.satyrlabs.android.goatchat.R;
 import com.satyrlabs.android.goatchat.activity.GoatSelectionActivity;
 import com.satyrlabs.android.goatchat.callback.GetFriendsCallback;
@@ -25,6 +28,7 @@ import com.satyrlabs.android.goatchat.callback.GetUsernameCallback;
 import com.satyrlabs.android.goatchat.callback.GetUsersCallback;
 import com.satyrlabs.android.goatchat.models.Friend;
 import com.google.firebase.auth.FirebaseAuth;
+import com.satyrlabs.android.goatchat.models.Message;
 import com.satyrlabs.android.goatchat.models.User;
 
 import java.util.ArrayList;
@@ -89,6 +93,8 @@ public class FriendListFragment extends Fragment {
     private void populateListView() {
         ArrayAdapter<Friend> adapter = new FriendListFragment.MyListAdapter();
         ListView list = (ListView) view.findViewById(R.id.content_friend_list);
+
+
         list.setAdapter(adapter);
 
         senders= new ArrayList<String>();
@@ -117,8 +123,13 @@ public class FriendListFragment extends Fragment {
             if (itemView == null) {
                 itemView = activity.getLayoutInflater().inflate(R.layout.friend_list_item, parent, false);
             }
+            //          Configure the on click event to view messages
+            itemView.setOnClickListener(new View.OnClickListener() {
+                public void onClick(View v) {
+                   v.findViewById(R.id.checkBox).performClick();
+                }
+            });
 
-            Log.d(Constants.LOG_TAG, "friends array adapter");
             //Find the car to work with
             Friend currentFriend = myFriends.get(position);
             final String friendUid = currentFriend.getUser();
@@ -126,14 +137,11 @@ public class FriendListFragment extends Fragment {
             //Fill the view
            final ImageView imageView = (ImageView) itemView.findViewById(R.id.item_icon);
 
-          //  imageView.setImageBitmap(decodeBase64(myFriends.get(position).getImage()));
-
-
             class HelperGetUser implements GetUserCallback{
                 @Override
                 public void execute(User user) {
-                    imageView.setImageBitmap(decodeBase64(user.getProfPic()));
-
+                    Bitmap bm = Constants.decodeBase64(user.getProfPic());
+                    imageView.setImageBitmap(ImageConverter.getRoundedCornerBitmap(bm, 30));
                 }
             }
             Database.instance.getUserWithUID(friendUid, new HelperGetUser());
@@ -149,10 +157,8 @@ public class FriendListFragment extends Fragment {
             class HelperGetUserName implements GetUserCallback {
                 @Override
                 public void execute(User user) {
-
-
-                            nameText.setText(user.getUsername());
-
+                    nameText.setText(user.getUsername());
+                    nameText.setTypeface(Constants.tf(activity));
                 }
             }
 

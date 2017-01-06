@@ -154,13 +154,9 @@ public class MessageListActivity extends AppCompatActivity {
                 itemView = getLayoutInflater().inflate(R.layout.message_list_item, parent, false);
             }
 
-
-
-
             String str = "FROM: " + friendArr.get(position).fromUID;
             final TextView makeText = (TextView) itemView.findViewById(R.id.friend_name);
             //makeText.setText(str);
-
 
             class HelperGetUserName implements GetUsernameCallback {
                 @Override
@@ -172,38 +168,9 @@ public class MessageListActivity extends AppCompatActivity {
 
             Database.instance.getUsernameWithUID(friendArr.get(position).fromUID, new HelperGetUserName());
 
-
-
-
-
-
-
-
-
             str = "Number of messages:" + friendArr.get(position).messages.size();
             TextView yearText = (TextView) itemView.findViewById(R.id.num_messages);
             yearText.setText(str);
-
-
-            Button button = (Button) itemView.findViewById(R.id.view_messages_button);
-            Log.d(Constants.LOG_TAG, "making button");
-            button.setOnClickListener(new View.OnClickListener(){
-                public void onClick(View v){
-                    Log.d(Constants.LOG_TAG,"message clicked");
-                    //Database.instance.deleteMessage(messageId);
-                    //Database.instance.setReceivedMessagetoSeen(messageId, currentMessage.fromUID);   //shows message
-                    Log.d(Constants.LOG_TAG, friendArr.get(position).messages.get(0).getTypeOGoat()+"");
-                    friendArr.get(position).messages.remove(0);
-                    recreate();
-                  //  Database.instance.setReceivedMessagetoSeen(friendArr.get(position).messages.get(0).messageId, "useless" );
-                  //  Database.instance.getReceivedMessagesOfUserWithUID(FirebaseAuth.getInstance().getCurrentUser().getUid(), new  HelperMessageList());
-
-                    //getView(position, convertView, parent);
-                    recreate();
-                    showGoat(friendArr.get(position).messages.get(0).getTypeOGoat());  //type of goat
-                    populateListView();
-                }
-            });
 
             return itemView;
         }
